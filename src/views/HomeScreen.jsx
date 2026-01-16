@@ -6,7 +6,7 @@ export default function HomeScreen({ onStart, onLeaderboard, storedData }) {
 
     return (
         <div className="screen" style={{ background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)', padding: '1rem', overflowY: 'auto' }}>
-            <div className="animate-fade-in w-full max-w-sm mx-auto flex-col" style={{ gap: '1.5rem', paddingBottom: '2rem' }}>
+            <div className="animate-fade-in w-full max-w-sm mx-auto" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', paddingBottom: '2rem' }}>
 
                 {/* Header */}
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '1rem' }}>
@@ -84,17 +84,10 @@ export default function HomeScreen({ onStart, onLeaderboard, storedData }) {
                         </div>
                     </div>
                 </div>
-                {/* Decorative bg element */}
-                <div style={{
-                    position: 'absolute', right: -20, bottom: -20,
-                    opacity: 0.2, transform: 'rotate(-15deg)'
-                }}>
-                    <Building2 size={120} />
-                </div>
             </div>
 
             {/* Rewards Wallet */}
-            <div>
+            <div style={{ paddingBottom: '2rem' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem' }}>
                     <Wallet size={18} color="var(--color-warning)" />
                     <h3 style={{ fontSize: '1.1rem' }}>Rewards Wallet</h3>
@@ -131,7 +124,7 @@ export default function HomeScreen({ onStart, onLeaderboard, storedData }) {
             </div>
 
             {/* Audit Log */}
-            <div>
+            <div style={{ paddingBottom: '2rem' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem' }}>
                     <History size={18} color="var(--color-text-muted)" />
                     <h3 style={{ fontSize: '1.1rem' }}>Audit Log</h3>
