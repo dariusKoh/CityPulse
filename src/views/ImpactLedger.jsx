@@ -12,85 +12,82 @@ export default function ImpactLedger({ data, onRestart }) {
         <div className="screen" style={{ overflowY: 'auto' }}>
             <div className="animate-fade-in flex-col" style={{ gap: '1.5rem', paddingBottom: '2rem' }}>
 
-                {/* Header */}
-                <div className="text-center" style={{ marginTop: '1rem' }}>
-                    <h1 style={{ fontSize: '2rem', color: 'var(--color-primary)' }}>Mission Report</h1>
-                    <p style={{ color: '#94a3b8' }}>Planner ID: <span style={{ color: 'white', fontWeight: 700 }}>{data.nickname}</span></p>
-                </div>
-
-                {/* Stats Card */}
+                {/* Receipt Card */}
                 <div style={{
-                    background: '#1e293b',
-                    borderRadius: '16px',
+                    background: '#f8fafc',
+                    color: '#0f172a',
                     padding: '1.5rem',
-                    display: 'grid',
-                    gridTemplateColumns: '1fr 1fr',
-                    gap: '1rem',
-                    textAlign: 'center'
+                    borderRadius: '6px',
+                    fontFamily: '"Courier New", Courier, monospace',
+                    position: 'relative',
+                    boxShadow: '0 4px 6px -1px rgba(0,0,0,0.5)'
                 }}>
-                    <div>
-                        <div style={{ fontSize: '0.8rem', color: '#94a3b8' }}>HAPPINESS</div>
-                        <div style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--color-primary)' }}>{data.stats.happiness}%</div>
+                    {/* Perforation visual at bottom */}
+                    <div style={{
+                        position: 'absolute', bottom: -5, left: 0, right: 0, height: '10px',
+                        background: 'radial-gradient(circle, transparent 50%, #0f172a 50%)',
+                        backgroundSize: '20px 20px',
+                        transform: 'rotate(180deg)'
+                    }} />
+
+                    <div style={{ textAlign: 'center', borderBottom: '2px dashed #94a3b8', paddingBottom: '1rem', marginBottom: '1rem' }}>
+                        <h3 style={{ fontSize: '1.2rem', fontWeight: 800, textTransform: 'uppercase' }}>Official Receipt</h3>
+                        <div style={{ fontSize: '0.8rem' }}>MND / URA PROTOTYPE</div>
+                        <div style={{ marginTop: '0.5rem', fontSize: '0.9rem' }}>{new Date().toLocaleString()}</div>
+                        <div style={{ fontSize: '0.9rem' }}>ID: {data.receiptId || 'PENDING'}</div>
                     </div>
-                    <div>
-                        <div style={{ fontSize: '0.8rem', color: '#94a3b8' }}>HEALTH</div>
-                        <div style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--color-secondary)' }}>{data.stats.health}%</div>
+
+                    <table style={{ width: '100%', fontSize: '0.9rem', marginBottom: '1rem' }}>
+                        <tbody>
+                            <tr>
+                                <td style={{ padding: '4px 0' }}>Citizens Served (Happy)</td>
+                                <td style={{ textAlign: 'right', fontWeight: 700 }}>{data.stats.happiness}%</td>
+                            </tr>
+                            <tr>
+                                <td style={{ padding: '4px 0' }}>Health Index</td>
+                                <td style={{ textAlign: 'right', fontWeight: 700 }}>{data.stats.health}%</td>
+                            </tr>
+                            <tr>
+                                <td style={{ padding: '4px 0' }}>Budget Remaining</td>
+                                <td style={{ textAlign: 'right', fontWeight: 700 }}>${data.stats.budget}M</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div style={{
+                        borderTop: '2px dashed #94a3b8',
+                        paddingTop: '0.5rem',
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        fontWeight: 800, fontSize: '1.1rem'
+                    }}>
+                        <span>TOTAL POINTS</span>
+                        <span>{data.pointsEarned || 850} CP</span>
                     </div>
-                    <div>
-                        <div style={{ fontSize: '0.8rem', color: '#94a3b8' }}>BUDGET</div>
-                        <div style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--color-warning)' }}>{data.stats.budget}%</div>
-                    </div>
-                    <div>
-                        <div style={{ fontSize: '0.8rem', color: '#94a3b8' }}>LAND</div>
-                        <div style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--color-success)' }}>{data.stats.land}%</div>
+
+                    <div style={{ marginTop: '1.5rem', textAlign: 'center' }}>
+                        <span style={{
+                            background: '#facc15',
+                            color: '#854d0e',
+                            padding: '4px 12px',
+                            borderRadius: '4px',
+                            fontSize: '0.8rem',
+                            fontWeight: 800,
+                            border: '2px solid #854d0e',
+                            transform: 'rotate(-5deg)',
+                            display: 'inline-block'
+                        }}>
+                            PENDING AUDIT
+                        </span>
                     </div>
                 </div>
 
-                {/* Ledger */}
-                <div>
-                    <h2 style={{ fontSize: '1.2rem', marginBottom: '1rem', borderBottom: '1px solid #334155', paddingBottom: '0.5rem' }}>
-                        Decision Ledger
-                    </h2>
-                    <div className="flex-col" style={{ gap: '0.75rem' }}>
-                        {choices.map((choice, i) => (
-                            <motion.div
-                                key={i}
-                                initial={{ opacity: 0, x: -20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ delay: i * 0.05 }}
-                                style={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: '1rem',
-                                    padding: '1rem',
-                                    background: '#1e293b',
-                                    borderRadius: '12px',
-                                    borderLeft: `4px solid ${choice.decision === 'yes' ? 'var(--color-success)' : choice.decision === 'no' ? 'var(--color-danger)' : 'var(--color-warning)'}`
-                                }}
-                            >
-                                <div style={{ flex: 1 }}>
-                                    <div style={{ fontWeight: 600 }}>{choice.title}</div>
-                                    {choice.input && (
-                                        <div style={{ fontSize: '0.85rem', color: '#94a3b8', fontStyle: 'italic', marginTop: '4px' }}>
-                                            "{choice.input}"
-                                        </div>
-                                    )}
-                                </div>
-                                <div>
-                                    {choice.decision === 'yes' && <div style={{ color: 'var(--color-success)', fontWeight: 700, fontSize: '0.8em' }}>APPROVED</div>}
-                                    {choice.decision === 'no' && <div style={{ color: 'var(--color-danger)', fontWeight: 700, fontSize: '0.8em' }}>REJECTED</div>}
-                                    {choice.decision === 'submitted' && <div style={{ color: 'var(--color-warning)', fontWeight: 700, fontSize: '0.8em' }}>FILED</div>}
-                                </div>
-                            </motion.div>
-                        ))}
-                    </div>
-                </div>
-
-                {/* Actions */}
+                {/* Return Button */}
                 <button
                     onClick={onRestart}
                     style={{
                         marginTop: '1rem',
+                        width: '100%',
                         padding: '1rem',
                         background: 'var(--color-primary)',
                         color: 'white',
@@ -102,7 +99,7 @@ export default function ImpactLedger({ data, onRestart }) {
                     }}
                 >
                     <RotateCcw size={20} />
-                    Play Again
+                    Return to Home
                 </button>
 
             </div>
