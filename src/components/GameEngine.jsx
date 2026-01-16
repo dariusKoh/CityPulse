@@ -200,8 +200,8 @@ export default function GameEngine({ nickname, onFinish }) {
                 {formatTime(timeLeft)}
             </div>
 
-            {/* City Background */}
-            <CityBackground approvedStickers={approvedStickers} />
+            {/* CityBackground Removed per user request */}
+            {/* <CityBackground approvedStickers={approvedStickers} /> */}
 
             {/* HUD */}
             <div style={{ position: 'relative', zIndex: 10 }}>

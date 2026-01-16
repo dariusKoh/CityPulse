@@ -1,14 +1,19 @@
-import { motion, useMotionValue, useTransform, useAnimation } from 'framer-motion';
+import { motion, useMotionValue, useTransform, useAnimation, useMotionTemplate } from 'framer-motion';
 import { useRef } from 'react';
-import { Info } from 'lucide-react';
+import { Info, Check, X, ArrowRight, ArrowLeft } from 'lucide-react';
 
 export default function SwipeCard({ card, onSwipe, onAdvisorClick }) {
     const controls = useAnimation();
     const x = useMotionValue(0);
-    const constrainedX = useTransform(x, [-200, 200], [-150, 150]); // Limit visual range
+    const constrainedX = useTransform(x, [-200, 200], [-150, 150]);
     const rotate = useTransform(x, [-200, 200], [-25, 25]);
-    const opacityYes = useTransform(x, [50, 150], [0, 1]);
-    const opacityNo = useTransform(x, [-50, -150], [0, 1]); // Note: input range is negative for left swipe
+
+    // Radial Reveal Logic
+    const yesRadius = useTransform(x, [0, 150], [0, 150]);
+    const yesClipPath = useMotionTemplate`circle(${yesRadius}% at 0% 100%)`; // Bottom Left corner
+
+    const noRadius = useTransform(x, [0, -150], [0, 150]);
+    const noClipPath = useMotionTemplate`circle(${noRadius}% at 100% 100%)`; // Bottom Right corner
 
     const handleDragEnd = async (event, info) => {
         const threshold = 100;
@@ -61,12 +66,12 @@ export default function SwipeCard({ card, onSwipe, onAdvisorClick }) {
                 {card.advisor && (
                     <button
                         onClick={(e) => {
-                            e.stopPropagation(); // Prevent drag interference
+                            e.stopPropagation();
                             onAdvisorClick && onAdvisorClick();
                         }}
                         style={{
                             position: 'absolute', top: '15px', right: '15px',
-                            background: 'rgba(15, 23, 42, 0.6)', // Neutral Dark (Slate 900 + Opacity)
+                            background: 'rgba(15, 23, 42, 0.6)',
                             backdropFilter: 'blur(4px)',
                             color: 'white',
                             border: '1px solid rgba(255,255,255,0.2)',
@@ -89,27 +94,35 @@ export default function SwipeCard({ card, onSwipe, onAdvisorClick }) {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    position: 'relative'
+                    position: 'relative',
+                    overflow: 'hidden'
                 }}>
-                    {/* In real app, we use <img> tag. For now, color block + Icon if needed or just color. */}
-                    {/* Overlays */}
+                    {/* Visual Feedback Overlays - Radial Reveal */}
+
+                    {/* Yes / Check / Green - Expands from Bottom Left */}
                     <motion.div style={{
-                        position: 'absolute', top: 20, right: 20,
-                        border: '4px solid #22c55e', color: '#22c55e',
-                        padding: '5px 10px', borderRadius: '8px',
-                        fontWeight: 800, fontSize: '24px', transform: 'rotate(15deg)',
-                        opacity: opacityYes, background: 'rgba(0,0,0,0.5)'
+                        position: 'absolute', inset: 0,
+                        background: 'rgba(34, 197, 94, 0.9)', // More opaque for solid fill feel
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        zIndex: 20,
+                        clipPath: yesClipPath
                     }}>
-                        APPROVE
+                        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: 'white', borderRadius: '50%', padding: '1rem', boxShadow: '0 10px 20px rgba(0,0,0,0.2)' }}>
+                            <Check size={48} color="#16a34a" strokeWidth={3} />
+                        </div>
                     </motion.div>
+
+                    {/* No / Cross / Red - Expands from Bottom Right */}
                     <motion.div style={{
-                        position: 'absolute', top: 20, left: 20,
-                        border: '4px solid #ef4444', color: '#ef4444',
-                        padding: '5px 10px', borderRadius: '8px',
-                        fontWeight: 800, fontSize: '24px', transform: 'rotate(-15deg)',
-                        opacity: opacityNo, background: 'rgba(0,0,0,0.5)'
+                        position: 'absolute', inset: 0,
+                        background: 'rgba(239, 68, 68, 0.9)', // More opaque
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        zIndex: 20,
+                        clipPath: noClipPath
                     }}>
-                        REJECT
+                        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", background: 'white', borderRadius: '50%', padding: '1rem', boxShadow: '0 10px 20px rgba(0,0,0,0.2)' }}>
+                            <X size={48} color="#dc2626" strokeWidth={3} />
+                        </div>
                     </motion.div>
                 </div>
 
@@ -118,9 +131,9 @@ export default function SwipeCard({ card, onSwipe, onAdvisorClick }) {
                     <h2 style={{ fontSize: '1.5rem', marginBottom: '0.5rem', lineHeight: 1.2 }}>{card.title}</h2>
                     <p style={{ color: '#94a3b8', fontSize: '1rem', lineHeight: 1.5 }}>{card.description}</p>
 
-                    <div style={{ marginTop: 'auto', paddingTop: '1rem', fontSize: '0.8rem', color: '#64748b', display: 'flex', justifyContent: 'space-between' }}>
-                        <span>Swipe Right to Build</span>
-                        <span>Swipe Left to Reject</span>
+                    <div style={{ marginTop: 'auto', paddingTop: '1rem', fontSize: '0.8rem', color: '#64748b', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><ArrowLeft size={14} /> Swipe Left to Reject</span>
+                        <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>Swipe Right to Build <ArrowRight size={14} /></span>
                     </div>
                 </div>
             </div>
