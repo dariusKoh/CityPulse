@@ -1,7 +1,8 @@
 import { motion, useMotionValue, useTransform, useAnimation } from 'framer-motion';
 import { useRef } from 'react';
+import { Info } from 'lucide-react';
 
-export default function SwipeCard({ card, onSwipe }) {
+export default function SwipeCard({ card, onSwipe, onAdvisorClick }) {
     const controls = useAnimation();
     const x = useMotionValue(0);
     const constrainedX = useTransform(x, [-200, 200], [-150, 150]); // Limit visual range
@@ -55,6 +56,31 @@ export default function SwipeCard({ card, onSwipe }) {
                 flexDirection: 'column',
                 border: '1px solid #334155'
             }}>
+
+                {/* Optional Advisor Button */}
+                {card.advisor && (
+                    <button
+                        onClick={(e) => {
+                            e.stopPropagation(); // Prevent drag interference
+                            onAdvisorClick && onAdvisorClick();
+                        }}
+                        style={{
+                            position: 'absolute', top: '15px', right: '15px',
+                            background: 'rgba(15, 23, 42, 0.6)', // Neutral Dark (Slate 900 + Opacity)
+                            backdropFilter: 'blur(4px)',
+                            color: 'white',
+                            border: '1px solid rgba(255,255,255,0.2)',
+                            borderRadius: '50%',
+                            width: '36px', height: '36px',
+                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                            cursor: 'pointer',
+                            zIndex: 50,
+                            boxShadow: '0 4px 6px rgba(0,0,0,0.3)'
+                        }}
+                    >
+                        <Info size={20} />
+                    </button>
+                )}
 
                 {/* Card Image Placeholder */}
                 <div style={{

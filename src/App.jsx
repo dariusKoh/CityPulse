@@ -3,10 +3,11 @@ import HomeScreen from './views/HomeScreen';
 import GameEngine from './components/GameEngine';
 import ImpactLedger from './views/ImpactLedger';
 import AdminDashboard from './views/AdminDashboard';
+import Leaderboard from './views/Leaderboard';
 import { getStoredData, saveGameResult } from './utils/StorageManager';
 
 function App() {
-  const [currentView, setCurrentView] = useState('start'); // start, game, result, admin
+  const [currentView, setCurrentView] = useState('start'); // start, game, result, admin, leaderboard
   const [playerData, setPlayerData] = useState({
     nickname: 'Citizen Planner', // Default name
     choices: [],
@@ -50,7 +51,8 @@ function App() {
 
   return (
     <div className="app-container">
-      {currentView === 'start' && <HomeScreen onStart={startGame} storedData={storedData} />}
+      {currentView === 'start' && <HomeScreen onStart={startGame} onLeaderboard={() => setCurrentView('leaderboard')} storedData={storedData} />}
+      {currentView === 'leaderboard' && <Leaderboard onBack={() => setCurrentView('start')} userScore={storedData?.totalPoints || 0} />}
       {currentView === 'game' && <GameEngine onFinish={finishGame} nickname={playerData.nickname} />}
       {currentView === 'result' && <ImpactLedger data={playerData} onRestart={() => setCurrentView('start')} />}
       {currentView === 'admin' && <AdminDashboard />}

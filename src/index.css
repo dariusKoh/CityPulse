@@ -2,31 +2,36 @@
 
 :root {
   /* Brand Colors */
-  --color-primary: #3b82f6; /* Modern Blue */
-  --color-secondary: #f43f5e; /* Rose */
-  --color-accent: #14b8a6; /* Teal */
-  
+  --color-primary: #ffbd59;
+  /* Brand Amber */
+  --color-secondary: #f43f5e;
+  /* Rose */
+  --color-accent: #14b8a6;
+  /* Teal */
+
   /* Semantic Colors */
   --color-success: #22c55e;
   --color-danger: #ef4444;
   --color-warning: #f59e0b;
-  
+
   /* Backgrounds */
-  --color-bg: #0f172a; /* Slate 900 */
-  --color-surface: #1e293b; /* Slate 800 */
+  --color-bg: #0f172a;
+  /* Slate 900 */
+  --color-surface: #1e293b;
+  /* Slate 800 */
   --color-surface-hover: #334155;
-  
+
   /* Text */
   --color-text-main: #f8fafc;
   --color-text-muted: #94a3b8;
-  
+
   /* UI */
   --radius-lg: 16px;
   --radius-md: 12px;
   --radius-sm: 8px;
-  
+
   --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5);
-  --shadow-glow: 0 0 20px rgb(59 130 246 / 0.3);
+  --shadow-glow: 0 0 20px rgb(255 189 89 / 0.4);
 
   --font-main: 'Inter', sans-serif;
   --font-display: 'Outfit', sans-serif;
@@ -49,14 +54,16 @@ body {
 }
 
 #root {
-  max-width: 480px; /* Mobile first constaint */
+  max-width: 480px;
+  /* Mobile first constaint */
   margin: 0 auto;
   min-height: 100vh;
-  background-color: #111; /* Slight contrast for letterbox */
+  background-color: #111;
+  /* Slight contrast for letterbox */
   position: relative;
   overflow: hidden;
   background: radial-gradient(circle at top, #1e293b 0%, #0f172a 100%);
-  box-shadow: 0 0 50px rgba(0,0,0,0.5);
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
 }
 
 button {
@@ -71,7 +78,9 @@ button:active {
   transform: scale(0.98);
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   font-family: var(--font-display);
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -97,13 +106,25 @@ h1, h2, h3 {
   flex-direction: column;
 }
 
-.text-center { text-align: center; }
-.w-full { width: 100%; }
+.text-center {
+  text-align: center;
+}
+
+.w-full {
+  width: 100%;
+}
 
 /* Animations */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .animate-fade-in {

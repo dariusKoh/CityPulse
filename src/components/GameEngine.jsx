@@ -5,7 +5,8 @@ import PressConferenceCard from './PressConferenceCard';
 import { CARDS } from '../data/cards';
 import { calculateNextState, INITIAL_STATS, checkGameOver } from '../utils/ResourceManager';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Clock } from 'lucide-react';
+import { Clock, GraduationCap, AlertTriangle } from 'lucide-react';
+import CityBackground from './CityBackground';
 
 const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
@@ -22,6 +23,11 @@ export default function GameEngine({ nickname, onFinish }) {
     // Timer State
     const [timeLeft, setTimeLeft] = useState(180); // 3 minutes
     const [isShaking, setIsShaking] = useState(false);
+
+    // CityPulse 2.0 State
+    const [showAdvisor, setShowAdvisor] = useState(false);
+    const [crisisMode, setCrisisMode] = useState(false);
+    const [approvedStickers, setApprovedStickers] = useState([]); // For CityBackground
 
     useEffect(() => {
         // Determine deck. For now, just use the static list.
@@ -62,33 +68,39 @@ export default function GameEngine({ nickname, onFinish }) {
     }, [timeLeft]);
 
     const handleSwipe = async (decision) => {
-        // Budget Cap Check for 'Yes'
-        if (decision === 'yes' && stats.budget <= 0) {
-            // Using the previous logic: Shake if trying to spend with 0 budget.
-            // BUT user also said "terminate when budget reaches 0".
-            // Let's assume: If you HAVE budget and spend it to hit 0, game ends.
-            // If you are AT 0 and try to spend, you can't (Shake).
-            // If you Reject, game continues? Or does 0 budget mean immediate loss?
-            // "ensure that the game terminates when budget reaches 0" suggests immediate stop.
-
-            // Let's implement: If you hit 0 budget, the game ends after that move.
-            // So we don't block the move that TAKES you to 0. We block moves if you are ALREADY at 0?
-            // Actually, strict interpretation: "Terminates when budget reaches 0".
-            // So as soon as stats.budget == 0, onFinish.
-        }
-
         const currentCard = deck[currentIndex];
 
-        // Check cost before applying?
+        // REMOVED ADVISOR INTERCEPTION LOGIC (Optional Mode)
+
+        // Budget Cap / Shake Logic
+        if (decision === 'yes' && stats.budget <= 0) {
+            if (currentCard.yes && currentCard.yes.budget < 0) {
+                setIsShaking(true);
+                setTimeout(() => setIsShaking(false), 500);
+                return;
+            }
+        }
+
         if (decision === 'yes' && currentCard.yes && currentCard.yes.budget < 0 && stats.budget <= 0) {
             setIsShaking(true);
             setTimeout(() => setIsShaking(false), 500);
             return;
         }
 
+        // 2. Crisis Event Trigger (Every 5 swipes)
+        // Check if next swipe should trigger crisis? 
+        // Let's do it AFTER the swipe is processed, maybe interrupt the NEXT card?
+        // Or simply: if (choices.length % 5 === 4) -> Trigger Crisis Modal immediately after this swipe?
+        // Let's implement Crisis as a "Modal" that pauses the game flow.
+
         // Update Stats
         const newStats = calculateNextState(stats, currentCard, decision);
         setStats(newStats);
+
+        // Update Stickers
+        if (decision === 'yes' && currentCard.sticker) {
+            setApprovedStickers(prev => [...prev, currentCard.sticker]);
+        }
 
         // Record Choice
         const choiceRecord = {
@@ -100,21 +112,41 @@ export default function GameEngine({ nickname, onFinish }) {
         const newChoices = [...choices, choiceRecord];
         setChoices(newChoices);
 
-        // Termination Condition: Budget <= 0
-        // We allow the move that drops it to 0, then end.
+        // Termination Condition
         if (newStats.budget <= 0) {
             onFinish(newStats, newChoices);
             return;
         }
 
-        // Check Game Over
         if (checkGameOver(newStats)) {
-            // Simple alert or status for now? Or just end.
-            // Let's just proceed. If 0, they might fail later.
+            // Proceed
         }
 
-        // Next Card
-        advanceCard(newChoices, newStats);
+        // Check Crisis trigger
+        if (newChoices.length > 0 && newChoices.length % 5 === 0) {
+            setCrisisMode(true);
+            // We pause advancing card? Or advance then overlay crisis?
+            // Advance card first.
+            advanceCard(newChoices, newStats);
+        } else {
+            advanceCard(newChoices, newStats);
+        }
+    };
+
+    // Helper to dismiss advisor and effectively 'retry' the swipe user intended? 
+    // Actually, user swiped, we intercepted. Now they are looking at Advisor.
+    // They click "Got it" to close Advisor. Then they have to swipe again. 
+    // This is better for learning.
+
+    // Crisis Handler
+    const handleCrisisResolved = () => {
+        setCrisisMode(false);
+        // Apply crisis penalty?
+        setStats(prev => ({
+            ...prev,
+            happiness: Math.max(0, prev.happiness - 10),
+            budget: Math.max(0, prev.budget - 5)
+        }));
     };
 
     const handlePressConferenceSubmit = (input) => {
@@ -168,11 +200,79 @@ export default function GameEngine({ nickname, onFinish }) {
                 {formatTime(timeLeft)}
             </div>
 
+            {/* City Background */}
+            <CityBackground approvedStickers={approvedStickers} />
+
             {/* HUD */}
-            <HUD stats={stats} />
+            <div style={{ position: 'relative', zIndex: 10 }}>
+                <HUD stats={stats} />
+            </div>
+
+            {/* Modals Overlay */}
+            <AnimatePresence>
+                {showAdvisor && (
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0 }}
+                        style={{
+                            position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
+                            background: 'rgba(0,0,0,0.85)',
+                            zIndex: 200,
+                            display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+                            padding: '2rem', textAlign: 'center'
+                        }}
+                    >
+                        <div style={{ background: '#1e293b', padding: '2rem', borderRadius: '16px', border: '1px solid var(--color-primary)' }}>
+                            <div style={{ marginBottom: '1rem', display: 'flex', justifyContent: 'center' }}>
+                                <GraduationCap size={48} color="var(--color-primary)" />
+                            </div>
+                            <h3 style={{ fontSize: '1.5rem', color: 'white', marginBottom: '0.5rem' }}>Advisor Insight</h3>
+                            <h4 style={{ color: 'var(--color-primary)', textTransform: 'uppercase', fontSize: '0.9rem', marginBottom: '1rem' }}>
+                                {deck[currentIndex].advisor?.character}
+                            </h4>
+                            <p style={{ color: '#e2e8f0', marginBottom: '1.5rem', lineHeight: 1.6 }}>
+                                "{deck[currentIndex].advisor?.text}"
+                            </p>
+                            <button
+                                onClick={() => setShowAdvisor(false)}
+                                style={{ background: 'var(--color-primary)', color: 'black', padding: '0.75rem 2rem', borderRadius: '8px', fontWeight: 800 }}
+                            >
+                                Understood
+                            </button>
+                        </div>
+                    </motion.div>
+                )}
+
+                {crisisMode && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 50 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0 }}
+                        style={{
+                            position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
+                            background: 'rgba(239, 68, 68, 0.9)',
+                            zIndex: 200,
+                            display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+                            padding: '2rem', textAlign: 'center', color: 'white'
+                        }}
+                    >
+                        <AlertTriangle size={64} style={{ marginBottom: '1rem' }} />
+                        <h2 style={{ fontSize: '2rem', fontWeight: 800, textTransform: 'uppercase' }}>Crisis Alert!</h2>
+                        <p style={{ fontSize: '1.2rem', marginBottom: '1rem' }}>Flash Floods Reported!</p>
+                        <p style={{ opacity: 0.9, marginBottom: '2rem' }}>Happiness -10 | Budget -5 for relief efforts.</p>
+                        <button
+                            onClick={handleCrisisResolved}
+                            style={{ background: 'white', color: '#ef4444', padding: '1rem 2rem', borderRadius: '8px', fontWeight: 800 }}
+                        >
+                            Mobilize Response
+                        </button>
+                    </motion.div>
+                )}
+            </AnimatePresence>
 
             {/* Card Area */}
-            <div style={{ flex: 1, position: 'relative', width: '100%', maxWidth: '400px', margin: '0 auto' }}>
+            <div style={{ flex: 1, position: 'relative', width: '100%', maxWidth: '400px', margin: '0 auto', zIndex: 20 }}>
                 {/* Budget Alert Overlay */}
                 <AnimatePresence>
                     {isShaking && (
@@ -206,9 +306,9 @@ export default function GameEngine({ nickname, onFinish }) {
                     style={{ width: '100%', height: '100%' }}
                 >
                     <AnimatePresence mode="wait">
-                        {currentCard.type === 'press_conference' ? (
+                        {deck[currentIndex].type === 'press_conference' ? (
                             <motion.div
-                                key={currentCard.id}
+                                key={deck[currentIndex].id}
                                 initial={{ scale: 0.8, opacity: 0 }}
                                 animate={{ scale: 1, opacity: 1 }}
                                 exit={{ scale: 0.8, opacity: 0 }}
@@ -216,15 +316,16 @@ export default function GameEngine({ nickname, onFinish }) {
                                 style={{ width: '100%', height: '100%' }}
                             >
                                 <PressConferenceCard
-                                    card={currentCard}
+                                    card={deck[currentIndex]}
                                     onSubmit={handlePressConferenceSubmit}
                                 />
                             </motion.div>
                         ) : (
                             <SwipeCard
-                                key={currentCard.id}
-                                card={currentCard}
+                                key={deck[currentIndex].id}
+                                card={deck[currentIndex]}
                                 onSwipe={handleSwipe}
+                                onAdvisorClick={() => setShowAdvisor(true)}
                             />
                         )}
                     </AnimatePresence>
