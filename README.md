@@ -35,7 +35,9 @@ Detailed documentation for the new gameplay features and content can be found in
 - **Tinder-Style Decision Making**: Swipe Left/Right to make choices.
 - **Resource Balancing**: Manage Budget, Land, Health, and Happiness.
 - **Dynamic Scenarios**: "Silver Tsunami" (Aging) and "Climate Siege" modes.
+- **DMP2025 Themes**: Cards color-coded by strategic pillar (Social, Economy, Resilience, Heritage, Connectivity).
 - **Gamified Performance Review**: Get graded (S-F) based on your strategic alignment with DMP2025.
+
 - **Citizen Voice**: Real-time feedback mechanic for bonus rewards.
 - **DMP2025 Content**: Includes Long Island, Turf City, and JLD strategies.
 

@@ -105,7 +105,8 @@ export default function StatisticsScreen({ storedData, onBack }) {
                                         <div style={{
                                             width: `${yesPercent}%`,
                                             background: 'var(--color-success)',
-                                            display: 'flex', alignItems: 'center', justifyContent: 'flex-start',
+                                            display: yesPercent > 0 ? 'flex' : 'none', // Hide if 0
+                                            alignItems: 'center', justifyContent: 'flex-start',
                                             paddingLeft: '8px', fontSize: '0.75rem', fontWeight: 700, color: '#052e16'
                                         }}>
                                             {yesPercent > 10 && `${yesPercent}%`}
@@ -113,7 +114,8 @@ export default function StatisticsScreen({ storedData, onBack }) {
                                         <div style={{
                                             width: `${noPercent}%`,
                                             background: 'var(--color-danger)',
-                                            display: 'flex', alignItems: 'center', justifyContent: 'flex-end',
+                                            display: noPercent > 0 ? 'flex' : 'none', // Hide if 0
+                                            alignItems: 'center', justifyContent: 'flex-end',
                                             paddingRight: '8px', fontSize: '0.75rem', fontWeight: 700, color: '#450a0a'
                                         }}>
                                             {noPercent > 10 && `${noPercent}%`}

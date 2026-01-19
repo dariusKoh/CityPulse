@@ -13,6 +13,15 @@ This document lists all available cards in the CityPulse Deck, including their s
 - **Health**: Public health and environmental resilience.
 - **Happiness**: Social cohesion and public approval.
 
+## Color Themes (DMP2025)
+Cards are color-coded by their strategic pillar:
+- 🟧 **Social**: Happy, Healthy City.
+- 🟦 **Economy**: Sustainable Growth.
+- 🟦 **Resilience**: Climate & Resource Security.
+- 🟪 **Heritage**: Nature & Identity.
+- 🟪 **Connectivity**: Smart Infrastructure.
+
+
 ---
 
 ## Card Index

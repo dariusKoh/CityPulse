@@ -36,9 +36,9 @@ const CARD_ANALYSIS = {
     19: { correct: 'no', reason: "Alienates the elderly & creates digital divide." }, // Techno-Centricity
 };
 
-export default function ImpactLedger({ data, onRestart }) {
+export default function ImpactLedger({ data, onRestart, isReceipt = false, titleOverride }) {
     const { choices, stats } = data;
-    const [showFullLog, setShowFullLog] = useState(false);
+    const [showFullLog, setShowFullLog] = useState(isReceipt);
 
     // 1. Calculate Grade
     let correctCount = 0;
@@ -80,6 +80,73 @@ export default function ImpactLedger({ data, onRestart }) {
     const highlights = [...mistakes.slice(0, 3)];
     if (highlights.length < 3) {
         highlights.push(...correctMoves.slice(0, 3 - highlights.length));
+    }
+
+    // Hide Grade/Highlights if it's a Receipt view
+    if (isReceipt) {
+        return (
+            <div className="screen" style={{ overflowY: 'auto', background: '#0f172a' }}>
+                <div className="animate-fade-in flex-col" style={{ gap: '1.5rem', paddingBottom: '3rem', maxWidth: '600px', margin: '0 auto', width: '100%' }}>
+                    <div style={{ textAlign: 'center', paddingTop: '2rem' }}>
+                        <h2 style={{ fontSize: '1.5rem', color: 'white', fontWeight: 700 }}>{titleOverride || 'Official Transcript'}</h2>
+                        <div style={{ color: '#94a3b8', fontSize: '0.9rem' }}>Receipt ID: #{data.receiptId || 'UNKNOWN'}</div>
+                    </div>
+
+                    <div className="flex-col" style={{ gap: '0.75rem', padding: '0 1.5rem' }}>
+                        {choices.map((choice, i) => {
+                            const isOpenEnded = choice.type === 'bonus_feedback' || (choice.type === 'press_conference' && choice.input);
+
+                            if (isOpenEnded) {
+                                return (
+                                    <div key={i} style={{
+                                        background: 'rgba(59, 130, 246, 0.1)',
+                                        padding: '1rem', borderRadius: '12px',
+                                        border: '1px solid rgba(59, 130, 246, 0.3)'
+                                    }}>
+                                        <div style={{ fontSize: '0.8rem', color: '#60a5fa', marginBottom: '4px', fontStyle: 'italic' }}>
+                                            Response to: {choice.title}
+                                        </div>
+                                        <div style={{ fontSize: '1rem', color: 'white', fontWeight: 500 }}>
+                                            "{choice.input || "No comment"}"
+                                        </div>
+                                    </div>
+                                );
+                            }
+
+                            return (
+                                <div key={i} style={{
+                                    background: '#1e293b', padding: '0.75rem 1rem', borderRadius: '8px',
+                                    display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                                    opacity: 0.7
+                                }}>
+                                    <span style={{ fontSize: '0.9rem', color: '#94a3b8' }}>{choice.title}</span>
+                                    <span style={{
+                                        fontSize: '0.75rem', fontWeight: 700,
+                                        color: choice.decision === 'yes' ? '#22c55e' : '#ef4444',
+                                        background: 'rgba(0,0,0,0.2)', padding: '2px 6px', borderRadius: '4px'
+                                    }}>
+                                        {choice.decision.toUpperCase()}
+                                    </span>
+                                </div>
+                            );
+                        })}
+                    </div>
+
+                    <div style={{ padding: '0 1.5rem', marginTop: 'auto' }}>
+                        <button
+                            onClick={onRestart}
+                            style={{
+                                width: '100%', padding: '1rem', background: '#334155', color: 'white',
+                                fontWeight: 700, borderRadius: '12px', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem'
+                            }}
+                        >
+                            <ArrowRight size={20} />
+                            Back to Menu
+                        </button>
+                    </div>
+                </div>
+            </div>
+        );
     }
 
     return (
@@ -177,22 +244,44 @@ export default function ImpactLedger({ data, onRestart }) {
                                 style={{ overflow: 'hidden' }}
                             >
                                 <div className="flex-col" style={{ gap: '0.75rem', marginTop: '1rem' }}>
-                                    {choices.map((choice, i) => (
-                                        <div key={i} style={{
-                                            background: '#1e293b', padding: '1rem', borderRadius: '8px',
-                                            display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                                            opacity: 0.8
-                                        }}>
-                                            <span style={{ fontSize: '0.9rem' }}>{choice.title}</span>
-                                            <span style={{
-                                                fontSize: '0.8rem', fontWeight: 700,
-                                                color: choice.decision === 'yes' ? '#22c55e' : '#ef4444',
-                                                background: 'rgba(0,0,0,0.2)', padding: '4px 8px', borderRadius: '6px'
+                                    {choices.map((choice, i) => {
+                                        const isOpenEnded = choice.type === 'bonus_feedback' || (choice.type === 'press_conference' && choice.input);
+
+                                        if (isOpenEnded) {
+                                            return (
+                                                <div key={i} style={{
+                                                    background: 'rgba(59, 130, 246, 0.1)', // Blue tint for feedback
+                                                    padding: '1rem',
+                                                    borderRadius: '12px',
+                                                    border: '1px solid rgba(59, 130, 246, 0.3)'
+                                                }}>
+                                                    <div style={{ fontSize: '0.8rem', color: '#60a5fa', marginBottom: '4px', fontStyle: 'italic' }}>
+                                                        Question: {choice.title}
+                                                    </div>
+                                                    <div style={{ fontSize: '1rem', color: 'white', fontWeight: 500 }}>
+                                                        "{choice.input || "No comment"}"
+                                                    </div>
+                                                </div>
+                                            );
+                                        }
+
+                                        return (
+                                            <div key={i} style={{
+                                                background: '#1e293b', padding: '0.75rem 1rem', borderRadius: '8px',
+                                                display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                                                opacity: 0.7
                                             }}>
-                                                {choice.decision.toUpperCase()}
-                                            </span>
-                                        </div>
-                                    ))}
+                                                <span style={{ fontSize: '0.9rem', color: '#94a3b8' }}>{choice.title}</span>
+                                                <span style={{
+                                                    fontSize: '0.75rem', fontWeight: 700,
+                                                    color: choice.decision === 'yes' ? '#22c55e' : '#ef4444',
+                                                    background: 'rgba(0,0,0,0.2)', padding: '2px 6px', borderRadius: '4px'
+                                                }}>
+                                                    {choice.decision.toUpperCase()}
+                                                </span>
+                                            </div>
+                                        );
+                                    })}
                                 </div>
                             </motion.div>
                         )}

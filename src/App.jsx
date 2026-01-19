@@ -98,7 +98,7 @@ function App() {
       {currentView === 'leaderboard' && <Leaderboard onBack={() => setCurrentView('start')} userScore={storedData?.totalPoints || 0} />}
       {currentView === 'game' && <GameEngine onFinish={finishGame} nickname={playerData.nickname} scenario={selectedScenario} />}
       {currentView === 'result' && <ImpactLedger data={playerData} onRestart={() => setCurrentView('start')} />}
-      {currentView === 'receipt' && <ImpactLedger data={selectedReceipt} onRestart={() => setCurrentView('start')} />}
+      {currentView === 'receipt' && <ImpactLedger data={selectedReceipt} onRestart={() => setCurrentView('start')} isReceipt={true} />}
       {currentView === 'statistics' && <StatisticsScreen storedData={storedData} onBack={() => setCurrentView('start')} />}
       {currentView === 'admin' && <AdminDashboard />}
     </div>

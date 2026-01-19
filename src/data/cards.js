@@ -5,7 +5,7 @@ export const CARDS = [
     title: "10-Minute Neighbourhood",
     description: "Reorganize urban space so residents can access amenities within a 10-minute walk.",
     image: "10_min_hood",
-    color: "#22c55e", // Green for 'Good'
+    color: "#f97316", // Social (Happy, Healthy)
     sticker: "park",
     advisor: {
       character: "Urban Planner",
@@ -20,7 +20,7 @@ export const CARDS = [
     title: "Turf City Redevelopment",
     description: "Develop high-density public housing in the prestigious Bukit Timah district.",
     image: "turf_city",
-    color: "#f59e0b", // Amber for 'Project'
+    color: "#f97316", // Social (Happy, Healthy)
     sticker: "building",
     advisor: {
       character: "Social Planner",
@@ -35,7 +35,7 @@ export const CARDS = [
     title: "Gated Enclave",
     description: "Approve a private, walled community that separates itself from the neighbourhood.",
     image: "gated_community",
-    color: "#ef4444", // Red for 'Failure'
+    color: "#f97316", // Social (Failure but topic is Social)
     sticker: "wall",
     advisor: {
       character: "Sociologist",
@@ -50,7 +50,7 @@ export const CARDS = [
     title: "JLD Gateway Strategy",
     description: "Develop the Jurong Lake District as a second CBD to decentralize jobs.",
     image: "jurong_lake",
-    color: "#3b82f6", // Blue for 'Economy'
+    color: "#3b82f6", // Economy
     sticker: "skyscraper",
     advisor: {
       character: "Economist",
@@ -65,7 +65,7 @@ export const CARDS = [
     title: "Public Feedback Session",
     description: "Residents are concerned about the loss of heritage in the new development plans. How do you respond?",
     image: "microphone",
-    color: "#a855f7",
+    color: "#d946ef", // Distinct for Event
     bonusScore: 300
   },
   {
@@ -74,7 +74,7 @@ export const CARDS = [
     title: "Vertical Zoning Policy",
     description: "Allow stacking of light industry, commercial, and residential uses in a single building.",
     image: "vertical_zoning",
-    color: "#6366f1", // Indigo for 'Policy'
+    color: "#3b82f6", // Economy
     sticker: "mixed_use",
     advisor: {
       character: "Architect",
@@ -89,14 +89,14 @@ export const CARDS = [
     title: "Long Island Reclamation",
     description: "Initiate massive reclamation off East Coast for coastal protection and new habitable land.",
     image: "long_island",
-    color: "#0ea5e9", // Sky for 'Mega-Proj'
+    color: "#06b6d4", // Resilience
     sticker: "island",
     advisor: {
       character: "Climate Scientist",
       text: "This is our existential hedge against rising sea levels. It costs billions, but survival is priceless."
     },
     yes: { budget: -40, land: 50, health: 30, happiness: 20 },
-    no: { budget: 20, land: 0, health: -50, happiness: -10 } // Penalties for ignoring climate
+    no: { budget: 20, land: 0, health: -50, happiness: -10 }
   },
   {
     id: 8,
@@ -104,7 +104,7 @@ export const CARDS = [
     title: "Identity Corridor",
     description: "Preserve the 'Historic East' heritage shophouses instead of redeveloping for condos.",
     image: "shophouse",
-    color: "#fb923c", // Orange for 'Heritage'
+    color: "#a855f7", // Heritage
     sticker: "heritage",
     advisor: {
       character: "Historian",
@@ -119,7 +119,7 @@ export const CARDS = [
     title: "Concrete Canal",
     description: "Channel river water through a straight concrete drain to prevent flooding quickly.",
     image: "canal",
-    color: "#94a3b8", // Grey for 'Legacy'
+    color: "#06b6d4", // Resilience (Bad)
     sticker: "drain",
     advisor: {
       character: "Urban Stylist",
@@ -134,7 +134,7 @@ export const CARDS = [
     title: "Digital Twin (Virtual SG)",
     description: "Invest in a 3D simulation model to optimize wind flow and energy use before building.",
     image: "digital_twin",
-    color: "#14b8a6", // Teal for 'Tech'
+    color: "#6366f1", // Connectivity (Smart)
     sticker: "satellite",
     advisor: {
       character: "Data Scientist",
@@ -149,7 +149,7 @@ export const CARDS = [
     title: "Master Plan Review",
     description: "The term is ending. Which 'Resource' did you find most difficult to manage?",
     image: "clipboard",
-    color: "#ec4899",
+    color: "#d946ef", // Distinct for Event
     bonusScore: 500
   },
   {
@@ -158,7 +158,7 @@ export const CARDS = [
     title: "Dormitory Town",
     description: "Build a town solely for housing with no employment nodes to maximize unit supply.",
     image: "dormitory_town",
-    color: "#ef4444", // Red for 'Failure'
+    color: "#f97316", // Social (Bad)
     sticker: "sleeping_face",
     advisor: {
       character: "Urban Planner",
@@ -173,7 +173,7 @@ export const CARDS = [
     title: "Vertical Industrial Zoning",
     description: "Stack clean industry, offices, and commercial uses in a single development.",
     image: "vertical_industry",
-    color: "#6366f1", // Indigo for 'Policy'
+    color: "#3b82f6", // Economy
     sticker: "factory",
     advisor: {
       character: "Architect",
@@ -188,7 +188,7 @@ export const CARDS = [
     title: "Single-Use Zoning",
     description: "Strictly isolate residential, commercial, and industrial zones.",
     image: "single_use",
-    color: "#ef4444", // Red for 'Failure'
+    color: "#f97316", // Social (Bad)
     sticker: "fence",
     advisor: {
       character: "Legacy Planner",
@@ -203,7 +203,7 @@ export const CARDS = [
     title: "District Cooling System",
     description: "Install centralized cooling networks for the entire district.",
     image: "district_cooling",
-    color: "#14b8a6", // Teal for 'Tech'
+    color: "#06b6d4", // Resilience
     sticker: "snowflake",
     advisor: {
       character: "Engineer",
@@ -218,7 +218,7 @@ export const CARDS = [
     title: "Ecological Corridors",
     description: "Preserve a green spine to connect fragmented nature reserves.",
     image: "eco_corridor",
-    color: "#22c55e", // Green for 'Nature'
+    color: "#a855f7", // Heritage & Nature
     sticker: "leaf",
     advisor: {
       character: "Biologist",
@@ -233,7 +233,7 @@ export const CARDS = [
     title: "Tabula Rasa Redevelopment",
     description: "Clear the site completely. Flatten topography and erase history.",
     image: "tabula_rasa",
-    color: "#ef4444", // Red for 'Failure'
+    color: "#a855f7", // Heritage (Bad)
     sticker: "bulldozer",
     advisor: {
       character: "Historian",
@@ -248,7 +248,7 @@ export const CARDS = [
     title: "Smart Sensors & ODP",
     description: "Deploy an Open Digital Platform to optimise estate services.",
     image: "smart_sensors",
-    color: "#3b82f6", // Blue for 'Infra'
+    color: "#6366f1", // Connectivity
     sticker: "wifi",
     advisor: {
       character: "Tech Lead",
@@ -263,7 +263,7 @@ export const CARDS = [
     title: "Techno-Centricity",
     description: "Implement complex digital interfaces for all essential services.",
     image: "tech_trap",
-    color: "#ef4444", // Red for 'Failure'
+    color: "#6366f1", // Connectivity (Bad)
     sticker: "robot",
     advisor: {
       character: "Sociologist",
@@ -278,7 +278,7 @@ export const CARDS = [
     title: "Recreation Master Plan",
     description: "Activate 'dead spaces' under viaducts and on rooftops for community use.",
     image: "recreation_master_plan",
-    color: "#eab308", // Yellow for 'Happy'
+    color: "#f97316", // Social
     sticker: "basketball",
     advisor: {
       character: "Community Leader",
@@ -293,7 +293,7 @@ export const CARDS = [
     title: "PLAB Relocation",
     description: "Lift height limits in the East following the air base relocation.",
     image: "plab_relocation",
-    color: "#3b82f6", // Blue for 'Strategy'
+    color: "#3b82f6", // Economy
     sticker: "airplane_departure",
     advisor: {
       character: "Urban Planner",
@@ -308,7 +308,7 @@ export const CARDS = [
     title: "Hill-to-Hill Link",
     description: "Construct a green pedestrian spine connecting Pearl's Hill to Fort Canning.",
     image: "hill_to_hill",
-    color: "#22c55e", // Green for 'Nature'
+    color: "#a855f7", // Heritage & Nature
     sticker: "bridge",
     advisor: {
       character: "Landscape Architect",
@@ -323,7 +323,7 @@ export const CARDS = [
     title: "Bayshore Main Street",
     description: "Develop a car-lite district with a central amenity spine linked to the TEL.",
     image: "bayshore_main_street",
-    color: "#f59e0b", // Amber for 'Project'
+    color: "#f97316", // Social (Car-lite lifestyle)
     sticker: "pedestrian",
     advisor: {
       character: "Transport Planner",
@@ -338,7 +338,7 @@ export const CARDS = [
     title: "Pasir Panjang Power Station",
     description: "Adaptively reuse the turbine halls into a lifestyle and arts destination.",
     image: "power_station",
-    color: "#fb923c", // Orange for 'Heritage'
+    color: "#a855f7", // Heritage
     sticker: "art",
     advisor: {
       character: "Creative Director",
@@ -353,7 +353,7 @@ export const CARDS = [
     title: "Chencharu Heritage Estate",
     description: "Develop a new housing estate that retains colonial bungalows as community nodes.",
     image: "chencharu",
-    color: "#a855f7", // Purple for 'Culture'
+    color: "#a855f7", // Heritage
     sticker: "bungalow",
     advisor: {
       character: "Historian",
@@ -368,7 +368,7 @@ export const CARDS = [
     title: "Business-White Zoning",
     description: "Allow developers to flex the mix of industrial and commercial uses.",
     image: "business_white",
-    color: "#6366f1", // Indigo for 'Policy'
+    color: "#3b82f6", // Economy
     sticker: "chart_mixed",
     advisor: {
       character: "Economist",
@@ -383,7 +383,7 @@ export const CARDS = [
     title: "RTS Link",
     description: "Operate the Rapid Transit System link to Johor Bahru.",
     image: "rts_link",
-    color: "#0ea5e9", // Sky for 'Infra'
+    color: "#6366f1", // Connectivity
     sticker: "train_cross_border",
     advisor: {
       character: "Diplomat",
@@ -398,7 +398,7 @@ export const CARDS = [
     title: "Agri-Food Innovation Park",
     description: "Build high-tech vertical farms at Sungei Kadut.",
     image: "agri_food",
-    color: "#22c55e", // Green for 'Sustainable'
+    color: "#06b6d4", // Resilience
     sticker: "plant",
     advisor: {
       character: "Food Scientist",
@@ -413,7 +413,7 @@ export const CARDS = [
     title: "Urban Heat Resilience",
     description: "Mandate cool paints and wind flow geometry for all new buildings.",
     image: "cool_paint",
-    color: "#14b8a6", // Teal for 'Tech'
+    color: "#06b6d4", // Resilience
     sticker: "thermometer",
     advisor: {
       character: "Climate Architect",
