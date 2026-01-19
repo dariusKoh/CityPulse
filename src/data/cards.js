@@ -9,7 +9,7 @@ export const CARDS = [
     sticker: "park",
     advisor: {
       character: "Urban Planner",
-      text: "This reduces tidal flow traffic and activates the precinct 24/7. A key to the 'Happy, Healthy City'."
+      text: "Decentralizes amenities to reduce 'tidal flow' traffic; activates precincts 24/7."
     },
     yes: { budget: 7, land: 20, health: 25, happiness: 30 },
     no: { budget: 0, land: 0, health: -5, happiness: -5 }
@@ -24,7 +24,7 @@ export const CARDS = [
     sticker: "building",
     advisor: {
       character: "Social Planner",
-      text: "We must mitigate social stratification. This is a high-stakes move to prevent 'rich ghettos' forming."
+      text: "Mitigates stratification by placing HDBs in prime districts; prevents 'rich ghettos'."
     },
     yes: { budget: 5, land: 25, health: -10, happiness: 40 },
     no: { budget: 0, land: 0, health: 0, happiness: -10 }
@@ -39,7 +39,7 @@ export const CARDS = [
     sticker: "wall",
     advisor: {
       character: "Sociologist",
-      text: "Be careful. While profitable, this destroys social cohesion and connectivity. It is a failure of design."
+      text: "High walls and exclusive access will attract the wealthy investors we need to boost property tax revenue."
     },
     yes: { budget: 2, land: -20, health: -15, happiness: -30 },
     no: { budget: 0, land: 10, health: 5, happiness: 10 }
@@ -47,14 +47,14 @@ export const CARDS = [
   {
     id: 4,
     type: 'choice',
-    title: "JLD Gateway Strategy",
+    title: "Polycentricity",
     description: "Develop the Jurong Lake District as a second CBD to decentralize jobs.",
     image: "jurong_lake",
     color: "#3b82f6", // Economy
     sticker: "skyscraper",
     advisor: {
       character: "Economist",
-      text: "Monocentric cities fail at scale. We need this gateway to reduce the morning rush hour strain."
+      text: "Essential for transport viability; breaks the monocentric CBD model."
     },
     yes: { budget: 17, land: 15, health: 20, happiness: 25 },
     no: { budget: -10, land: 0, health: -5, happiness: -5 }
@@ -78,7 +78,7 @@ export const CARDS = [
     sticker: "mixed_use",
     advisor: {
       character: "Architect",
-      text: "This maximizes land yield in high-value zones. It's the only way to grow without new land."
+      text: "Maximizes yield in high-value zones; only way to grow without new land."
     },
     yes: { budget: 15, land: 40, health: 10, happiness: 15 },
     no: { budget: 0, land: -10, health: 0, happiness: 0 }
@@ -93,7 +93,7 @@ export const CARDS = [
     sticker: "island",
     advisor: {
       character: "Climate Scientist",
-      text: "This is our existential hedge against rising sea levels. It costs billions, but survival is priceless."
+      text: "Existential hedge against sea-level rise; expensive but necessary for survival."
     },
     yes: { budget: -40, land: 50, health: 30, happiness: 20 },
     no: { budget: 20, land: 0, health: -50, happiness: -10 }
@@ -108,7 +108,7 @@ export const CARDS = [
     sticker: "heritage",
     advisor: {
       character: "Historian",
-      text: "A city without memory is just a machine. We sacrifice some density to keep our soul."
+      text: "Preserves the city's 'soul' and memory; prevents 'placelessness'."
     },
     yes: { budget: 20, land: -10, health: 10, happiness: 50 },
     no: { budget: 10, land: 20, health: 0, happiness: -30 }
@@ -123,7 +123,7 @@ export const CARDS = [
     sticker: "drain",
     advisor: {
       character: "Urban Stylist",
-      text: "This is ouddated 20th-century thinking! It destroys biodiversity and increases downstream risks."
+      text: "Straight, concrete channels move water the fastest, offering the most efficient flood protection for our real estate."
     },
     yes: { budget: -10, land: -5, health: -30, happiness: -20 },
     no: { budget: 0, land: 5, health: 20, happiness: 10 }
@@ -162,7 +162,7 @@ export const CARDS = [
     sticker: "sleeping_face",
     advisor: {
       character: "Urban Planner",
-      text: "This is a trap! It creates 'tidal flow' traffic and a soulless estate."
+      text: "Massive housing estates without commercial distraction ensure a peaceful, quiet environment for our workforce to rest."
     },
     yes: { budget: -20, land: 0, health: -30, happiness: -40 },
     no: { budget: 0, land: 0, health: 0, happiness: 0 }
@@ -192,7 +192,7 @@ export const CARDS = [
     sticker: "fence",
     advisor: {
       character: "Legacy Planner",
-      text: "Euclidean zoning creates car dependency and sterile streets. Avoid this."
+      text: "Strictly separating factories from homes guarantees safety and order, keeping pollutants far from where our children sleep."
     },
     yes: { budget: -10, land: -25, health: -40, happiness: -35 },
     no: { budget: 0, land: 0, health: 0, happiness: 0 }
@@ -207,7 +207,7 @@ export const CARDS = [
     sticker: "snowflake",
     advisor: {
       character: "Engineer",
-      text: "It achieves economies of scale and removes heat rejection from streets."
+      text: "Economies of scale for cooling; removes street-level heat rejection."
     },
     yes: { budget: 7, land: 10, health: 25, happiness: 5 },
     no: { budget: 0, land: 0, health: 0, happiness: 0 }
@@ -222,7 +222,7 @@ export const CARDS = [
     sticker: "leaf",
     advisor: {
       character: "Biologist",
-      text: "Connectivity is key. Without it, isolated reserves suffer from genetic degradation."
+      text: "Connects isolated reserves to prevent genetic degradation."
     },
     yes: { budget: 0, land: -15, health: 40, happiness: 15 },
     no: { budget: 0, land: 0, health: 0, happiness: 0 }
@@ -237,7 +237,7 @@ export const CARDS = [
     sticker: "bulldozer",
     advisor: {
       character: "Historian",
-      text: "This creates 'placeless' towns. We should integrate, not obliterate."
+      text: "Clearing the site completely is the most efficient way to maximize construction speed and standardize housing units."
     },
     yes: { budget: 10, land: 30, health: -50, happiness: -40 },
     no: { budget: 0, land: 0, health: 0, happiness: 0 }
@@ -252,7 +252,7 @@ export const CARDS = [
     sticker: "wifi",
     advisor: {
       character: "Tech Lead",
-      text: "Predictive maintenance saves millions and improves reliability."
+      text: "Predictive maintenance reduces operating costs of all other infra."
     },
     yes: { budget: 12, land: 0, health: 20, happiness: 10 },
     no: { budget: 0, land: 0, health: 0, happiness: 0 }
@@ -282,7 +282,7 @@ export const CARDS = [
     sticker: "basketball",
     advisor: {
       character: "Community Leader",
-      text: "This turns wasted space into active social hubs without needing new land."
+      text: "Activating rooftops and viaducts creates infinite play space without consuming valuable land."
     },
     yes: { budget: 5, land: 5, health: 15, happiness: 5 },
     no: { budget: 0, land: 0, health: 0, happiness: 0 }
@@ -297,7 +297,7 @@ export const CARDS = [
     sticker: "airplane_departure",
     advisor: {
       character: "Urban Planner",
-      text: "A massive unlock! We can rebuild low-rise estates into high-density precincts."
+      text: "Relocating the airbase doesn't just give us land; it lifts the ceiling for half the island, allowing us to build taller and greener."
     },
     yes: { budget: 15, land: 40, health: -5, happiness: -10 },
     no: { budget: 0, land: 0, health: 0, happiness: 0 }
@@ -312,7 +312,7 @@ export const CARDS = [
     sticker: "bridge",
     advisor: {
       character: "Landscape Architect",
-      text: "This restores the natural ridge and creates a continuous walking experience."
+      text: "Restores natural ridge connectivity; promotes active mobility."
     },
     yes: { budget: 5, land: -5, health: 15, happiness: 20 },
     no: { budget: 0, land: 0, health: 0, happiness: 0 }

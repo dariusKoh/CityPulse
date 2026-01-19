@@ -6,8 +6,9 @@ import { CARDS } from '../data/cards';
 import { calculateNextState, INITIAL_STATS, checkGameOver } from '../utils/ResourceManager';
 import { CRISIS_TYPES, SCENARIO_CRISIS_WEIGHTS, rollForCrisis, checkCardSolvesCrisis } from '../data/crisisConfig';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Clock, GraduationCap, AlertTriangle, Eye, EyeOff, Zap } from 'lucide-react';
+import { Clock, GraduationCap, AlertTriangle, Eye, EyeOff, Zap, BookOpen } from 'lucide-react';
 import City3D from './City3D';
+import HowToPlayModal from './HowToPlayModal';
 
 const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
@@ -36,6 +37,7 @@ export default function GameEngine({ nickname, onFinish, scenario }) {
     const [approvedStickers, setApprovedStickers] = useState([]); // For CityBackground
     const [showCityView, setShowCityView] = useState(false); // Toggle for city view
     const [currentCrisisType, setCurrentCrisisType] = useState(null); // For 3D effects - shows first active crisis
+    const [showHowToPlay, setShowHowToPlay] = useState(false);
 
     // Shuffle Utility
     const shuffleArray = (array) => {
@@ -420,6 +422,25 @@ export default function GameEngine({ nickname, onFinish, scenario }) {
                 {formatTime(timeLeft)}
             </div>
 
+            {/* How to Play Button */}
+            <button
+                onClick={() => setShowHowToPlay(true)}
+                style={{
+                    position: 'absolute', top: '1rem', left: '1rem', zIndex: 50,
+                    background: 'rgba(15, 23, 42, 0.8)',
+                    color: 'white',
+                    padding: '8px',
+                    borderRadius: '50%',
+                    border: 'none',
+                    cursor: 'pointer',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    transition: 'background 0.3s'
+                }}
+                title="How to Play"
+            >
+                <BookOpen size={20} />
+            </button>
+
             {/* View City Toggle Button */}
             <button
                 onClick={() => setShowCityView(!showCityView)}
@@ -574,6 +595,12 @@ export default function GameEngine({ nickname, onFinish, scenario }) {
                             Understood - Continue
                         </button>
                     </motion.div>
+                )}
+            </AnimatePresence>
+
+            <AnimatePresence>
+                {showHowToPlay && (
+                    <HowToPlayModal onClose={() => setShowHowToPlay(false)} />
                 )}
             </AnimatePresence>
 
