@@ -44,5 +44,6 @@ export const calculateNextState = (currentStats, card, decision) => {
 export const checkGameOver = (stats) => {
   // Example: If budget or land hits 0, maybe soft game over? 
   // For now, we won't force end, but we could return true if critical.
-  return stats.budget <= 0 && stats.land <= 0; // Just an example
+  // Game Over if fundamental resources are depleted
+  return stats.budget <= 0 || stats.health <= 0 || stats.happiness <= 0;
 };

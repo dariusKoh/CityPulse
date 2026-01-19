@@ -4,8 +4,9 @@ import SwipeCard from './SwipeCard';
 import PressConferenceCard from './PressConferenceCard';
 import { CARDS } from '../data/cards';
 import { calculateNextState, INITIAL_STATS, checkGameOver } from '../utils/ResourceManager';
+import { CRISIS_TYPES, SCENARIO_CRISIS_WEIGHTS, rollForCrisis, checkCardSolvesCrisis } from '../data/crisisConfig';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Clock, GraduationCap, AlertTriangle, Eye, EyeOff } from 'lucide-react';
+import { Clock, GraduationCap, AlertTriangle, Eye, EyeOff, Zap } from 'lucide-react';
 import City3D from './City3D';
 
 const formatTime = (seconds) => {
@@ -22,7 +23,8 @@ export default function GameEngine({ nickname, onFinish, scenario }) {
     // Bonus Feedback State
     const [isBonusActive, setIsBonusActive] = useState(false);
 
-    // ... (Crisis State etc.)
+    // v4.0 Persistent Crisis State
+    const [activeCrises, setActiveCrises] = useState([]); // Array of crisis types: ['flood', 'heatwave']
 
     const [timeLeft, setTimeLeft] = useState(180); // 3 minutes
     const [isShaking, setIsShaking] = useState(false);
@@ -33,7 +35,7 @@ export default function GameEngine({ nickname, onFinish, scenario }) {
     const [crisisDetails, setCrisisDetails] = useState({ title: "", description: "", impact: "" });
     const [approvedStickers, setApprovedStickers] = useState([]); // For CityBackground
     const [showCityView, setShowCityView] = useState(false); // Toggle for city view
-    const [currentCrisisType, setCurrentCrisisType] = useState(null); // 'flood' or 'heatwave'
+    const [currentCrisisType, setCurrentCrisisType] = useState(null); // For 3D effects - shows first active crisis
 
     // Shuffle Utility
     const shuffleArray = (array) => {
@@ -45,32 +47,59 @@ export default function GameEngine({ nickname, onFinish, scenario }) {
         return newArray;
     };
 
-    useEffect(() => {
-        // 1. Shuffle the full deck first
-        let fullDeck = shuffleArray(CARDS);
+    // Build deck with solution card boosting for active crises
+    const buildDeck = (currentActiveCrises = []) => {
+        // 1. Separate solution cards, press conferences, and choice cards
+        const solutionCards = CARDS.filter(card => card.type === 'solution');
+        const pressConferenceCards = CARDS.filter(card => card.type === 'press_conference');
+        const choiceCards = CARDS.filter(card => card.type === 'choice');
+
+        // 2. Select Max 2 Press Conference Cards
+        const selectedPressConferences = shuffleArray(pressConferenceCards).slice(0, 2);
+
+        // 3. Create pool for deck building (Choice + Selected Press Conferences)
+        const regularPool = [...choiceCards, ...selectedPressConferences];
+
+        // 4. Shuffle regular cards
+        let shuffledRegular = shuffleArray(regularPool);
         let finalDeck = [];
 
-        // 2. Apply Scenario Logic
+        // 3. Apply Scenario Logic  
         if (scenario && scenario.priorityCards && scenario.priorityCards.length > 0) {
             const priorityIds = scenario.priorityCards;
-
-            // Separate priority cards and others
-            const priorityDeck = fullDeck.filter(card => priorityIds.includes(card.id));
-            const otherDeck = fullDeck.filter(card => !priorityIds.includes(card.id));
-
-            // Limit to 15 cards total
-            // Take all priority cards (e.g. 5) + fill the rest from otherDeck
+            const priorityDeck = shuffledRegular.filter(card => priorityIds.includes(card.id));
+            const otherDeck = shuffledRegular.filter(card => !priorityIds.includes(card.id));
             const slotsRemaining = 15 - priorityDeck.length;
             const filledOthers = otherDeck.slice(0, slotsRemaining);
-
-            // Place priority cards at the front to ensure they are seen early
             finalDeck = [...priorityDeck, ...filledOthers];
         } else {
-            // Standard Game: Just take top 15 random cards
-            finalDeck = fullDeck.slice(0, 15);
+            finalDeck = shuffledRegular.slice(0, 15);
         }
 
-        setDeck(finalDeck);
+        // 4. Boost solution cards if crises are active
+        if (currentActiveCrises.length > 0) {
+            // Find solution cards that can resolve active crises
+            const relevantSolutions = solutionCards.filter(card =>
+                currentActiveCrises.includes(card.resolves)
+            );
+
+            if (relevantSolutions.length > 0) {
+                // Insert a relevant solution card into position 2-4 of remaining deck
+                const solutionToInsert = relevantSolutions[Math.floor(Math.random() * relevantSolutions.length)];
+                // Check if not already in deck
+                if (!finalDeck.find(c => c.id === solutionToInsert.id)) {
+                    const insertPos = Math.min(2 + Math.floor(Math.random() * 3), finalDeck.length);
+                    finalDeck.splice(insertPos, 0, solutionToInsert);
+                }
+            }
+        }
+
+        return finalDeck;
+    };
+
+    useEffect(() => {
+        const initialDeck = buildDeck([]);
+        setDeck(initialDeck);
 
         // Timer Interval
         const timer = setInterval(() => {
@@ -128,13 +157,12 @@ export default function GameEngine({ nickname, onFinish, scenario }) {
         }
     }, [timeLeft]);
 
+
     const handleSwipe = async (decision) => {
         setIsBonusActive(false);
         const currentCard = deck[currentIndex];
 
-        // REMOVED ADVISOR INTERCEPTION LOGIC (Optional Mode)
-
-        // Budget Cap / Shake Logic
+        // Budget Cap / Shake Logic: Can't approve if it would exceed budget
         if (decision === 'yes' && stats.budget <= 0) {
             if (currentCard.yes && currentCard.yes.budget < 0) {
                 setIsShaking(true);
@@ -149,14 +177,57 @@ export default function GameEngine({ nickname, onFinish, scenario }) {
             return;
         }
 
-        // 2. Crisis Event Trigger (Every 5 swipes)
-        // Check if next swipe should trigger crisis? 
-        // Let's do it AFTER the swipe is processed, maybe interrupt the NEXT card?
-        // Or simply: if (choices.length % 5 === 4) -> Trigger Crisis Modal immediately after this swipe?
-        // Let's implement Crisis as a "Modal" that pauses the game flow.
+        // v4.1: Land Cap Check - Can't approve if land would go below 0
+        const landCap = scenario?.modifiers?.land_cap || 100;
+        if (decision === 'yes' && currentCard.yes && currentCard.yes.land < 0) {
+            if (stats.land + currentCard.yes.land < 0) {
+                setIsShaking(true);
+                setTimeout(() => setIsShaking(false), 500);
+                return; // Cannot use land you don't have
+            }
+        }
 
-        // Update Stats
-        const newStats = calculateNextState(stats, currentCard, decision);
+        // Update Stats from card
+        let newStats = calculateNextState(stats, currentCard, decision);
+
+        // v4.1: Apply Fiscal Cliff (Budget Drain) - inflation/maintenance cost
+        const budgetDrain = scenario?.modifiers?.budget_drain || 0;
+        if (budgetDrain > 0) {
+            newStats = {
+                ...newStats,
+                budget: Math.max(0, newStats.budget - budgetDrain)
+            };
+        }
+
+        // v4.1: Enforce Land Cap
+        newStats = {
+            ...newStats,
+            land: Math.min(landCap, newStats.land)
+        };
+
+        // v4.0: Apply active crisis penalties
+        if (activeCrises.length > 0) {
+            let penaltyBudget = 0;
+            let penaltyHealth = 0;
+            let penaltyHappiness = 0;
+
+            activeCrises.forEach(crisisType => {
+                const crisisConfig = CRISIS_TYPES[crisisType];
+                if (crisisConfig && crisisConfig.penalties) {
+                    penaltyBudget += crisisConfig.penalties.budget || 0;
+                    penaltyHealth += crisisConfig.penalties.health || 0;
+                    penaltyHappiness += crisisConfig.penalties.happiness || 0;
+                }
+            });
+
+            newStats = {
+                ...newStats,
+                budget: Math.max(0, newStats.budget - penaltyBudget),
+                health: Math.max(0, newStats.health - penaltyHealth),
+                happiness: Math.max(0, newStats.happiness - penaltyHappiness)
+            };
+        }
+
         setStats(newStats);
 
         // Update Stickers
@@ -164,114 +235,119 @@ export default function GameEngine({ nickname, onFinish, scenario }) {
             setApprovedStickers(prev => [...prev, currentCard.sticker]);
         }
 
+        // v4.0: Check if this is a solution card that resolves a crisis
+        let updatedActiveCrises = [...activeCrises];
+        if (decision === 'yes' && currentCard.type === 'solution' && currentCard.resolves) {
+            const crisisToResolve = currentCard.resolves;
+            if (activeCrises.includes(crisisToResolve)) {
+                // Crisis resolved!
+                updatedActiveCrises = activeCrises.filter(c => c !== crisisToResolve);
+                setActiveCrises(updatedActiveCrises);
+
+                // Update 3D crisis visual if no more crises
+                if (updatedActiveCrises.length === 0) {
+                    setCurrentCrisisType(null);
+                } else {
+                    setCurrentCrisisType(updatedActiveCrises[0]); // Show first remaining crisis
+                }
+            }
+        }
+
         // Record Choice
         const choiceRecord = {
             cardId: currentCard.id,
             title: currentCard.title,
             decision: decision,
-            type: 'choice'
+            type: currentCard.type === 'solution' ? 'solution' : 'choice',
+            resolvedCrisis: decision === 'yes' && currentCard.resolves && activeCrises.includes(currentCard.resolves)
+                ? currentCard.resolves : null
         };
         const newChoices = [...choices, choiceRecord];
         setChoices(newChoices);
 
         // Termination Condition
-        if (newStats.budget <= 0) {
+        if (checkGameOver(newStats)) {
             onFinish(newStats, newChoices);
             return;
         }
 
-        if (checkGameOver(newStats)) {
-            // Proceed
+        // v4.0: Probability-based crisis triggering (instead of fixed intervals)
+        // Check every turn after turn 3, with scenario-based weights
+        if (newChoices.length >= 3 && updatedActiveCrises.length < 2) { // Max 2 concurrent crises
+            const scenarioId = scenario?.id || 'standard';
+            const newCrisis = rollForCrisis(scenarioId, updatedActiveCrises);
+
+            if (newCrisis && !updatedActiveCrises.includes(newCrisis)) {
+                triggerCrisis(newCrisis, newChoices, newStats, updatedActiveCrises);
+                return; // Don't advance card yet, crisis modal will handle it
+            }
         }
 
-        // Check Crisis trigger
-        if (newChoices.length > 0 && newChoices.length % 5 === 0) {
-            triggerCrisis(newChoices, newStats);
-        } else {
-            advanceCard(newChoices, newStats);
-        }
+        advanceCard(newChoices, newStats, updatedActiveCrises);
     };
 
-    const triggerCrisis = (currentChoices, currentStats) => {
-        // Determine Crisis Type based on progress
-        // Event 1 (5 cards): Flash Floods (Heavy Rain)
-        // Event 2 (10 cards): Heat Wave
-        // Event 3 (15 cards): Sea Level Rise (Game Over check?)
+    const triggerCrisis = (crisisConfig, currentChoices, currentStats, currentActiveCrises) => {
+        // Add crisis to active list
+        const newActiveCrises = [...currentActiveCrises, crisisConfig.id];
+        setActiveCrises(newActiveCrises);
 
-        let title = "Crisis Alert!";
-        let description = "Unexpected disruption.";
-        let impactText = "";
-        let budgetPenalty = 5;
-        let happinessPenalty = 10;
-        let healthPenalty = 0;
+        // Set 3D visual effect to first active crisis (priority to newest)
+        setCurrentCrisisType(crisisConfig.id === 'supply_shock' ? 'heatwave' : crisisConfig.id);
 
-        const turnCount = currentChoices.length;
+        // Build crisis details for modal
+        let impactText = '';
+        const penalties = crisisConfig.penalties;
+        const parts = [];
+        if (penalties.budget) parts.push(`Budget ${penalties.budget > 0 ? '+' : ''}${penalties.budget}/turn`);
+        if (penalties.health) parts.push(`Health ${penalties.health > 0 ? '+' : ''}${penalties.health}/turn`);
+        if (penalties.happiness) parts.push(`Happiness ${penalties.happiness > 0 ? '+' : ''}${penalties.happiness}/turn`);
+        impactText = parts.join(' | ');
 
-        if (turnCount === 5) {
-            title = "Flash Floods";
-            description = "Heavy rain overwhelms the drainage system.";
-
-            // Educational Modifier: Concrete Canal (ID 9)
-            // If user built Concrete Canal (ID 9, decision 'yes'), double damage.
+        // Educational modifier for concrete canal
+        let description = crisisConfig.description;
+        if (crisisConfig.id === 'flood') {
             const hasConcreteCanal = currentChoices.find(c => c.cardId === 9 && c.decision === 'yes');
-
             if (hasConcreteCanal) {
-                description += " The straight concrete canals accelerated the water flow, worsening downstream flooding! (Legacy Failure)";
-                budgetPenalty = 15; // 3x penalty
-                happinessPenalty = 20; // 2x penalty
-            } else {
-                description += " Natural drainage helped, but relief efforts are still needed.";
+                description += " The concrete canals worsened the flooding! (Legacy Failure)";
             }
-
-            impactText = `Budget -${budgetPenalty} | Happiness -${happinessPenalty}`;
-
-            // Apply immediate stats update (can also be done on resolve)
-            // We'll store potential impact to apply on resolve to avoid double render issues
-            // stored in ref or state? Let's just calculate on resolve or use state.
-            // Simplified: Prepare details for Modal.
-
-        } else if (turnCount === 10) {
-            title = "Heat Wave";
-            description = "Temperatures soar to 36°C. The city is baking.";
-            happinessPenalty = 15;
-            healthPenalty = 10;
-            impactText = `Happiness -${happinessPenalty} | Health -${healthPenalty}`;
         }
 
         setCrisisDetails({
-            title,
-            description,
+            title: crisisConfig.title,
+            description: description,
             impact: impactText,
-            penalties: { budget: budgetPenalty, happiness: happinessPenalty, health: healthPenalty }
+            icon: crisisConfig.icon,
+            educationalNote: crisisConfig.educationalNote,
+            solutionCards: crisisConfig.solutionCards,
+            crisisId: crisisConfig.id,
+            penalties: crisisConfig.penalties
         });
-        // Set crisis type for 3D effects
-        if (turnCount === 5) setCurrentCrisisType('flood');
-        else if (turnCount === 10) setCurrentCrisisType('heatwave');
+
         setCrisisMode(true);
+
+        // Store context for after modal closes
+        window._crisisContext = { currentChoices, currentStats, newActiveCrises };
     };
 
-    // Crisis Handler
+    // Crisis Handler - v4.0: No longer applies penalties (they're per-turn now)
     const handleCrisisResolved = () => {
         setCrisisMode(false);
-        setCurrentCrisisType(null); // Clear crisis visual effects
-        const penalties = crisisDetails.penalties || { budget: 5, happiness: 10, health: 0 };
 
-        setStats(prev => ({
-            ...prev,
-            budget: Math.max(0, prev.budget - penalties.budget),
-            happiness: Math.max(0, prev.happiness - penalties.happiness),
-            health: Math.max(0, prev.health - (penalties.health || 0))
-        }));
+        // Get stored context
+        const ctx = window._crisisContext || {
+            currentChoices: choices,
+            currentStats: stats,
+            newActiveCrises: activeCrises
+        };
 
-        // Advance card after crisis resolved
-        advanceCard(choices, stats); // This uses current `currentIndex` which hasn't changed.
+        // Advance card after crisis acknowledged
+        advanceCard(ctx.currentChoices, ctx.currentStats, ctx.newActiveCrises);
     };
 
     const handlePressConferenceSubmit = (input) => {
         const currentCard = deck[currentIndex];
 
-        // Bonus Score logic? Maybe add to Happiness/Budget or just score.
-        // We'll add +5 Happiness for any feedback for now.
+        // Bonus Score logic
         const newStats = { ...stats, happiness: Math.min(100, stats.happiness + 5) };
         setStats(newStats);
 
@@ -285,10 +361,35 @@ export default function GameEngine({ nickname, onFinish, scenario }) {
         const newChoices = [...choices, choiceRecord];
         setChoices(newChoices);
 
-        advanceCard(newChoices, newStats);
+        advanceCard(newChoices, newStats, activeCrises);
     };
 
-    const advanceCard = (currentChoices, currentStats) => {
+    const advanceCard = (currentChoices, currentStats, currentActiveCrises = activeCrises) => {
+        // v4.0: Rebuild deck with solution card boosting if crises are active
+        if (currentActiveCrises.length > 0 && currentIndex + 1 < deck.length) {
+            // Check if we should inject a solution card
+            const upcomingCards = deck.slice(currentIndex + 1);
+            const hasSolutionUpcoming = upcomingCards.some(card =>
+                card.type === 'solution' && currentActiveCrises.includes(card.resolves)
+            );
+
+            if (!hasSolutionUpcoming && Math.random() < 0.5) {
+                // Inject a solution card
+                const solutionCards = CARDS.filter(card =>
+                    card.type === 'solution' && currentActiveCrises.includes(card.resolves)
+                );
+                if (solutionCards.length > 0) {
+                    const solutionToAdd = solutionCards[Math.floor(Math.random() * solutionCards.length)];
+                    if (!deck.find(c => c.id === solutionToAdd.id)) {
+                        const newDeck = [...deck];
+                        const insertPos = currentIndex + 1 + Math.floor(Math.random() * 2); // Insert in next 2 cards
+                        newDeck.splice(Math.min(insertPos, newDeck.length), 0, solutionToAdd);
+                        setDeck(newDeck);
+                    }
+                }
+            }
+        }
+
         if (currentIndex + 1 < deck.length) {
             setCurrentIndex(prev => prev + 1);
         } else {
@@ -296,6 +397,7 @@ export default function GameEngine({ nickname, onFinish, scenario }) {
             onFinish(currentStats, currentChoices);
         }
     };
+
 
     if (deck.length === 0) return <div>Loading Deck...</div>;
 
@@ -357,7 +459,7 @@ export default function GameEngine({ nickname, onFinish, scenario }) {
 
             {/* HUD */}
             <div style={{ position: 'relative', zIndex: 10 }}>
-                <HUD stats={stats} />
+                <HUD stats={stats} activeCrises={activeCrises} />
             </div>
 
             {/* Modals Overlay */}
@@ -403,21 +505,73 @@ export default function GameEngine({ nickname, onFinish, scenario }) {
                         exit={{ opacity: 0 }}
                         style={{
                             position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
-                            background: 'rgba(239, 68, 68, 0.9)',
+                            background: 'linear-gradient(135deg, rgba(239, 68, 68, 0.95) 0%, rgba(185, 28, 28, 0.95) 100%)',
                             zIndex: 200,
                             display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
                             padding: '2rem', textAlign: 'center', color: 'white'
                         }}
                     >
-                        <AlertTriangle size={64} style={{ marginBottom: '1rem' }} />
-                        <h2 style={{ fontSize: '2rem', fontWeight: 800, textTransform: 'uppercase' }}>{crisisDetails.title}</h2>
-                        <p style={{ fontSize: '1.2rem', marginBottom: '1rem', maxWidth: '80%' }}>{crisisDetails.description}</p>
-                        <p style={{ opacity: 0.9, marginBottom: '2rem', fontWeight: 'bold' }}>{crisisDetails.impact}</p>
+                        <div style={{ fontSize: '4rem', marginBottom: '0.5rem' }}>
+                            {crisisDetails.icon || '⚠️'}
+                        </div>
+                        <h2 style={{ fontSize: '2rem', fontWeight: 800, textTransform: 'uppercase', marginBottom: '0.5rem' }}>
+                            {crisisDetails.title}
+                        </h2>
+                        <p style={{ fontSize: '1.1rem', marginBottom: '1rem', maxWidth: '85%', lineHeight: 1.5 }}>
+                            {crisisDetails.description}
+                        </p>
+
+                        {/* Penalty Info */}
+                        <div style={{
+                            background: 'rgba(0,0,0,0.3)',
+                            padding: '0.75rem 1.5rem',
+                            borderRadius: '12px',
+                            marginBottom: '1rem'
+                        }}>
+                            <div style={{ fontSize: '0.8rem', opacity: 0.8, marginBottom: '4px' }}>ONGOING IMPACT</div>
+                            <div style={{ fontSize: '1rem', fontWeight: 700 }}>{crisisDetails.impact}</div>
+                        </div>
+
+                        {/* Educational Note */}
+                        {crisisDetails.educationalNote && (
+                            <p style={{
+                                fontSize: '0.85rem',
+                                opacity: 0.85,
+                                maxWidth: '90%',
+                                marginBottom: '1.5rem',
+                                fontStyle: 'italic',
+                                lineHeight: 1.5
+                            }}>
+                                💡 {crisisDetails.educationalNote}
+                            </p>
+                        )}
+
+                        {/* Solution Hint */}
+                        <p style={{
+                            fontSize: '0.9rem',
+                            marginBottom: '1.5rem',
+                            background: 'rgba(255,255,255,0.15)',
+                            padding: '0.5rem 1rem',
+                            borderRadius: '8px'
+                        }}>
+                            Find a <strong>Solution Card</strong> to resolve this crisis!
+                        </p>
+
                         <button
                             onClick={handleCrisisResolved}
-                            style={{ background: 'white', color: '#ef4444', padding: '1rem 2rem', borderRadius: '8px', fontWeight: 800 }}
+                            style={{
+                                background: 'white',
+                                color: '#dc2626',
+                                padding: '1rem 2.5rem',
+                                borderRadius: '12px',
+                                fontWeight: 800,
+                                fontSize: '1rem',
+                                border: 'none',
+                                cursor: 'pointer',
+                                boxShadow: '0 4px 15px rgba(0,0,0,0.3)'
+                            }}
                         >
-                            Mobilize Response
+                            Understood - Continue
                         </button>
                     </motion.div>
                 )}

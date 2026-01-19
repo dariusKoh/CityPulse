@@ -1,15 +1,27 @@
 import { format } from 'date-fns';
-import { Building2, Play, Wallet, History, Gift, Trophy, BarChart2 } from 'lucide-react';
+import { Building2, Play, Wallet, History, Gift, Trophy, BarChart2, TrendingUp, Users, Map } from 'lucide-react';
 import { SCENARIOS } from '../data/scenarios';
 import { MOCK_LEADERS } from '../data/leaderboardData';
 
-export default function HomeScreen({ onStart, onLeaderboard, onStats, storedData, onViewReceipt }) {
+// Community Pulse - Mock aggregated stats (would be from backend in production)
+const COMMUNITY_PULSE = [
+    { card: "Long Island Reclamation", stat: "52% built it", tag: "Controversial", icon: "🏝️" },
+    { card: "Turf City Housing", stat: "64% chose public", tag: "Popular", icon: "🏠" },
+    { card: "Dover Forest", stat: "78% preserved", tag: "Consensus", icon: "🌳" },
+    { card: "District Cooling", stat: "71% approved", tag: "Popular", icon: "❄️" },
+    { card: "Gated Enclaves", stat: "89% rejected", tag: "Consensus", icon: "🚫" }
+];
+
+export default function HomeScreen({ onStart, onLeaderboard, onStats, storedData, onViewReceipt, onViewLastCity }) {
     const { totalPoints, submissionHistory } = storedData || { totalPoints: 0, submissionHistory: [] };
 
     // Calculate Rank
     const combinedList = [...MOCK_LEADERS, { score: totalPoints, isUser: true }];
     combinedList.sort((a, b) => b.score - a.score);
     const userRank = combinedList.findIndex(p => p.isUser) + 1;
+
+    // Calculate total sessions for community pulse
+    const totalSessions = submissionHistory.length + 247; // Mock: add fake backend sessions
 
     return (
         <div className="screen" style={{ background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)', padding: '1rem', overflowY: 'auto' }}>
@@ -36,7 +48,75 @@ export default function HomeScreen({ onStart, onLeaderboard, onStats, storedData
                         fontSize: '0.8rem',
                         color: '#94a3b8'
                     }}>
-                        Beta v0.3
+                        Beta v0.4
+                    </div>
+                </div>
+
+                {/* Community Pulse Ticker */}
+                <div style={{
+                    background: 'rgba(59, 130, 246, 0.1)',
+                    border: '1px solid rgba(59, 130, 246, 0.3)',
+                    borderRadius: '12px',
+                    padding: '0.75rem 1rem',
+                    overflow: 'hidden'
+                }}>
+                    <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        marginBottom: '0.5rem',
+                        fontSize: '0.75rem',
+                        color: '#60a5fa',
+                        fontWeight: 700,
+                        textTransform: 'uppercase',
+                        letterSpacing: '1px'
+                    }}>
+                        <Users size={14} />
+                        Community Pulse
+                        <span style={{
+                            marginLeft: 'auto',
+                            background: 'rgba(59, 130, 246, 0.2)',
+                            padding: '2px 8px',
+                            borderRadius: '10px',
+                            fontSize: '0.65rem'
+                        }}>
+                            {totalSessions.toLocaleString()} sessions
+                        </span>
+                    </div>
+                    <div style={{
+                        display: 'flex',
+                        gap: '1rem',
+                        overflowX: 'auto',
+                        paddingBottom: '4px',
+                        scrollbarWidth: 'none',
+                        msOverflowStyle: 'none'
+                    }}>
+                        {COMMUNITY_PULSE.map((item, i) => (
+                            <div key={i} style={{
+                                flex: '0 0 auto',
+                                background: '#1e293b',
+                                padding: '0.5rem 0.75rem',
+                                borderRadius: '8px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '8px',
+                                whiteSpace: 'nowrap'
+                            }}>
+                                <span style={{ fontSize: '1.2rem' }}>{item.icon}</span>
+                                <div>
+                                    <div style={{ fontSize: '0.75rem', fontWeight: 600, color: 'white' }}>
+                                        {item.stat}
+                                    </div>
+                                    <div style={{
+                                        fontSize: '0.65rem',
+                                        color: item.tag === 'Controversial' ? '#fbbf24' :
+                                            item.tag === 'Consensus' ? '#22c55e' : '#94a3b8'
+                                    }}>
+                                        {item.tag}
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </div>
 
@@ -45,7 +125,7 @@ export default function HomeScreen({ onStart, onLeaderboard, onStats, storedData
                     background: 'linear-gradient(to right, #ffbd59, #ea580c)',
                     borderRadius: '20px',
                     padding: '1.5rem',
-                    color: '#0f172a', // Dark text on bright amber
+                    color: '#0f172a',
                     boxShadow: '0 10px 20px -5px rgba(255, 189, 89, 0.4)',
                     position: 'relative',
                     overflow: 'hidden'
@@ -53,11 +133,11 @@ export default function HomeScreen({ onStart, onLeaderboard, onStats, storedData
                     <div style={{ position: 'relative', zIndex: 2 }}>
                         <h2 style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>Plan Your City</h2>
                         <p style={{ opacity: 0.9, marginBottom: '1.5rem', maxWidth: '80%' }}>Balance the budget, keep citizens happy, and audit your impact.</p>
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem' }}>
                             <button
                                 onClick={() => onStart()}
                                 style={{
-                                    background: '#0f172a', // Dark button on amber card
+                                    background: '#0f172a',
                                     color: 'white',
                                     padding: '0.75rem 1.5rem',
                                     borderRadius: '12px',
@@ -71,6 +151,26 @@ export default function HomeScreen({ onStart, onLeaderboard, onStats, storedData
                                 <Play size={18} fill="currentColor" />
                                 Start Shift
                             </button>
+                            {/* View Last City Action */}
+                            {onViewLastCity && (
+                                <button
+                                    onClick={onViewLastCity}
+                                    style={{
+                                        background: '#0f172a',
+                                        padding: '0.75rem 1rem',
+                                        borderRadius: '12px',
+                                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                        gap: '0.5rem', // Added gap for text
+                                        border: '1px solid rgba(255, 255, 255, 0.2)',
+                                        color: 'white',
+                                        cursor: 'pointer'
+                                    }}
+                                    title="View Last City 3D"
+                                >
+                                    <Map size={20} />
+                                    <span style={{ fontSize: '0.9rem', fontWeight: 600 }}>View City</span>
+                                </button>
+                            )}
                             <button
                                 onClick={onLeaderboard}
                                 style={{
@@ -83,8 +183,7 @@ export default function HomeScreen({ onStart, onLeaderboard, onStats, storedData
                                     justifyContent: 'center',
                                     gap: '0.5rem',
                                     border: '1px solid rgba(15, 23, 42, 0.3)',
-                                    color: '#0f172a',
-                                    marginLeft: '0.75rem'
+                                    color: '#0f172a'
                                 }}
                             >
                                 <Trophy size={20} />
@@ -109,9 +208,9 @@ export default function HomeScreen({ onStart, onLeaderboard, onStats, storedData
                     {/* Mock Coupons */}
                     <div style={{ padding: '1rem', display: 'flex', gap: '1rem', overflowX: 'auto' }}>
                         {[
-                            { name: "Coffee", cost: 500, color: "#d97706" },
-                            { name: "Transit", cost: 1000, color: "#059669" },
-                            { name: "Cinema", cost: 2000, color: "#7c3aed" }
+                            { name: "Coffee", cost: 5000, color: "#d97706" },
+                            { name: "Transit", cost: 10000, color: "#059669" },
+                            { name: "Cinema", cost: 20000, color: "#7c3aed" }
                         ].map((item, i) => (
                             <div key={i} style={{
                                 flex: '0 0 100px',

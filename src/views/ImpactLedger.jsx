@@ -1,6 +1,38 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { Check, X, ArrowRight, RotateCcw, ChevronDown, ChevronUp, Star, Award, AlertTriangle } from 'lucide-react';
+import { Check, X, ArrowRight, RotateCcw, ChevronDown, ChevronUp, Star, Award, AlertTriangle, Lightbulb, Globe, Map, ArrowLeft } from 'lucide-react';
 import { useState } from 'react';
+
+// Real-world impact context for key decisions
+const REAL_WORLD_IMPACT = {
+    7: { // Long Island
+        yes: "Protects East Coast from 1m sea level rise. Estimated cost: $60 billion over 50 years.",
+        no: "Without coastal protection, 300,000 residents may need relocation by 2100."
+    },
+    2: { // Turf City
+        yes: "First public housing in Bukit Timah in 40 years. Reduces social stratification.",
+        no: "Opportunity cost: ~4,000 affordable housing units not built in prime location."
+    },
+    8: { // Identity Corridor
+        yes: "Preserves cultural memory. Studies show heritage areas boost mental well-being by 15%.",
+        no: "Development yields 3x more housing units but erases 150 years of history."
+    },
+    16: { // Ecological Corridors
+        yes: "Enables wildlife movement. Dover Forest alone hosts 120 bird species.",
+        no: "Fragmented reserves lose 30% biodiversity within 20 years."
+    },
+    28: { // Agri-Food
+        yes: "Moves toward 30-by-30 goal. Reduces food import dependency from 90% to 70%.",
+        no: "Remains vulnerable to global supply chain shocks like COVID-19."
+    },
+    30: { // ABC Waters (Solution)
+        yes: "Bishan-Ang Mo Kio Park transformed a concrete canal into a 3km natural river. Template for resilience.",
+        no: "Concrete drainage accelerates flooding downstream and destroys ecosystems."
+    },
+    31: { // Wind Corridors (Solution)
+        yes: "Marina South wind corridors reduce ambient temperature by 2-4°C in peak summer.",
+        no: "Urban heat island effect continues to intensify."
+    }
+};
 
 // Analysis Logic config
 const CARD_ANALYSIS = {
@@ -27,6 +59,18 @@ const CARD_ANALYSIS = {
     28: { correct: 'yes', reason: "Critical for national food security." }, // Agri-Food
     29: { correct: 'yes', reason: "Passive design lowers the city's fever." }, // Heat Resilience
 
+    // SOLUTION CARDS (Correct = 'yes' during crisis)
+    30: { correct: 'yes', reason: "ABC Waters naturalizes drainage and adds recreation value." }, // ABC Waters
+    31: { correct: 'yes', reason: "Wind corridors cool the city naturally without energy." }, // Wind Corridors
+    32: { correct: 'yes', reason: "District cooling achieves economies of scale." }, // District Cooling Network
+    33: { correct: 'yes', reason: "Vertical farms address the 30-by-30 food security goal." }, // Vertical Farms
+
+    // DMP2025 Cards (v4.1)
+    101: { correct: 'yes', reason: "Assisted living is critical for our aging population." }, // Community Care
+    102: { correct: 'yes', reason: "Sacrificing land for wind corridors prevents heat build-up." }, // Wind Corridors (Heatwave)
+    103: { correct: 'yes', reason: "Heritage defines our city's soul. Conservation > Efficiency." }, // Identity Corridor
+    104: { correct: 'yes', reason: "Decentralizing to JLD reduces city-center congestion." }, // JLD Gateway
+
     // BAD CARDS (Correct = 'no')
     3: { correct: 'no', reason: "Destroys social cohesion & creates enclaves." }, // Gated Enclave
     9: { correct: 'no', reason: "Destroys biodiversity & increases flood risk." }, // Concrete Canal
@@ -36,7 +80,7 @@ const CARD_ANALYSIS = {
     19: { correct: 'no', reason: "Alienates the elderly & creates digital divide." }, // Techno-Centricity
 };
 
-export default function ImpactLedger({ data, onRestart, isReceipt = false, titleOverride }) {
+export default function ImpactLedger({ data, onRestart, isReceipt = false, onViewCity, titleOverride }) {
     const { choices, stats } = data;
     const [showFullLog, setShowFullLog] = useState(isReceipt);
 
@@ -44,13 +88,28 @@ export default function ImpactLedger({ data, onRestart, isReceipt = false, title
     let correctCount = 0;
     let strategicChoices = 0;
 
+    // Identify Missed Solutions
+    const missedSolutions = [];
+
     const analyzedChoices = choices.map(choice => {
+        // Fix: Ignore Bonus Feedback entries for analysis
+        if (choice.type === 'bonus_feedback') return { ...choice, status: 'neutral' };
+
         const analysis = CARD_ANALYSIS[choice.cardId];
         if (!analysis) return { ...choice, status: 'neutral' }; // Press conferences etc.
 
         strategicChoices++;
         const isCorrect = choice.decision === analysis.correct;
         if (isCorrect) correctCount++;
+
+        // Check if this was a missed solution card
+        const isSolutionCard = [30, 31, 32, 33, 102].includes(choice.cardId);
+        if (isSolutionCard && !isCorrect) {
+            missedSolutions.push({
+                title: choice.title,
+                reason: analysis.reason
+            });
+        }
 
         return {
             ...choice,
@@ -87,6 +146,29 @@ export default function ImpactLedger({ data, onRestart, isReceipt = false, title
         return (
             <div className="screen" style={{ overflowY: 'auto', background: '#0f172a' }}>
                 <div className="animate-fade-in flex-col" style={{ gap: '1.5rem', paddingBottom: '3rem', maxWidth: '600px', margin: '0 auto', width: '100%' }}>
+
+                    {/* Nav Back Button */}
+                    <button
+                        onClick={onRestart}
+                        style={{
+                            position: 'sticky',
+                            top: '1rem',
+                            zIndex: 50,
+                            alignSelf: 'flex-start',
+                            color: 'white',
+                            background: 'rgba(15, 23, 42, 0.8)',
+                            backdropFilter: 'blur(4px)',
+                            width: '40px', height: '40px',
+                            borderRadius: '50%',
+                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                            boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+                            border: '1px solid #334155',
+                            marginLeft: '1.5rem',
+                            marginTop: '1rem'
+                        }}
+                    >
+                        <ArrowLeft size={24} />
+                    </button>
                     <div style={{ textAlign: 'center', paddingTop: '2rem' }}>
                         <h2 style={{ fontSize: '1.5rem', color: 'white', fontWeight: 700 }}>{titleOverride || 'Official Transcript'}</h2>
                         <div style={{ color: '#94a3b8', fontSize: '0.9rem' }}>Receipt ID: #{data.receiptId || 'UNKNOWN'}</div>
@@ -133,16 +215,33 @@ export default function ImpactLedger({ data, onRestart, isReceipt = false, title
                     </div>
 
                     <div style={{ padding: '0 1.5rem', marginTop: 'auto' }}>
-                        <button
-                            onClick={onRestart}
-                            style={{
-                                width: '100%', padding: '1rem', background: '#334155', color: 'white',
-                                fontWeight: 700, borderRadius: '12px', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem'
-                            }}
-                        >
-                            <ArrowRight size={20} />
-                            Back to Menu
-                        </button>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                            {/* View City Button */}
+                            {onViewCity && (
+                                <button
+                                    onClick={onViewCity}
+                                    style={{
+                                        width: '100%', padding: '1rem', background: '#3b82f6', color: 'white',
+                                        fontWeight: 700, borderRadius: '12px', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem',
+                                        border: 'none', cursor: 'pointer', boxShadow: '0 4px 6px -1px rgba(59, 130, 246, 0.5)'
+                                    }}
+                                >
+                                    <Map size={20} />
+                                    View City
+                                </button>
+                            )}
+
+                            <button
+                                onClick={onRestart}
+                                style={{
+                                    width: '100%', padding: '1rem', background: '#334155', color: 'white',
+                                    fontWeight: 700, borderRadius: '12px', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '0.5rem'
+                                }}
+                            >
+                                <ArrowRight size={20} />
+                                Back to Menu
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -152,6 +251,29 @@ export default function ImpactLedger({ data, onRestart, isReceipt = false, title
     return (
         <div className="screen" style={{ overflowY: 'auto', background: '#0f172a' }}>
             <div className="animate-fade-in flex-col" style={{ gap: '1.5rem', paddingBottom: '3rem', maxWidth: '600px', margin: '0 auto', width: '100%' }}>
+
+                {/* Nav Back Button */}
+                <button
+                    onClick={onRestart}
+                    style={{
+                        position: 'sticky',
+                        top: '1rem',
+                        zIndex: 50,
+                        alignSelf: 'flex-start',
+                        color: 'white',
+                        background: 'rgba(15, 23, 42, 0.8)',
+                        backdropFilter: 'blur(4px)',
+                        width: '40px', height: '40px',
+                        borderRadius: '50%',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+                        border: '1px solid #334155',
+                        marginLeft: '1.5rem',
+                        marginTop: '1rem'
+                    }}
+                >
+                    <ArrowLeft size={24} />
+                </button>
 
                 {/* Header: Grade & Score */}
                 <div style={{ textAlign: 'center', paddingTop: '2rem' }}>
@@ -169,6 +291,34 @@ export default function ImpactLedger({ data, onRestart, isReceipt = false, title
                         Logic Score: {Math.round(scorePercent)}% • Public Approval: {stats.happiness}%
                     </div>
                 </div>
+
+                {/* Missed Solutions Warning */}
+                {missedSolutions.length > 0 && (
+                    <div style={{ padding: '0 1.5rem' }}>
+                        <div style={{
+                            background: 'rgba(239, 68, 68, 0.15)',
+                            border: '1px solid #ef4444',
+                            borderRadius: '12px',
+                            padding: '1rem'
+                        }}>
+                            <h3 style={{ fontSize: '1rem', color: '#fca5a5', marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                <AlertTriangle size={18} /> Missed Opportunities
+                            </h3>
+                            <div className="flex-col" style={{ gap: '0.5rem' }}>
+                                {missedSolutions.map((item, i) => (
+                                    <div key={i}>
+                                        <div style={{ fontWeight: 700, color: '#ef4444', fontSize: '0.9rem' }}>
+                                            {item.title}
+                                        </div>
+                                        <div style={{ fontSize: '0.8rem', color: '#fca5a5', fontStyle: 'italic' }}>
+                                            {item.reason}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                )}
 
                 {/* Key Highlights Section */}
                 <div style={{ padding: '0 1.5rem' }}>
@@ -221,6 +371,60 @@ export default function ImpactLedger({ data, onRestart, isReceipt = false, title
                         ))}
                     </div>
                 </div>
+
+                {/* Real-World Impact Section */}
+                {(() => {
+                    // Find choices that have real-world impact context
+                    const impactChoices = choices.filter(c => REAL_WORLD_IMPACT[c.cardId]);
+                    if (impactChoices.length === 0) return null;
+
+                    return (
+                        <div style={{ padding: '0 1.5rem' }}>
+                            <h3 style={{ fontSize: '1.1rem', color: '#e2e8f0', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                <Globe size={20} color="#60a5fa" /> In Real Life...
+                            </h3>
+                            <div className="flex-col" style={{ gap: '0.75rem' }}>
+                                {impactChoices.slice(0, 3).map((choice, i) => {
+                                    const impact = REAL_WORLD_IMPACT[choice.cardId];
+                                    const impactText = impact[choice.decision] || impact.yes;
+
+                                    return (
+                                        <motion.div
+                                            key={i}
+                                            initial={{ opacity: 0, y: 10 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            transition={{ delay: 0.3 + i * 0.1 }}
+                                            style={{
+                                                background: 'rgba(59, 130, 246, 0.1)',
+                                                border: '1px solid rgba(59, 130, 246, 0.3)',
+                                                borderRadius: '12px',
+                                                padding: '1rem'
+                                            }}
+                                        >
+                                            <div style={{
+                                                fontSize: '0.75rem',
+                                                color: '#60a5fa',
+                                                fontWeight: 600,
+                                                marginBottom: '0.25rem',
+                                                textTransform: 'uppercase',
+                                                letterSpacing: '0.5px'
+                                            }}>
+                                                {choice.title}
+                                            </div>
+                                            <div style={{
+                                                fontSize: '0.9rem',
+                                                color: '#e2e8f0',
+                                                lineHeight: 1.5
+                                            }}>
+                                                💡 {impactText}
+                                            </div>
+                                        </motion.div>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    );
+                })()}
 
                 {/* Collapsible Full Log */}
                 <div style={{ padding: '0 1.5rem' }}>
@@ -289,7 +493,30 @@ export default function ImpactLedger({ data, onRestart, isReceipt = false, title
                 </div>
 
                 {/* Action Buttons */}
-                <div style={{ padding: '0 1.5rem', marginTop: 'auto' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', padding: '0 1.5rem', marginTop: 'auto' }}>
+                    {onViewCity && (
+                        <button
+                            onClick={onViewCity}
+                            style={{
+                                width: '100%',
+                                padding: '1rem',
+                                background: '#3b82f6',
+                                color: 'white',
+                                fontWeight: 700,
+                                borderRadius: '12px',
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                gap: '0.5rem',
+                                border: 'none',
+                                cursor: 'pointer',
+                            }}
+                        >
+                            <Map size={20} />
+                            View City
+                        </button>
+                    )}
+
                     <button
                         onClick={onRestart}
                         style={{
@@ -303,7 +530,7 @@ export default function ImpactLedger({ data, onRestart, isReceipt = false, title
                             justifyContent: 'center',
                             alignItems: 'center',
                             gap: '0.5rem',
-                            boxShadow: '0 4px 12px rgba(59, 130, 246, 0.4)'
+                            boxShadow: '0 4px 12px rgba(246, 181, 59, 0.4)'
                         }}
                     >
                         <RotateCcw size={20} />

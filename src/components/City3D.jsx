@@ -40,8 +40,31 @@ export default function City3D({
         }
     }, [isShowcaseMode]);
 
-    // Adjust camera and controls for showcase mode
-    const cameraPosition = isShowcaseMode ? [10, 8, 10] : [12, 10, 12];
+    // Responsive Camera Logic
+    const [aspect, setAspect] = useState(window.innerWidth / window.innerHeight);
+
+    useEffect(() => {
+        const handleResize = () => setAspect(window.innerWidth / window.innerHeight);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    // Aspect Ratio Adjustment
+    // In portrait (aspect < 1), we need to pull back to fit the same horizontal width.
+    // The factor is roughly 1/aspect.
+    const basePos = isShowcaseMode ? [10, 8, 10] : [12, 10, 12];
+
+    // Calculate distance multiplier: 
+    // If landscape (aspect > 1), use 1. 
+    // If portrait (aspect < 1), scale by (1 / aspect) * 0.8 to fit comfortably.
+    const distanceMultiplier = aspect < 1 ? (1 / aspect) * 0.9 : 1;
+
+    const cameraPosition = [
+        basePos[0] * distanceMultiplier,
+        basePos[1] * distanceMultiplier,
+        basePos[2] * distanceMultiplier
+    ];
+
     const autoRotateSpeed = isShowcaseMode ? 1 : 0.5;
 
     // Handle building click
@@ -160,9 +183,9 @@ export default function City3D({
                 <PerspectiveCamera
                     makeDefault
                     position={cameraPosition}
-                    fov={isShowcaseMode ? 45 : 50}
+                    fov={50} // Keep standard FOV, adjust distance instead
                     near={0.1}
-                    far={100}
+                    far={200} // Increased render distance
                 />
 
                 {/* Suspense for async loading */}
@@ -199,9 +222,9 @@ export default function City3D({
                     enablePan={false}
                     minPolarAngle={Math.PI / 6}
                     maxPolarAngle={Math.PI / 2.5}
-                    target={[0, 1, 0]}
+                    target={[0, 0, 0]} // Lower target slightly
                     minDistance={5}
-                    maxDistance={25}
+                    maxDistance={80} // Allow zooming out further for narrow aspect ratios
                 />
             </Canvas>
         </div>

@@ -89,6 +89,8 @@ export default function SwipeCard({ card, onSwipe, onAdvisorClick, isBonusActive
                     </button>
                 )}
 
+                {/* Solution Card Badge REMOVED for Difficulty */}
+
                 {/* Card Image Placeholder */}
                 <div style={{
                     height: isBonusActive ? '45%' : '55%', // Shrink image if bonus active
@@ -141,18 +143,43 @@ export default function SwipeCard({ card, onSwipe, onAdvisorClick, isBonusActive
                             style={{
                                 marginTop: '0.5rem',
                                 padding: '0.75rem',
-                                background: 'rgba(59, 130, 246, 0.1)',
-                                border: '1px dashed #3b82f6',
+                                background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(139, 92, 246, 0.15) 100%)',
+                                border: '1px solid rgba(59, 130, 246, 0.4)',
                                 borderRadius: '12px'
                             }}
                         >
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.8rem', fontWeight: 700, color: '#60a5fa', marginBottom: '0.5rem' }}>
-                                <MessageSquarePlus size={16} />
-                                CITIZEN VOICE BONUS
+                            <div style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                                marginBottom: '0.5rem'
+                            }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.75rem', fontWeight: 700, color: '#60a5fa', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                                    <MessageSquarePlus size={16} />
+                                    CITIZEN VOICE
+                                </div>
+                                <div style={{
+                                    background: 'rgba(34, 197, 94, 0.2)',
+                                    color: '#22c55e',
+                                    padding: '2px 8px',
+                                    borderRadius: '12px',
+                                    fontSize: '0.75rem',
+                                    fontWeight: 700
+                                }}>
+                                    +100 CP
+                                </div>
+                            </div>
+                            <div style={{
+                                fontSize: '0.7rem',
+                                color: '#94a3b8',
+                                marginBottom: '0.5rem',
+                                fontStyle: 'italic'
+                            }}>
+                                Your input helps shape the Youth Action Plan
                             </div>
                             <input
                                 type="text"
-                                placeholder="Opinion on this plan..."
+                                placeholder="Share your thoughts on this policy..."
                                 value={bonusText}
                                 onChange={(e) => setBonusText(e.target.value)}
                                 style={{
@@ -160,7 +187,7 @@ export default function SwipeCard({ card, onSwipe, onAdvisorClick, isBonusActive
                                     background: '#0f172a',
                                     border: '1px solid #334155',
                                     color: 'white',
-                                    padding: '8px',
+                                    padding: '10px 12px',
                                     borderRadius: '8px',
                                     fontSize: '0.9rem',
                                     marginBottom: '0.5rem'
@@ -175,15 +202,18 @@ export default function SwipeCard({ card, onSwipe, onAdvisorClick, isBonusActive
                                 }}
                                 style={{
                                     width: '100%',
-                                    background: '#3b82f6',
+                                    background: 'linear-gradient(to right, #3b82f6, #8b5cf6)',
                                     color: 'white',
-                                    padding: '6px',
-                                    borderRadius: '6px',
-                                    fontWeight: 600,
-                                    fontSize: '0.85rem'
+                                    padding: '10px',
+                                    borderRadius: '8px',
+                                    fontWeight: 700,
+                                    fontSize: '0.9rem',
+                                    border: 'none',
+                                    cursor: 'pointer',
+                                    boxShadow: '0 4px 12px rgba(59, 130, 246, 0.3)'
                                 }}
                             >
-                                Submit (+Bonus)
+                                Submit Feedback
                             </button>
                         </div>
                     )}

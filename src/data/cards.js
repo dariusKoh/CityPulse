@@ -11,7 +11,7 @@ export const CARDS = [
       character: "Urban Planner",
       text: "This reduces tidal flow traffic and activates the precinct 24/7. A key to the 'Happy, Healthy City'."
     },
-    yes: { budget: 15, land: 20, health: 25, happiness: 30 },
+    yes: { budget: 7, land: 20, health: 25, happiness: 30 },
     no: { budget: 0, land: 0, health: -5, happiness: -5 }
   },
   {
@@ -26,7 +26,7 @@ export const CARDS = [
       character: "Social Planner",
       text: "We must mitigate social stratification. This is a high-stakes move to prevent 'rich ghettos' forming."
     },
-    yes: { budget: 10, land: 25, health: -10, happiness: 40 },
+    yes: { budget: 5, land: 25, health: -10, happiness: 40 },
     no: { budget: 0, land: 0, health: 0, happiness: -10 }
   },
   {
@@ -41,7 +41,7 @@ export const CARDS = [
       character: "Sociologist",
       text: "Be careful. While profitable, this destroys social cohesion and connectivity. It is a failure of design."
     },
-    yes: { budget: 5, land: -20, health: -15, happiness: -30 },
+    yes: { budget: 2, land: -20, health: -15, happiness: -30 },
     no: { budget: 0, land: 10, health: 5, happiness: 10 }
   },
   {
@@ -56,7 +56,7 @@ export const CARDS = [
       character: "Economist",
       text: "Monocentric cities fail at scale. We need this gateway to reduce the morning rush hour strain."
     },
-    yes: { budget: 35, land: 15, health: 20, happiness: 25 },
+    yes: { budget: 17, land: 15, health: 20, happiness: 25 },
     no: { budget: -10, land: 0, health: -5, happiness: -5 }
   },
   {
@@ -80,7 +80,7 @@ export const CARDS = [
       character: "Architect",
       text: "This maximizes land yield in high-value zones. It's the only way to grow without new land."
     },
-    yes: { budget: 30, land: 40, health: 10, happiness: 15 },
+    yes: { budget: 15, land: 40, health: 10, happiness: 15 },
     no: { budget: 0, land: -10, health: 0, happiness: 0 }
   },
   {
@@ -140,7 +140,7 @@ export const CARDS = [
       character: "Data Scientist",
       text: "Measure twice, cut once. This simulation prevents 'sick buildings' and costly errors."
     },
-    yes: { budget: 20, land: 10, health: 15, happiness: 10 },
+    yes: { budget: 10, land: 10, health: 15, happiness: 10 },
     no: { budget: 0, land: 0, health: 0, happiness: 0 }
   },
   {
@@ -179,7 +179,7 @@ export const CARDS = [
       character: "Architect",
       text: "This allows 're-industrialization' of the city center, bringing jobs closer to talent."
     },
-    yes: { budget: 25, land: 30, health: 15, happiness: 10 },
+    yes: { budget: 12, land: 30, health: 15, happiness: 10 },
     no: { budget: 0, land: 0, health: 0, happiness: 0 }
   },
   {
@@ -209,7 +209,7 @@ export const CARDS = [
       character: "Engineer",
       text: "It achieves economies of scale and removes heat rejection from streets."
     },
-    yes: { budget: 15, land: 10, health: 25, happiness: 5 },
+    yes: { budget: 7, land: 10, health: 25, happiness: 5 },
     no: { budget: 0, land: 0, health: 0, happiness: 0 }
   },
   {
@@ -254,7 +254,7 @@ export const CARDS = [
       character: "Tech Lead",
       text: "Predictive maintenance saves millions and improves reliability."
     },
-    yes: { budget: 25, land: 0, health: 20, happiness: 10 },
+    yes: { budget: 12, land: 0, health: 20, happiness: 10 },
     no: { budget: 0, land: 0, health: 0, happiness: 0 }
   },
   {
@@ -299,7 +299,7 @@ export const CARDS = [
       character: "Urban Planner",
       text: "A massive unlock! We can rebuild low-rise estates into high-density precincts."
     },
-    yes: { budget: 30, land: 40, health: -5, happiness: -10 },
+    yes: { budget: 15, land: 40, health: -5, happiness: -10 },
     no: { budget: 0, land: 0, health: 0, happiness: 0 }
   },
   {
@@ -374,7 +374,7 @@ export const CARDS = [
       character: "Economist",
       text: "Market cycles move faster than Master Plans. Flexibility builds resilience."
     },
-    yes: { budget: 30, land: 20, health: 5, happiness: 5 },
+    yes: { budget: 15, land: 20, health: 5, happiness: 5 },
     no: { budget: 0, land: 0, health: 0, happiness: 0 }
   },
   {
@@ -389,7 +389,7 @@ export const CARDS = [
       character: "Diplomat",
       text: "This catalyzes the Special Economic Zone and reduces Causeway congestion."
     },
-    yes: { budget: 40, land: 10, health: 10, happiness: 15 },
+    yes: { budget: 20, land: 10, health: 10, happiness: 15 },
     no: { budget: 0, land: 0, health: 0, happiness: 0 }
   },
   {
@@ -404,7 +404,7 @@ export const CARDS = [
       character: "Food Scientist",
       text: "We must produce 30% of our nutritional needs locally. This is survival."
     },
-    yes: { budget: 20, land: -10, health: 30, happiness: 5 },
+    yes: { budget: 10, land: -10, health: 30, happiness: 5 },
     no: { budget: 0, land: 0, health: 0, happiness: 0 }
   },
   {
@@ -421,5 +421,324 @@ export const CARDS = [
     },
     yes: { budget: -5, land: 0, health: 20, happiness: 10 },
     no: { budget: 0, land: 0, health: 0, happiness: 0 }
+  },
+  // =============================================
+  // SOLUTION CARDS (v4.0 Crisis Interventions)
+  // These cards appear with higher frequency during active crises
+  // =============================================
+  {
+    id: 30,
+    type: 'solution',
+    resolves: 'flood',
+    title: "Deploy ABC Waters Strategy",
+    description: "Transform concrete canals into naturalized waterways. Active, Beautiful, Clean.",
+    image: "abc_waters",
+    color: "#0ea5e9", // Solution Blue
+    sticker: "river",
+    advisor: {
+      character: "Water Engineer",
+      text: "This mimics nature's drainage and adds recreational value. The Bishan-Ang Mo Kio Park is our proof."
+    },
+    yes: { budget: -20, land: 0, health: 15, happiness: 15 },
+    no: { budget: 0, land: 0, health: 0, happiness: 0 }
+  },
+  {
+    id: 31,
+    type: 'solution',
+    resolves: 'heatwave',
+    title: "Gazette Wind Corridors",
+    description: "Protect height-restricted wind paths through the city to naturally cool urban areas.",
+    image: "wind_corridor",
+    color: "#0ea5e9", // Solution Blue
+    sticker: "wind",
+    advisor: {
+      character: "Climate Planner",
+      text: "Based on Marina South planning. We sacrifice some plot ratio to let the city breathe."
+    },
+    yes: { budget: 0, land: -15, health: 20, happiness: 10 },
+    no: { budget: 0, land: 0, health: 0, happiness: 0 }
+  },
+  {
+    id: 32,
+    type: 'solution',
+    resolves: 'heatwave',
+    title: "District Cooling Network",
+    description: "Install underground cooling infrastructure for the entire precinct.",
+    image: "district_cooling",
+    color: "#0ea5e9", // Solution Blue
+    sticker: "snowflake",
+    advisor: {
+      character: "Infrastructure Engineer",
+      text: "Centralized cooling achieves economies of scale. Marina Bay uses this already."
+    },
+    yes: { budget: -30, land: 5, health: 15, happiness: 5 },
+    no: { budget: 0, land: 0, health: 0, happiness: 0 }
+  },
+  {
+    id: 33,
+    type: 'solution',
+    resolves: 'supply_shock',
+    title: "Vertical Farms Initiative",
+    description: "Convert rooftops across the city to high-tech vertical farms for food security.",
+    image: "vertical_farm",
+    color: "#0ea5e9", // Solution Blue
+    sticker: "plant",
+    advisor: {
+      character: "Food Scientist",
+      text: "30-by-30 is not a slogan, it's survival. We must produce 30% of our nutritional needs locally."
+    },
+    yes: { budget: -25, land: 0, health: 10, happiness: 15 },
+    no: { budget: 0, land: 0, health: 0, happiness: 0 }
+  },
+  // =============================================
+  // DMP2025 SPECIFIC POLICY CARDS (v4.1)
+  // =============================================
+  {
+    id: 101,
+    type: 'choice',
+    title: "Community Care Apartments",
+    description: "By 2030, 1 in 4 Singaporeans will be over 65. Build assisted living flats in Queenstown?",
+    image: "community_care",
+    color: "#f97316", // Social Orange
+    sticker: "elderly",
+    advisor: {
+      character: "Social Planner",
+      text: "We can't just build nursing homes. Seniors need to age *in* the community."
+    },
+    yes: { budget: -15, land: -10, health: 20, happiness: 15 },
+    no: { budget: 0, land: 0, health: -20, happiness: -10 }
+  },
+  {
+    id: 102,
+    type: 'solution',
+    resolves: 'heatwave',
+    title: "Gazette Wind Corridors",
+    description: "Sacrifice buildable land in Marina South to let prevailing winds cool the city naturally.",
+    image: "wind_corridor",
+    color: "#0ea5e9", // Solution Blue
+    sticker: "wind",
+    advisor: {
+      character: "Climate Architect",
+      text: "It lowers the plot ratio (less profit), but it prevents the 'Oven City' effect."
+    },
+    yes: { budget: -5, land: -20, health: 25, happiness: 10 },
+    no: { budget: 0, land: 0, health: 0, happiness: 0 }
+  },
+  {
+    id: 103,
+    type: 'choice',
+    title: "Identity Corridor: Historic East",
+    description: "Developers want to en-bloc these shophouses for high-rise condos. Conserve them instead?",
+    image: "shophouse_conservation",
+    color: "#a855f7", // Heritage Purple
+    sticker: "heritage",
+    advisor: {
+      character: "Youth Fellow",
+      text: "If we tear this down, the city loses its soul. A city without memory is just a machine."
+    },
+    yes: { budget: -10, land: -15, health: 0, happiness: 40 },
+    no: { budget: 10, land: 20, health: 0, happiness: -30 }
+  },
+  {
+    id: 104,
+    type: 'choice',
+    title: "Decentralization: JLD Gateway",
+    description: "Move government agencies to Jurong Lake District (Second CBD) to reduce peak-hour jams.",
+    image: "jurong_lake",
+    color: "#3b82f6", // Economy Blue
+    sticker: "train",
+    advisor: {
+      character: "Transport Minister",
+      text: "Monocentric cities fail at scale. We need to bring jobs closer to homes."
+    },
+    yes: { budget: -30, land: 15, health: 10, happiness: 20 },
+    no: { budget: 0, land: 0, health: -5, happiness: -5 }
+  },
+  // =============================================
+  // PRESS CONFERENCE / CITIZEN VOICE CARDS (IDs 200+)
+  // These simulate Town Halls and Media Scrums
+  // =============================================
+  {
+    id: 200,
+    type: 'press_conference',
+    title: "The PLH Debate",
+    description: "Private homeowners in Bukit Timah are protesting the new public housing. 'It devalues our property,' they say. How do you justify the 'Prime Location' model?",
+    image: "microphone_orange",
+    color: "#f97316", // Social
+    sticker: "megaphone",
+    bonusScore: 500,
+    advisor: {
+      character: "The Straits Times Reporter",
+      text: "This is the hottest topic in the forums. Are we democratizing land or unfairly subsidizing a lucky few?"
+    }
+  },
+  {
+    id: 201,
+    type: 'press_conference',
+    title: "Nature vs. Homes",
+    description: "Green groups are petitioning to save a secondary forest you earmarked for 5,000 flats. The waitlist for BTOs is 5 years long. Who do you prioritize?",
+    image: "microphone_green",
+    color: "#a855f7", // Nature/Identity
+    sticker: "tree",
+    bonusScore: 500,
+    advisor: {
+      character: "Nature Society Rep",
+      text: "Once a forest is gone, it's gone forever. But young couples are delaying marriage because they have no homes. It's a zero-sum game."
+    }
+  },
+  {
+    id: 202,
+    type: 'press_conference',
+    title: "The 'Car-Lite' Friction",
+    description: "Business owners in the CBD are complaining that removing parking lots for cycling paths is killing retail footfall. Is the 'Car-Lite' vision hurting the economy?",
+    image: "microphone_blue",
+    color: "#6366f1", // Connectivity
+    sticker: "car",
+    bonusScore: 400,
+    advisor: {
+      character: "Business Association",
+      text: "Not everyone can cycle to work in 32°C heat. Are we moving too fast with these road repurposing projects?"
+    }
+  },
+  {
+    id: 203,
+    type: 'press_conference',
+    title: "The Long Island Price Tag",
+    description: "Critics argue that the $100 Billion for Long Island reclamation should be spent on healthcare for the elderly instead. Why pour money into the sea?",
+    image: "microphone_cyan",
+    color: "#06b6d4", // Resilience
+    sticker: "money_bag",
+    bonusScore: 600,
+    advisor: {
+      character: "Financial Analyst",
+      text: "It's an intergenerational transfer of wealth. We pay now so our grandchildren don't drown. Can you sell that narrative?"
+    }
+  },
+  {
+    id: 204,
+    type: 'press_conference',
+    title: "NIMBYism & Nursing Homes",
+    description: "Residents in a private estate are blocking the construction of a simplified nursing home nearby, citing 'ambulance noise'. How do you address this lack of empathy?",
+    image: "microphone_orange",
+    color: "#f97316", // Social
+    sticker: "angry_face",
+    bonusScore: 450,
+    advisor: {
+      character: "Social Worker",
+      text: "This is the 'Silver Tsunami' reality. Everyone wants elderly care, just 'Not In My Backyard'. You need to be firm."
+    }
+  },
+  {
+    id: 205,
+    type: 'press_conference',
+    title: "Heritage vs. Efficiency",
+    description: "The 'Old Police Academy' has low plot efficiency. Developers say we could build double the homes if we demolished the heritage barracks. Why keep them?",
+    image: "microphone_purple",
+    color: "#a855f7", // Heritage
+    sticker: "museum",
+    bonusScore: 400,
+    advisor: {
+      character: "Heritage Board",
+      text: "Efficiency isn't everything. These buildings anchor the community's identity. But is that worth losing 500 potential homes?"
+    }
+  },
+  {
+    id: 206,
+    type: 'press_conference',
+    title: "Surveillance City?",
+    description: "Privacy advocates worry that the 'Smart Sensors' for elderly monitoring in HDBs are invasive. Where do you draw the line between safety and surveillance?",
+    image: "microphone_indigo",
+    color: "#6366f1", // Smart City
+    sticker: "cctv",
+    bonusScore: 350,
+    advisor: {
+      character: "Tech Ethics Prof",
+      text: "The road to hell is paved with good intentions. Today it's fall detection, tomorrow it's social scoring?"
+    }
+  },
+  {
+    id: 207,
+    type: 'press_conference',
+    title: "Rooftop Wars",
+    description: "There is limited roof space. Solar panels fight climate change, but rooftop farms ensure food security. Which crisis is more urgent?",
+    image: "microphone_cyan",
+    color: "#06b6d4", // Resilience
+    sticker: "sun",
+    bonusScore: 500,
+    advisor: {
+      character: "Sustainability Chief",
+      text: "Energy vs. Food. Both are critical for the 'Resource Resilience' pillar. You can't have 100% of both."
+    }
+  },
+  {
+    id: 208,
+    type: 'press_conference',
+    title: "The Decentralization Gamble",
+    description: "Firms are hesitant to move to Jurong Lake District because 'all the prestige is in Raffles Place'. How do we break this mindset?",
+    image: "microphone_blue",
+    color: "#3b82f6", // Economy
+    sticker: "briefcase",
+    bonusScore: 550,
+    advisor: {
+      character: "JLD Master Planner",
+      text: "If companies don't move, the trains will remain empty in one direction. We need a 'first mover' to create critical mass."
+    }
+  },
+  {
+    id: 209,
+    type: 'press_conference',
+    title: "Construction Fatigue",
+    description: "Residents in the East have faced 10 years of MRT drilling noise. Now we are announcing the 'Long Island' works. Patience is running thin.",
+    image: "microphone_orange",
+    color: "#f97316", // Social
+    sticker: "construction",
+    bonusScore: 300,
+    advisor: {
+      character: "MP for East Coast",
+      text: "They call it 'progress', residents call it a migraine. How do we mitigate the impact of constant upgrading?"
+    }
+  },
+  {
+    id: 210,
+    type: 'press_conference',
+    title: "Arts as a Luxury?",
+    description: "Refurbishing the Pasir Panjang Power Station for the arts is expensive. Critics say that money should go to utility subsidies instead.",
+    image: "microphone_purple",
+    color: "#a855f7", // Heritage
+    sticker: "palette",
+    bonusScore: 350,
+    advisor: {
+      character: "Arts Council",
+      text: "A 'Happy City' needs culture, not just survival. But it's hard to justify arts funding when cost of living is high."
+    }
+  },
+  {
+    id: 211,
+    type: 'press_conference',
+    title: "The 30% Food Goal",
+    description: "Local fish farms are struggling against cheaper imports. Consumers aren't buying local. Should we force supermarkets to stock local produce?",
+    image: "microphone_cyan",
+    color: "#06b6d4", // Resilience
+    sticker: "fish",
+    bonusScore: 400,
+    advisor: {
+      character: "Agri-Food Agency",
+      text: "Food security isn't free. If we don't support them now, they won't be there when the next global supply chain crisis hits."
+    }
+  },
+  {
+    id: 212,
+    type: 'press_conference',
+    title: "The 'White Elephant' Risk",
+    description: "We are building massive infrastructure for the future population (T5, Tuas Port). What if the global economy shrinks and the people don't come?",
+    image: "microphone_blue",
+    color: "#3b82f6", // Economy
+    sticker: "chart_down",
+    bonusScore: 600,
+    advisor: {
+      character: "Risk Analyst",
+      text: "Planning 50 years ahead is a gamble. If we overbuild, we bankrupt the state. If we underbuild, we stagnate."
+    }
   }
 ];
+
