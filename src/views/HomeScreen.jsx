@@ -1,8 +1,15 @@
 import { format } from 'date-fns';
-import { Building2, Play, Wallet, History, Gift, Trophy } from 'lucide-react';
+import { Building2, Play, Wallet, History, Gift, Trophy, BarChart2 } from 'lucide-react';
+import { SCENARIOS } from '../data/scenarios';
+import { MOCK_LEADERS } from '../data/leaderboardData';
 
-export default function HomeScreen({ onStart, onLeaderboard, storedData }) {
+export default function HomeScreen({ onStart, onLeaderboard, onStats, storedData, onViewReceipt }) {
     const { totalPoints, submissionHistory } = storedData || { totalPoints: 0, submissionHistory: [] };
+
+    // Calculate Rank
+    const combinedList = [...MOCK_LEADERS, { score: totalPoints, isUser: true }];
+    combinedList.sort((a, b) => b.score - a.score);
+    const userRank = combinedList.findIndex(p => p.isUser) + 1;
 
     return (
         <div className="screen" style={{ background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)', padding: '1rem', overflowY: 'auto' }}>
@@ -29,7 +36,7 @@ export default function HomeScreen({ onStart, onLeaderboard, storedData }) {
                         fontSize: '0.8rem',
                         color: '#94a3b8'
                     }}>
-                        Beta v0.2
+                        Beta v0.3
                     </div>
                 </div>
 
@@ -68,18 +75,20 @@ export default function HomeScreen({ onStart, onLeaderboard, storedData }) {
                                 onClick={onLeaderboard}
                                 style={{
                                     background: 'rgba(255,255,255,0.2)',
-                                    padding: '0.75rem',
+                                    padding: '0.75rem 1rem',
                                     borderRadius: '12px',
                                     fontWeight: 700,
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
+                                    gap: '0.5rem',
                                     border: '1px solid rgba(15, 23, 42, 0.3)',
                                     color: '#0f172a',
                                     marginLeft: '0.75rem'
                                 }}
                             >
                                 <Trophy size={20} />
+                                <span style={{ fontSize: '0.9rem' }}>#{userRank}</span>
                             </button>
                         </div>
                     </div>
@@ -123,6 +132,35 @@ export default function HomeScreen({ onStart, onLeaderboard, storedData }) {
                 </div>
             </div>
 
+            {/* Statistics Entry */}
+            <div style={{ paddingBottom: '2rem' }}>
+                <button
+                    onClick={onStats}
+                    style={{
+                        width: '100%',
+                        background: '#1e293b',
+                        padding: '1rem',
+                        borderRadius: '16px',
+                        border: '1px solid #334155',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        color: 'white'
+                    }}
+                >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                        <div style={{ background: 'rgba(59, 130, 246, 0.2)', padding: '8px', borderRadius: '10px' }}>
+                            <BarChart2 size={20} color="#60a5fa" />
+                        </div>
+                        <div style={{ textAlign: 'left' }}>
+                            <div style={{ fontWeight: 600 }}>Global Statistics</div>
+                            <div style={{ fontSize: '0.8rem', color: '#94a3b8' }}>View aggregate decision data</div>
+                        </div>
+                    </div>
+                    <Building2 size={16} color="#475569" />
+                </button>
+            </div>
+
             {/* Audit Log */}
             <div style={{ paddingBottom: '2rem' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem' }}>
@@ -136,15 +174,29 @@ export default function HomeScreen({ onStart, onLeaderboard, storedData }) {
                         </div>
                     ) : (
                         submissionHistory.slice(0, 5).map((entry, i) => (
-                            <div key={i} style={{
-                                background: '#1e293b',
-                                padding: '1rem',
-                                borderRadius: '12px',
-                                border: '1px solid #334155',
-                                display: 'flex',
-                                justifyContent: 'space-between',
-                                alignItems: 'center'
-                            }}>
+                            <div
+                                key={i}
+                                onClick={() => onViewReceipt && onViewReceipt(entry)}
+                                style={{
+                                    background: '#1e293b',
+                                    padding: '1rem',
+                                    borderRadius: '12px',
+                                    border: '1px solid #334155',
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center',
+                                    cursor: 'pointer',
+                                    transition: 'transform 0.2s, background 0.2s'
+                                }}
+                                onMouseEnter={(e) => {
+                                    e.currentTarget.style.transform = 'translateY(-2px)';
+                                    e.currentTarget.style.background = '#334155';
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.currentTarget.style.transform = 'translateY(0)';
+                                    e.currentTarget.style.background = '#1e293b';
+                                }}
+                            >
                                 <div>
                                     <div style={{ fontWeight: 600, fontSize: '0.9rem', color: 'var(--color-text-main)' }}>
                                         #{entry.receiptId || 'PENDING'}

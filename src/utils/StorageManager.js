@@ -2,7 +2,7 @@ const STORAGE_KEY = 'citypulse_data';
 
 export const getStoredData = () => {
   try {
-    const data = localStorage.getItem(STORAGE_KEY);
+    const data = sessionStorage.getItem(STORAGE_KEY);
     return data ? JSON.parse(data) : {
       totalPoints: 0,
       submissionHistory: [], // Array of { date, choices, stats, receiptId }
@@ -32,6 +32,6 @@ export const saveGameResult = (resultData) => {
     lastPlayed: new Date().toISOString()
   };
 
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(newData));
+  sessionStorage.setItem(STORAGE_KEY, JSON.stringify(newData));
   return newData;
 };

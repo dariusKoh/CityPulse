@@ -1,0 +1,304 @@
+﻿URA Master Plan 2025: A Statutory Blueprint for Singapore’s Urban Evolution (2025–2040)
+1. Strategic Context and Executive Framework
+The Urban Redevelopment Authority (URA) Draft Master Plan 2025 (DMP2025), officially gazetted in December 2025 following a rigorous two-year public engagement exercise involving over 250,000 stakeholders, represents the definitive statutory land use plan for Singapore’s next phase of development.1 As the nation approaches its 60th year of independence (SG60), the DMP2025 translates the broad, conceptual strategies of the Long-Term Plan Review (LTPR) into granular, actionable zoning and development parameters for the next 10 to 15 years.3
+This document is not merely a zoning map; it is a strategic manifesto addressing a "trilemma" of constraints unique to the city-state: an ageing demographic requiring inclusive infrastructure, the existential threat of climate change necessitating costly adaptation, and the imperative to sustain economic competitiveness amidst global supply chain reconfiguration. The plan marks a decisive shift from the "expansionist" policies of the past to a philosophy of "optimization, intensification, and stewardship".4
+The structural integrity of the DMP2025 is anchored on four immutable strategic pillars that dictate every land use allocation, plot ratio adjustment, and infrastructure investment 4:
+1. Shaping a Happy, Healthy City: A focus on social inclusivity, expanding housing typologies in central locations, and creating "10-minute neighbourhoods."
+2. Enabling Sustainable Growth: The aggressive decentralization of economic activity to three regional gateways (West, East, North) and the introduction of flexible zoning tools like "Vertical Zoning."
+3. Strengthening Urban Resilience: A comprehensive response to climate risks, prominently featuring the "Long Island" reclamation project and urban heat mitigation strategies.
+4. Stewarding Nature and Heritage: The formalization of "Identity Corridors" and the "Recreation Master Plan" to preserve the nation's soul and historical memory amidst densification.
+The following report provides an exhaustive, forensic analysis of the DMP2025, deconstructing each precinct transformation, policy innovation, and infrastructure project. It synthesizes regulatory data with market implications to offer professional peers—urban planners, real estate investors, and policy analysts—a nuanced understanding of Singapore’s trajectory through the 2030s and 2040s.
+________________
+2. Shaping a Happy, Healthy City: The Residential Revolution
+The most socially significant component of the DMP2025 is the recalibration of residential precincts. The URA has moved beyond simple supply targets to prioritize the quality, location, and inclusivity of housing. A central tenet is the "democratization of prime land," evidenced by the introduction of public housing into historically exclusive districts like Bukit Timah and the Greater Southern Waterfront.
+2.1 Central Area Rejuvenation: The "City Living" Pivot
+The URA aims to aggressively inject a residential population into the Central Area to counteract the "hollowing out" of the CBD after office hours and to optimize the usage of heavy rail infrastructure against the peak-flow tide.
+2.1.1 Marina South: The Sustainable 10-Minute Neighbourhood
+Marina South is envisioned as a prototype for sustainable, high-density urban living, capitalizing on the infrastructure backbone of the Thomson-East Coast Line (TEL).6
+* Scale and Scope: The precinct plans for approximately 10,000 new homes, a mix of private luxury residences and potential public housing models under the Prime Location Public Housing (PLH) model.7
+* The "10-Minute" Concept: The urban design prioritizes pedestrian connectivity, ensuring that residents can access daily amenities, work nodes, and recreational spaces (Gardens by the Bay) within a 10-minute walk or cycle. This reduces reliance on private transport, aligning with the car-lite district designation.8
+* Wind and Heat Resilience: Unlike older CBD clusters, Marina South’s plot configurations are informed by wind flow studies. Building orientations are mandated to channel prevailing winds through the district to mitigate the Urban Heat Island (UHI) effect, a critical resilience feature for high-density tropical living.9
+* Development Activity: Early movers such as One Marina Gardens and W Residences – Marina View are already setting pricing benchmarks, positioning the precinct as an extension of the Marina Bay financial district but with a distinct residential character.10
+2.1.2 Pearl’s Hill: A Hill-to-Hill Urban Sanctuary
+Pearl’s Hill is set for a dramatic renaissance. Historically an underutilized enclave isolated by topography and state institutions, it is being transformed into a vibrant residential node yielding 6,000 new homes.6
+* Strategic Connectivity: The "Hill-to-Hill" green corridor is a defining feature, physically linking Pearl’s Hill City Park to the historic Fort Canning Park. This creates a continuous green spine through the city, offering residents direct access to major recreational zones.11
+* Transport Integration: The precinct anchors onto the Outram Park MRT interchange, now a tri-line hub (EWL, NEL, TEL). A landmark mixed-use development is planned directly atop the MRT station, serving as the commercial and social gateway to the residential clusters on the hill.11
+* Adaptive Reuse: The plan emphasizes the retention of former police operational buildings. These heritage assets will be repurposed for community and lifestyle uses, ensuring that the high-density new builds are grounded in the site's historical context.13
+* Market Implication: This precinct offers a unique value proposition: "hilltop living" in the city center. It provides a quieter, greener alternative to the intense urbanity of Tanjong Pagar while remaining geographically adjacent.12
+2.1.3 Orchard, Newton, and Paterson: The "Urban Village" Evolution
+The DMP2025 introduces the concept of "Urban Villages" to the prime districts of Newton and Paterson, planning for roughly 5,000 and 1,000 new homes respectively.5
+* Monk’s Hill Transformation: A key highlight is the pedestrianization of Monk’s Hill Road into a linear park. Flanked by mature rain trees and conserved heritage buildings, this corridor will serve as the community spine for new housing, fostering social cohesion in a typically fragmented high-end market.14
+* Orchard Road Diversification: The plan accelerates the transition of Orchard Road from a linear retail belt to a mixed-use lifestyle destination. New residential developments in Paterson will bridge the gap between the commercial energy of Orchard and the residential serenity of River Valley.15
+* Vertical Zoning Pilot: These areas will be testbeds for "Vertical Zoning." This allows a single development to stack distinct uses—commercial/retail on lower podiums, active community decks in the mid-levels, and residential towers above. This maximizes land efficiency in the most expensive land value zones.16
+2.2 Heritage-Integrated Brownfield Redevelopment
+A defining feature of DMP2025 is the redevelopment of sensitive "brownfield" sites—large tracts of state land with significant heritage or ecological value returning to the government. The planning approach here is "sensitive integration," balancing yield with preservation.
+2.2.1 Bukit Timah Turf City: A Paradigm of Heritage and Ecology
+The 176-hectare former racecourse is arguably the most significant residential project in the DMP2025, slated to yield 15,000 to 20,000 new homes over the next two decades.17
+* Inclusive Zoning: In a historic move, the URA has designated this prime district for a mix of private and public housing—marking the first HDB flats in Bukit Timah in 40 years.17 This signals a strong policy intent to mitigate social stratification and the "enclave" effect in wealthy districts.
+* Heritage Preservation: The site’s identity is preserved through the conservation of 22 heritage buildings, including the iconic Grandstand (likely repurposed for lifestyle/retail) and the old stable blocks (potential community use). The original race track footprint may be retained as a central recreational oval.17
+* Ecological Corridors: Recognizing the site's biodiversity, large forested zones at Bukit Tinggi and Eng Neo Avenue are retained as ecological corridors. The development underwent a rigorous Environmental Impact Assessment (EIA) to minimize disruption to flora and fauna connectivity between the Central Catchment Nature Reserve and surrounding green patches.18
+* Infrastructure Catalyst: The estate will be anchored by the future Turf City MRT station on the Cross Island Line (CRL), scheduled for completion in 2032. This provides the necessary capacity to support high-density housing without overwhelming the existing road network (Dunearn/Bukit Timah Road).17
+2.2.2 Mount Pleasant: Heritage in Nature
+Located on the site of the Old Police Academy, Mount Pleasant will provide approximately 5,000 new homes, with the first BTO launch scheduled for October 2025.6
+* Heritage Anchors: The estate is designed around four conserved colonial-era buildings from the Old Police Academy. These structures will serve as community clubs or heritage galleries, acting as the "heart" of the new town.20
+* Topography and Mobility: The design respects the undulating terrain of the area. It focuses on "active mobility," with reduced vehicular traffic and enhanced cycling paths connecting residents directly to the Central Catchment Nature Reserve and the Thomson-East Coast Line (Mount Pleasant station).20
+* Market Positioning: As a "Prime" location public housing estate, it creates a unique housing product—HDB living within a heritage, low-density bungalow enclave context.
+2.3 The Greater Southern Waterfront (GSW): From Vision to Reality
+The GSW, a massive 2,000-hectare project (six times the size of Marina Bay), begins its tangible transformation under DMP2025, moving from conceptual master planning to active construction.20
+2.3.1 Berlayar Estate (Former Keppel Club)
+* Development Scale: The site will yield approximately 10,000 homes (7,000 public, 3,000 private).21 The first BTO project, Berlayar Residences, launched in October 2025, features a 14% subsidy clawback (Prime model), reflecting its premium location.22
+* "Green and Blue" Integration: The estate is designed with a "Green and Blue" plan that seamlessly integrates housing with the coastline and the adjacent Labrador Nature Reserve. A new "Pasir Panjang Linear Park" will connect West Coast Park to Labrador Nature Reserve, ensuring continuous public waterfront access.23
+* Historical Grounding: The name "Berlayar" references the historic "Batu Berlayar" (Sailing Rock) navigational marker, grounding the new town in the area’s maritime history.21
+* Timeline: While the first launch occurred in 2025, the full build-out will occur progressively over 5-10 years, serving as the residential anchor for the western sector of the GSW.24
+2.3.2 Pasir Panjang Power District
+* Adaptive Reuse Vision: The decommissioned power district is reimagined as a vibrant mixed-use waterfront district. The DMP2025 emphasizes lifestyle, arts, and creative industries here.20
+* Industrial Heritage: The massive turbine halls of the former power station offer unique spatial qualities suitable for large-scale art installations (akin to London’s Tate Modern), convention spaces, or creative offices. This creates a cultural counterweight to the commercial density of the CBD.
+2.4 New Heartland Precincts: Expanding the Outer Core
+To support population growth and alleviate housing demand, DMP2025 activates several new precincts in the Outside Central Region (OCR) and Rest of Central Region (RCR).
+Table 1: Key New Heartland Precincts in DMP2025
+
+
+Precinct
+	Region
+	Est. Units
+	Key Features & Strategic Rationale
+	Sources
+	Chencharu
+	North (Yishun)
+	10,000
+	Concept: A "heritage-themed" estate retaining a 100-year-old colonial bungalow for community use.
+
+
+Connectivity: Features a bus-only corridor (Chencharu Link) for rapid connection to Khatib MRT.
+
+
+Status: First BTO launched June 2024.
+	25
+	Bayshore
+	East
+	12,500
+	Concept: A "Waterfront Urban Village" (7k HDB, 3k Private).
+
+
+Design: Car-lite district with a central "Bayshore Drive" main street lined with amenities, cafes, and pedestrian priority zones.
+
+
+Connectivity: Directly linked to the new Bayshore MRT (TEL).
+	14
+	Springleaf
+	North
+	Mixed
+	Transformation: Shifts a low-rise landed enclave into a mixed-density precinct near Springleaf MRT (TEL).
+
+
+Ecology: Includes biodiversity-sensitive condos and adaptive reuse of the old Upper Thomson Secondary School.
+	29
+	Holland Plain
+	Central
+	~2,500
+	Quality: A high-quality residential precinct featuring wetland parks and water management features.
+
+
+Connectivity: Located near King Albert Park MRT.
+	32
+	Dover-Medway
+	West
+	Mixed
+	Function: Supports the one-north technology hub. Provides housing options for the 50,000 knowledge workers in the area, reducing commute times.
+	5
+	________________
+3. Enabling Sustainable Growth: The Economic Gateways
+DMP2025 aggressively pursues polycentricity. By developing distinct economic gateways in the West, East, and North, the URA aims to bring jobs closer to homes (decentralization), reduce cross-island travel strain, and foster distinct industrial ecosystems tailored to specific sectors.
+3.1 The Western Gateway: The Industrial & Innovation Powerhouse
+The West remains the heavy lifter of Singapore’s economy, anchoring advanced manufacturing and the "Second CBD."
+3.1.1 Jurong Lake District (JLD): The Second CBD
+* Strategic Targets: The JLD is targeted to create 100,000 new jobs and 20,000 new homes by 2040-2050, functioning as the largest business hub outside the central city.5
+* Market Recalibration: Following a tepid market response to a massive "Master Developer" white site tender in 2024 (which saw a bid rejected for being too low), the URA recalibrated its strategy for DMP2025. The plan now releases smaller, lower-risk parcels (e.g., Town Hall Link) to catalyze development progressively, rather than attempting a single mega-tender.36
+* Connectivity Matrix: The district’s viability is underpinned by the Jurong Region Line (JRL) (completion ~2029) and the Cross Island Line (CRL) (completion ~2032). The future West Coast Extension will eventually link JRL to the Circle Line, closing the loop for the western sector.5
+3.1.2 Jurong Innovation District (JID) & Tuas Port
+* Synergy: The JID functions as an advanced manufacturing hub, integrating the production value chain with research capabilities from Nanyang Technological University (NTU).
+* Logistics Backbone: The consolidation of all port activities to the Tuas Mega Port (fully operational by the 2040s) is the critical enabler for the Greater Southern Waterfront, freeing up the Tanjong Pagar and Pasir Panjang terminals for redevelopment.20
+3.2 The Eastern Gateway: Aviation & Logistics
+The East is defined by its connection to the world via Changi and the massive unlocking of land from the airbase relocation.
+3.2.1 Changi Region & Terminal 5 (T5)
+* Changi East Urban District: This new zone is planned to support the future Terminal 5. It will host new industrial zones specifically for aviation-related logistics and Maintenance, Repair, and Overhaul (MRO) activities.27
+* Cargo Expansion: The expansion of cargo facilities aims to increase handling capacity from 3 million to 5.4 million tonnes per annum, reinforcing Singapore’s status as a key air cargo hub.38
+* Rail Connection: The Cross Island Line (CRL) will extend to serve T5 directly, integrating the airport with the heartlands and the JLD, facilitating labor mobility across the island.15
+3.2.2 Paya Lebar Air Base (PLAB): The "Long-Term" Giant
+PLAB represents the most significant long-term land unlock in the DMP2025, with relocation starting in the 2030s.
+* Scale of Transformation: The 800-hectare site (larger than Ang Mo Kio town) will yield approximately 150,000 new homes.14
+* Immediate Impact (Height Limits): While the town itself is a 2030s project, the immediate benefit detailed in DMP2025 is the lifting of building height restrictions in surrounding towns (Hougang, Marine Parade, Punggol). This unlocks massive redevelopment potential (en-bloc) for older low-rise estates previously capped by the flight path.28
+* Heritage Design: The 3.8km runway will be retained as a central "identity corridor" and public space, serving as the central spine for the new town, similar to the preservation of the Turf City race track.41
+3.3 The Northern Gateway: Connectivity & Innovation
+The North is repositioned as the strategic interface with Malaysia and a hub for agri-tech innovation.
+3.3.1 Woodlands Regional Centre
+* Cross-Border Catalyst: The Rapid Transit System (RTS) Link to Johor Bahru (operational by end-2026) transforms Woodlands into a true cross-border hub. This infrastructure is expected to catalyze a "twin-city" economic relationship.43
+* Economic Focus: The gateway targets the Johor-Singapore Special Economic Zone (JS-SEZ) synergy, attracting Headquarters (HQs) of companies that maintain manufacturing bases in Johor but require Singapore’s financial and legal services.16
+3.3.2 Sungei Kadut Eco-District & Agri-Food Innovation Park
+* Industrial Revitalization: Old, heavy industrial estates are being rezoned for high-tech agri-food industries, including vertical farming and alternative protein production. This directly supports Singapore’s "30 by 30" food security goal (producing 30% of nutritional needs locally by 2030).46
+* Sembawang Shipyard: Post-2028, this site will be redeveloped into a mixed-use waterfront lifestyle precinct, preserving its maritime history while creating a new coastal destination in the North.5
+3.4 Policy Innovation: Vertical Zoning & White Sites
+To maximize land efficiency in a maturing city, DMP2025 formalizes "Vertical Zoning" in industrial and commercial estates.
+* The Concept: A single development can now house light industrial uses (ground floors/basement), co-working/office spaces (mid-floors), and residential units or amenities (upper floors).
+* Target Areas: This zoning is being piloted in the Jurong Lake District, Punggol Digital District, and Kolam Ayer.42
+* Strategic Benefit: This creates a buffer between industrial noise and living spaces while intensifying land use. It supports the "Business-White" classification, allowing developers greater flexibility to toggle the mix of uses based on market demand cycles.50
+________________
+4. Strengthening Urban Resilience: Climate, Water, and Heat
+Singapore’s existential battle with climate change takes center stage in DMP2025. The plan moves from mitigation to aggressive, large-scale adaptation engineering.
+4.1 "Long Island": A Multi-Functional Defense Infrastructure
+The "Long Island" project is arguably the most ambitious engineering feat proposed in the master plan, reviving and expanding a concept first mooted in 1991.
+* Scope and Design: The project involves the reclamation of three massive tracts of land off the East Coast, creating approximately 800 hectares of new land mass.52
+* Primary Function (Coastal Protection): Its critical role is to act as a barrier against rising sea levels, protecting the low-lying East Coast and Katong areas from inundation.53
+* Secondary Function (Water Security): The reclamation will create a new freshwater reservoir (Singapore’s 18th) between the new land and the existing coast, significantly enhancing national water self-sufficiency.54
+* Tertiary Function (Housing & Recreation): The new land will host waterfront housing and approximately 20km of new coastal parks, effectively duplicating and expanding the beloved East Coast Park experience.53
+* Status: Technical studies and site investigations commenced in 2024/2025. Actual reclamation is a long-term project stretching over decades, but the planning parameters are crystallized in DMP2025.55
+4.2 Urban Heat Resilience: Cooling the Concrete Jungle
+With rising temperatures exacerbating the Urban Heat Island (UHI) effect, DMP2025 mandates specific design interventions to ensure liveability.
+* Wind Corridors: New estates like Lentor Hills and Marina South are designed using computational fluid dynamics (CFD) and wind flow modeling. This ensures that prevailing wind channels are preserved and penetrate deep into the city to flush out stagnant heat.9
+* Material Science & Design: Strategies include the mandatory use of "cool paints" on facades, varying building heights to prevent air trapping, and maximizing "skyrise greenery." For example, thermal analysis of Paya Lebar Quarter showed that lush planting lowered temperatures by 8-9°C in unshaded areas.9
+* Data-Driven Planning: The plan integrates data from the "Cooling Singapore" research project to set specific thermal comfort targets for new precincts, moving heat mitigation from a "nice-to-have" to a regulatory requirement.56
+________________
+5. Stewarding Nature and Heritage: Identity & Recreation
+DMP2025 recognizes that a dense city must be "endearing" to retain talent and foster national belonging. This involves preserving the "soul" of Singapore through Identity Corridors and the Recreation Master Plan.
+5.1 The Five Identity Corridors
+URA has designated five corridors that possess unique historical or streetscape qualities. The plan introduces specific urban design guidelines to preserve their character while allowing for intensification.57
+Table 2: The Five Identity Corridors
+
+
+Corridor
+	Key Areas
+	Specific Interventions & Plans
+	Sources
+	Historic East
+	Geylang Rd, Changi Rd, East Coast Rd
+	Preservation: Strict conservation of the low-rise shophouse streetscape.
+
+
+Mobility: Enhancing walkability and cycling paths from Old Airport Road to Bayshore to encourage "slow travel" through the heritage belt.
+	57
+	Thomson-Kallang
+	Kallang River, Thomson Road
+	Character: Focus on the riverine identity.
+
+
+Action: New public spaces and "active mobility" paths along the Kallang River, improving access to the water.
+	57
+	Inner Ring
+	Zion, Kim Seng, Scotts, Newton, Balestier
+	Connectivity: Enhancing walkability in these dense city-fringe districts.
+
+
+Intervention: Repurposing road lanes on Zion Road for wider cycling paths/pedestrian malls to connect Tiong Bahru, Jalan Besar, and Newton.
+	57
+	Rail Corridor
+	North-South spine
+	Expansion: Continued enhancement of community nodes and access points (e.g., at Buona Vista, Kranji). Integration with new housing at Queensway.
+	57
+	Southern Ridges
+	Mount Faber, Telok Blangah
+	Visuals: Protecting the hill-to-coast visual links. Strengthening the pedestrian connection to the Greater Southern Waterfront.
+	57
+	5.2 The Recreation Master Plan
+Launched in conjunction with DMP2025, this sub-plan aims to activate underutilized spaces to cater to diverse "Recreation Archetypes" (e.g., Nature Lovers, Active Warriors).61
+* Space Activation: The plan identifies "dead spaces" for activation, such as utilizing areas under MRT viaducts (e.g., the Viadukt project at Jurong) and rooftops of multi-storey car parks for sports, urban farming, and community uses.62
+* Poly-centric Leisure: Developing tourism and leisure anchors outside Sentosa. Key projects include the rustic trails at Changi Point and the new Science Centre in the Jurong Lake District, distributing recreational footfall across the island.14
+5.3 Nature Networks and Connectivity
+* Kranji Nature Corridor: This new corridor connects the Mandai Mangrove and Mudflat Nature Park with the Central Catchment Nature Reserve. It ensures ecological connectivity amidst the redevelopment of the Turf Club, allowing wildlife to navigate the changing landscape.64
+* Khatib Bongsu: Designated as a future nature park, this area will preserve the mangrove heritage in the North, serving as a green lung for the expanding residential population in Yishun/Simpang.
+________________
+6. Connectivity: The Nervous System
+DMP2025 coordinates land use with the completion of major rail projects, ensuring that density is always matched with capacity.
+Rail Timeline & Impact:
+* Thomson-East Coast Line (TEL): Fully operational by 2025, this line activates the East Coast (Bayshore, Marine Parade) and North (Springleaf, Woodlands South), driving the "main street" developments in these areas.15
+* Jurong Region Line (JRL): (Completion 2027-2029) The spine of the West, essential for the viability of JLD, JID, and the car-lite Tengah town.37
+* Cross Island Line (CRL): (Phase 1 by 2030, Phase 2 by 2032). This is the "game changer" for DMP2025. It cuts travel time from East (Changi/Pasir Ris) to West (JLD/Clementi) and is the prerequisite for unlocking the Turf City development (via Turf City Station).5
+* Active Mobility: Implementation of "Transit Priority Corridors" (e.g., Zion Road, Robinson Road) where road lanes are permanently repurposed for busways and widened cycling paths, reinforcing the car-lite ethos.60
+________________
+7. Market Analysis and Investment Implications
+The structural shifts in DMP2025 create clear "winners" in the real estate market, altering traditional investment axioms.
+7.1 Residential Hotspots
+* The "Gap" Opportunity: Market analysts (DBS, Knight Frank) point to the narrowing price gap between the Core Central Region (CCR) and the Rest of Central Region (RCR). DMP2025’s rejuvenation of Orchard, Newton, and Pearl’s Hill is expected to restore the premium of the CCR, making it a value buy in 2025/2026 as the "city living" trend accelerates.28
+* The "Transformation" Premium: Properties near Turf City, Bayshore, and Great World/Havelock are expected to see significant capital appreciation. This is driven by the massive infrastructure injection (MRT + amenities) transforming these areas from "transit-adjacent" to "transit-integrated" hubs.10
+* En-Bloc Potential: The PLAB height relaxation (taking effect post-2030) puts older freehold condos in Hougang and Paya Lebar on the radar for long-term land banking. The ability to build higher in the future adds intrinsic value to the land component of these aging assets.40
+7.2 Commercial & Retail
+* Decentralization Risks: The continued massive supply of office space in JLD and Punggol Digital District may soften rental growth in the traditional CBD B-grade offices. This will force older CBD assets to redevelop into mixed-use (Living/Hotel) under the CBD Incentive Scheme to survive.68
+* Retail Evolution: The shift to "lifestyle hubs" in Orchard means landlords must pivot from pure retail to "experiential" concepts. The vertical zoning allowances provide the flexibility to introduce non-retail uses (e.g., co-living, wellness) into shopping malls, revitalizing the tenant mix.6
+7.3 Industrial
+* High-Spec Demand: With "Vertical Zoning," there is a growing demand for high-spec industrial spaces that feel like offices (Business-White), particularly in One-North and Kallang Alive. These assets appeal to the tech and biomedical sectors that require cleaner, more central operations.51
+________________
+8. Conclusion: A Master Plan for an Evolving Nation
+The URA Master Plan 2025 is a sophisticated, data-driven response to the complex challenges of the 21st century. It moves Singapore away from a utilitarian "garden city" model to a "city in nature" that is structurally polycentric and socially inclusive.
+For stakeholders, the implications are profound:
+* Residents gain access to more diverse housing options (Prime/Plus models) and amenities closer to home, breaking the binary of "HDB vs. Private" and "Central vs. Heartland."
+* Investors must look beyond traditional location metrics and analyze "transformation stories"—the value unlocked by new lines (CRL) and new precincts (Turf City, Bayshore).
+* Businesses are strongly encouraged to decentralize, leveraging the cost efficiencies of the Northern and Western Gateways while tapping into new talent pools living in these emerging regional centres.
+As implementation begins in 2026, the success of DMP2025 will hinge on the delicate execution of these mega-projects—building the future without losing the heritage and green soul that defines the Singaporean identity.
+Works cited
+1. URA gazettes Master Plan 2025 following public engagement exercise - Singapore Property News - EdgeProp, accessed on January 16, 2026, https://www.edgeprop.sg/property-news/ura-gazettes-master-plan-2025-following-public-engagement-exercise
+2. URA Public Exhibition of Draft Master Plan 2025 - SG60, accessed on January 16, 2026, https://www.sg60.gov.sg/ura-public-exhibition-of-draft-master-plan-2025/
+3. URA's Draft Master Plan 2025 to guide Singapore's land use, development for next decade, accessed on January 16, 2026, https://www.youtube.com/watch?v=0pzZ7X_Gk-Q
+4. Themes | URA Master Plan, accessed on January 16, 2026, https://www.uradraftmasterplan.gov.sg/themes/
+5. The URA Master Plan 2025: Your Ultimate Guide to Singapore's Future Property Hotspots and Value Growth | Aesthetic Havens, accessed on January 16, 2026, https://aesthetichavens.com.sg/blog/the-ura-master-plan-2025-your-ultimate-guide-to-singapores-future-property-hotspots-and-value-growth/
+6. Paya Lebar Air Base Redevelopment: Driving Singapore's East Growth Wave - Lemon8-app, accessed on January 16, 2026, https://www.lemon8-app.com/@yeoswhatup/7568153324394938888?region=sg
+7. URA Draft Master Plan 2025: What Singapore is looking forward to - 99.co, accessed on January 16, 2026, https://www.99.co/singapore/insider/ura-draft-master-plan-2025/
+8. Bukit Timah Turf City | URA Master Plan, accessed on January 16, 2026, https://www.uradraftmasterplan.gov.sg/regional-plans/central-region/bukit-timah-turf-city/
+9. A Cool City in a Warming World | URA Master Plan, accessed on January 16, 2026, https://www.uradraftmasterplan.gov.sg/themes/strengthening-urban-resilience/a-cool-city-in-a-warming-world/
+10. Latest Property Insights | SRI - Singapore Realtors Inc., accessed on January 16, 2026, https://www.sri.sg/insights
+11. Enhancing City Neighbourhoods | URA Master Plan, accessed on January 16, 2026, https://www.uradraftmasterplan.gov.sg/regional-plans/central-area/enhancing-city-neighbourhoods/
+12. URA's 2025 Draft Master Plan: 80,000 New Homes Across 10 Estates — Here's What To Look Out For, accessed on January 16, 2026, https://stackedhomes.com/ura-draft-masterplan-2025/
+13. 2025 Draft Master Plan: New CCR Precincts on the Horizon – What's in Store? | ERA Singapore Property Blog, accessed on January 16, 2026, https://www.era.com.sg/blogs/2025-draft-master-plan-new-ccr-precincts
+14. Singapore URA Draft Master Plan 2025: New Housing Clusters, Land Rezoning & Key Transformation Areas Announced, accessed on January 16, 2026, https://darrenong.sg/blog/singapore-ura-draft-master-plan-2025-new-housing-clusters-land-rezoning-key-transformation-areas-announced/
+15. The URA Draft Masterplan 2025 review | by yuuka | From the Red Line - Medium, accessed on January 16, 2026, https://medium.com/from-the-red-line/the-ura-draft-masterplan-2025-review-b1b4820e7944
+16. Singapore issues its draft master plan 2025 - Reed Smith LLP, accessed on January 16, 2026, https://www.reedsmith.com/articles/singapore-issues-its-draft-master-plan-2025/
+17. Turf City Redevelopment 2025 – Everything You Need to Know - Turf City Condos - New Launches in Bukit Timah, accessed on January 16, 2026, https://turfcitycondos.com/turf-city-redevelopment-2025-everything-you-need-to-know/
+18. Planning With the Environment in Mind - HDB, accessed on January 16, 2026, https://www.hdb.gov.sg/about-us/our-role/smart-and-sustainable-living/Planning-with-the-Environment-in-mind
+19. Jurong Lake District Master Plan | URA Key Updates, accessed on January 16, 2026, https://lakesidedriveresidences.sg/jurong-lake-district-masterplan/
+20. Vibrant City Living for All - URA Master Plan, accessed on January 16, 2026, https://www.uradraftmasterplan.gov.sg/regional-plans/central-region/vibrant-city-living-for-all/
+21. HDB Unveils Masterplan for Berlayar Estate: Harbourfront Living Close to Nature, accessed on January 16, 2026, https://www.hdb.gov.sg/about-us/news-and-publications/press-releases/hdb-unveils-masterplan-for-berlayar-estate
+22. Bukit Merah Prime BTO 2026: Berlayar & Redhill Peaks Guide - RCS Renovation Contractor Singapore, accessed on January 16, 2026, https://renovationcontractorsingapore.com/blogs/news/berlayar-residences-redhill-peaks-bto-bukit-merah-guide
+23. Greater Southern Waterfront URA Master Plan Information - Terra Hill Condo, accessed on January 16, 2026, https://terra-hill.sg/waterfront-ura-masterplan/
+24. First BTO at Greater Southern Waterfront drops this October with 46-storey blocks & nature views - 99.co, accessed on January 16, 2026, https://www.99.co/singapore/insider/first-bto-greater-southern-waterfront-october-2025/
+25. Chencharu Green - HDB'S SALES LAUNCH FEBRUARY 2025, accessed on January 16, 2026, https://assets.hdb.gov.sg/residential/buying-a-flat/finding-a-flat/sales-brochure/25FEBBTO_pdf_selection/chencharu_green.pdf
+26. Liveable and Inclusive Neighbourhoods | URA Master Plan, accessed on January 16, 2026, https://www.uradraftmasterplan.gov.sg/themes/shaping-a-happy-healthy-city/liveable-and-inclusive-neighbourhoods/
+27. URA 2025 Draft Master Plan: 6 Under The Radar Changes You May Have Missed, accessed on January 16, 2026, https://stackedhomes.com/ura-2025-master-plan-6-missed-changes/
+28. Unlocking Value: The Top 5 Undervalued Singapore Neighbourhoods for Property Investment in 2025 | Aesthetic Havens, accessed on January 16, 2026, https://aesthetichavens.com.sg/blog/guide-to-singapores-top-5-undervalued-property-hotspots-in-2025/
+29. The New Bid at Springleaf: What the Latest Upper Thomson Land Sale Means for Prices, Demand, and the Future of District 26, accessed on January 16, 2026, https://www.springleaf-residences.com.sg/2025/11/20/the-new-bid-at-springleaf-what-the-latest-upper-thomson-land-sale-means-for-prices-demand-and-the-future-of-district-26/
+30. Springleaf is Shedding Its 'Landed-Only' Identity – So, How Will It Change? | ERA Singapore Property Blog, accessed on January 16, 2026, https://www.era.com.sg/blogs/springleaf-image-change
+31. Springleaf Residence Launches From $878K — Is This 941-Unit Mega Development Worth It? - Stacked Homes, accessed on January 16, 2026, https://stackedhomes.com/springleaf-mega-launch-941-units-from-878k/
+32. URA unleashes 9 GLS sites – 4,575 private homes on the way - 99.co, accessed on January 16, 2026, https://www.99.co/singapore/insider/1h2026-gls-programme/
+33. Holland Plain GLS | Upcoming New Launch | Call 68643300 Now - Property Review SG, accessed on January 16, 2026, https://propertyreviewsg.com/holland-plain-gls/
+34. The URA Master Plan Can Make Or Break Your Property's Potential: Why You Need To Pay Attention, accessed on January 16, 2026, https://stackedhomes.com/the-ura-master-plan-can-make-or-break-your-propertys-potential-why-you-need-to-pay-attention/
+35. At least 80,000 public, private homes planned in more than 10 areas over next 10 to 15 years | The Straits Times, accessed on January 16, 2026, https://www.straitstimes.com/singapore/housing/at-least-80000-public-private-homes-planned-in-more-than-10-areas-over-next-10-15-years
+36. What's Next for Singapore's West Region? 3 Major Developments Bringing Out Its Best, accessed on January 16, 2026, https://www.era.com.sg/blogs/whats-next-for-singapores-west-region-3-major-developments-bringing-out-its-best
+37. More Convenient and Connected Homes | URA Master Plan, accessed on January 16, 2026, https://www.uradraftmasterplan.gov.sg/regional-plans/west/more-convenient-and-connected-homes/
+38. Changi's expansion fuels new industrial opportunities - JLL, accessed on January 16, 2026, https://research.jllapsites.com/changis-expansion-fuels-new-industrial-opportunities/
+39. Relocation of Paya Lebar Airbase: Impact on Lorong Chuan - Joyce Tai Property, accessed on January 16, 2026, https://www.joycetaiproperty.sg/lorong-chuan/relocation-of-paya-lebar-airbase-lorong-chuan/
+40. Higher height limits a game changer for redevelopment potential in areas around Singapore airports: analysts - The Business Times, accessed on January 16, 2026, https://www.businesstimes.com.sg/property/higher-height-limits-game-changer-redevelopment-potential-areas-around-singapore-airports-analysts
+41. Draft Master Plan 2025 - Singapore - OrangeTee, accessed on January 16, 2026, https://www.orangetee.com/ResearchHubFiles/Items/375/20250727132243-348fba6a1.pdf
+42. The URA Master Plan 2025: A glimpse into Singapore's future - 99.co, accessed on January 16, 2026, https://www.99.co/singapore/insider/ura-master-plan-2025/
+43. Woodlands North Coast BTO: RTS Link & Renovation Guide | RCS - Helping You Renovate Stress-Free - RCS Renovation Contractor Singapore, accessed on January 16, 2026, https://renovationcontractorsingapore.com/blogs/news/woodlands-north-coast-bto-rts-link-renovation-guide
+44. Transforming Woodlands: Singapore's northern gateway is all set for major development - 99.co, accessed on January 16, 2026, https://www.99.co/singapore/insider/woodlands-development-plan/
+45. Norwood Grand: Redefining Luxury in Singapore's Northern Gateway | Aesthetic Havens, accessed on January 16, 2026, https://aesthetichavens.com.sg/blog/norwood-grand-redefining-luxury-in-singapores-northern-gateway/
+46. SHAPING FUTURE CENTRAL BUSINESS DISTRICTS:, accessed on January 16, 2026, https://isomer-user-content.by.gov.sg/50/0450c4b5-c1e6-4104-ae4f-d324279fc25a/Shaping%20Future%20Central%20Business%20Districts.pdf
+47. Guide For Singapore Property Buyers, Sellers And Businesses To Understand And Use The URA Master Plan - DollarsAndSense.sg, accessed on January 16, 2026, https://dollarsandsense.sg/complete-guide-property-buyers-decipher-ura-master-plan/
+48. URA Draft Master Plan 2025: What's next for Singapore? A quick guide for you, accessed on January 16, 2026, https://www.homeanddecor.com.sg/property/hdb/ura-draft-master-plan-2025
+49. From runway to work, rest and play – reimagining Singapore's airport - MODUS | RICS, accessed on January 16, 2026, https://ww3.rics.org/uk/en/modus/built-environment/urbanisation/singapore-airport-redevelopment.html
+50. SG60: Reading between the lines of the Draft Master Plan 2025 | The Straits Times, accessed on January 16, 2026, https://www.straitstimes.com/singapore/sg60-reading-between-the-lines-of-the-draft-master-plan-2025
+51. FUTURE READY - ESR-REIT, accessed on January 16, 2026, https://esr-reit.listedcompany.com/newsroom/20230404_075452_J91U_RVE7OBC4NSYTD0YM.1.pdf
+52. From new homes to a new 'island': 7 things about Singapore's long-term plan for next 50 years | The Straits Times, accessed on January 16, 2026, https://www.straitstimes.com/singapore/from-new-homes-to-a-new-island-7-things-about-singapores-long-term-plan-for-next-50-years
+53. A Flood Resilient City & Coast | URA Master Plan, accessed on January 16, 2026, https://www.uradraftmasterplan.gov.sg/themes/strengthening-urban-resilience/a-flood-resilient-city-and-coast/
+54. Box Story: The Long Island Project | Centre for Liveable Cities Knowledge Hub, accessed on January 16, 2026, https://knowledgehub.clc.gov.sg/liveability-in-action/box-story--the-long-island-project/
+55. Works to guide planning of Long Island start in August, with vessels deployed off East Coast Park | The Straits Times, accessed on January 16, 2026, https://www.straitstimes.com/singapore/environment/works-to-guide-planning-of-long-island-start-in-august-with-vessels-deployed-off-east-coast-park
+56. City of Possibilities - Singapore Pavilion: Expo 2025 Osaka, Kansai, Japan, accessed on January 16, 2026, https://expo2025singapore.sg/experience/city-of-possibilities/
+57. URA Master Plan 2025: 5 Key Future Changes You Need To Know - Stacked Homes, accessed on January 16, 2026, https://stackedhomes.com/ura-master-plan-2025-5-key-future-changes-you-need-to-know/
+58. Introduction | URA Master Plan, accessed on January 16, 2026, https://www.uradraftmasterplan.gov.sg/themes/stewarding-nature-and-heritage/identity-corridors/introduction/
+59. Historic East | URA Master Plan, accessed on January 16, 2026, https://www.uradraftmasterplan.gov.sg/themes/stewarding-nature-and-heritage/identity-corridors/historic-east/
+60. Inner Ring | URA Master Plan, accessed on January 16, 2026, https://www.uradraftmasterplan.gov.sg/themes/stewarding-nature-and-heritage/identity-corridors/inner-ring/
+61. Playful Spaces, Joyful Places - URA Master Plan, accessed on January 16, 2026, https://www.uradraftmasterplan.gov.sg/themes/shaping-a-happy-healthy-city/playful-spaces-joyful-places/
+62. Ura Gazettes Master Plan 2025 Following Public Engagement Exercise - Bedok Rise Condo, accessed on January 16, 2026, https://www.bedokrise.condo.com.sg/ura-gazettes-master-plan-2025-following-public-engagement-exercise/
+63. Commentary: Singapore is getting serious about recreation - CNA, accessed on January 16, 2026, https://www.channelnewsasia.com/commentary/singapore-work-play-live-recreation-ura-master-plan-viaduct-rooftop-4302846
+64. URA's Draft Master Plan 2025: Change is Coming, But Where and How Exactly? | ERA Singapore Property Blog, accessed on January 16, 2026, https://www.era.com.sg/blogs/ura-draft-master-plan-2025
+65. Cross Island Line - Wikipedia, accessed on January 16, 2026, https://en.wikipedia.org/wiki/Cross_Island_Line
+66. Singapore's H2 2025 Condo Hotspots: New Launches & URA Master Plan Catalysts | Aesthetic Havens, accessed on January 16, 2026, https://aesthetichavens.com.sg/blog/singapores-h2-2025-condo-hotspots-new-launches-ura-master-plan-catalysts/
+67. Suburban projects, mixed-use developments take centrestage in new launches of 2026 - Singapore Property News - EdgeProp, accessed on January 16, 2026, https://www.edgeprop.sg/property-news/suburban-projects-mixed-use-developments-take-centrestage-new-launches-2026
+68. 25 Insight Singapore Master Plan | PDF | Urban Planning | Mixed Use Development - Scribd, accessed on January 16, 2026, https://www.scribd.com/document/973384530/25-Insight-Singapore-Master-Plan

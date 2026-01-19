@@ -1,12 +1,13 @@
 import { motion, useMotionValue, useTransform, useAnimation, useMotionTemplate } from 'framer-motion';
-import { useRef } from 'react';
-import { Info, Check, X, ArrowRight, ArrowLeft } from 'lucide-react';
+import { useRef, useState } from 'react';
+import { Info, Check, X, ArrowRight, ArrowLeft, MessageSquarePlus } from 'lucide-react';
 
-export default function SwipeCard({ card, onSwipe, onAdvisorClick }) {
+export default function SwipeCard({ card, onSwipe, onAdvisorClick, isBonusActive, onBonusSubmit }) {
     const controls = useAnimation();
     const x = useMotionValue(0);
     const constrainedX = useTransform(x, [-200, 200], [-150, 150]);
     const rotate = useTransform(x, [-200, 200], [-25, 25]);
+    const [bonusText, setBonusText] = useState('');
 
     // Radial Reveal Logic
     const yesRadius = useTransform(x, [0, 150], [0, 150]);
@@ -47,7 +48,7 @@ export default function SwipeCard({ card, onSwipe, onAdvisorClick }) {
                 cursor: 'grab',
                 zIndex: 10
             }}
-            whileTap={{ cursor: 'grabbing', scale: 1.05 }}
+            whileTap={{ cursor: 'grabbing' }}
         >
             <div style={{
                 width: '100%',
@@ -65,6 +66,7 @@ export default function SwipeCard({ card, onSwipe, onAdvisorClick }) {
                 {/* Optional Advisor Button */}
                 {card.advisor && (
                     <button
+                        onPointerDown={(e) => e.stopPropagation()} // Stop drag
                         onClick={(e) => {
                             e.stopPropagation();
                             onAdvisorClick && onAdvisorClick();
@@ -89,13 +91,14 @@ export default function SwipeCard({ card, onSwipe, onAdvisorClick }) {
 
                 {/* Card Image Placeholder */}
                 <div style={{
-                    height: '55%',
+                    height: isBonusActive ? '45%' : '55%', // Shrink image if bonus active
                     background: card.color || '#64748b',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     position: 'relative',
-                    overflow: 'hidden'
+                    overflow: 'hidden',
+                    transition: 'height 0.3s ease'
                 }}>
                     {/* Visual Feedback Overlays - Radial Reveal */}
 
@@ -128,13 +131,69 @@ export default function SwipeCard({ card, onSwipe, onAdvisorClick }) {
 
                 {/* Content */}
                 <div style={{ padding: '1.5rem', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                    <h2 style={{ fontSize: '1.5rem', marginBottom: '0.5rem', lineHeight: 1.2 }}>{card.title}</h2>
-                    <p style={{ color: '#94a3b8', fontSize: '1rem', lineHeight: 1.5 }}>{card.description}</p>
+                    <h2 style={{ fontSize: '1.4rem', marginBottom: '0.5rem', lineHeight: 1.2 }}>{card.title}</h2>
+                    <p style={{ color: '#94a3b8', fontSize: '0.9rem', lineHeight: 1.5, flex: 1 }}>{card.description}</p>
 
-                    <div style={{ marginTop: 'auto', paddingTop: '1rem', fontSize: '0.8rem', color: '#64748b', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><ArrowLeft size={14} /> Swipe Left to Reject</span>
-                        <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>Swipe Right to Build <ArrowRight size={14} /></span>
-                    </div>
+                    {/* Bonus Section */}
+                    {isBonusActive && (
+                        <div
+                            onPointerDown={(e) => e.stopPropagation()} // Important: Stop drag to allow interaction
+                            style={{
+                                marginTop: '0.5rem',
+                                padding: '0.75rem',
+                                background: 'rgba(59, 130, 246, 0.1)',
+                                border: '1px dashed #3b82f6',
+                                borderRadius: '12px'
+                            }}
+                        >
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.8rem', fontWeight: 700, color: '#60a5fa', marginBottom: '0.5rem' }}>
+                                <MessageSquarePlus size={16} />
+                                CITIZEN VOICE BONUS
+                            </div>
+                            <input
+                                type="text"
+                                placeholder="Opinion on this plan..."
+                                value={bonusText}
+                                onChange={(e) => setBonusText(e.target.value)}
+                                style={{
+                                    width: '100%',
+                                    background: '#0f172a',
+                                    border: '1px solid #334155',
+                                    color: 'white',
+                                    padding: '8px',
+                                    borderRadius: '8px',
+                                    fontSize: '0.9rem',
+                                    marginBottom: '0.5rem'
+                                }}
+                            />
+                            <button
+                                onClick={() => {
+                                    if (bonusText.trim()) {
+                                        onBonusSubmit(bonusText);
+                                        setBonusText(''); // Clear
+                                    }
+                                }}
+                                style={{
+                                    width: '100%',
+                                    background: '#3b82f6',
+                                    color: 'white',
+                                    padding: '6px',
+                                    borderRadius: '6px',
+                                    fontWeight: 600,
+                                    fontSize: '0.85rem'
+                                }}
+                            >
+                                Submit (+Bonus)
+                            </button>
+                        </div>
+                    )}
+
+                    {!isBonusActive && (
+                        <div style={{ marginTop: 'auto', paddingTop: '1rem', fontSize: '0.8rem', color: '#64748b', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                            <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><ArrowLeft size={14} /> Reject</span>
+                            <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>Build <ArrowRight size={14} /></span>
+                        </div>
+                    )}
                 </div>
             </div>
         </motion.div>

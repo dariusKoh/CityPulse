@@ -14,39 +14,67 @@ const formatTime = (seconds) => {
     return `${mins}:${secs.toString().padStart(2, '0')}`;
 };
 
-export default function GameEngine({ nickname, onFinish }) {
+export default function GameEngine({ nickname, onFinish, scenario }) {
     const [stats, setStats] = useState(INITIAL_STATS);
+    const [choices, setChoices] = useState([]); // { cardId, decision, input? }
     const [deck, setDeck] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [choices, setChoices] = useState([]); // { cardId, decision, input? }
+    // Bonus Feedback State
+    const [isBonusActive, setIsBonusActive] = useState(false);
 
-    // Timer State
+    // ... (Crisis State etc.)
+
     const [timeLeft, setTimeLeft] = useState(180); // 3 minutes
     const [isShaking, setIsShaking] = useState(false);
 
     // CityPulse 2.0 State
     const [showAdvisor, setShowAdvisor] = useState(false);
     const [crisisMode, setCrisisMode] = useState(false);
+    const [crisisDetails, setCrisisDetails] = useState({ title: "", description: "", impact: "" });
     const [approvedStickers, setApprovedStickers] = useState([]); // For CityBackground
 
+    // Shuffle Utility
+    const shuffleArray = (array) => {
+        const newArray = [...array];
+        for (let i = newArray.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+        }
+        return newArray;
+    };
+
     useEffect(() => {
-        // Determine deck. For now, just use the static list.
-        setDeck(CARDS);
+        // 1. Shuffle the full deck first
+        let fullDeck = shuffleArray(CARDS);
+        let finalDeck = [];
+
+        // 2. Apply Scenario Logic
+        if (scenario && scenario.priorityCards && scenario.priorityCards.length > 0) {
+            const priorityIds = scenario.priorityCards;
+
+            // Separate priority cards and others
+            const priorityDeck = fullDeck.filter(card => priorityIds.includes(card.id));
+            const otherDeck = fullDeck.filter(card => !priorityIds.includes(card.id));
+
+            // Limit to 15 cards total
+            // Take all priority cards (e.g. 5) + fill the rest from otherDeck
+            const slotsRemaining = 15 - priorityDeck.length;
+            const filledOthers = otherDeck.slice(0, slotsRemaining);
+
+            // Place priority cards at the front to ensure they are seen early
+            finalDeck = [...priorityDeck, ...filledOthers];
+        } else {
+            // Standard Game: Just take top 15 random cards
+            finalDeck = fullDeck.slice(0, 15);
+        }
+
+        setDeck(finalDeck);
 
         // Timer Interval
         const timer = setInterval(() => {
             setTimeLeft(prev => {
                 if (prev <= 1) {
                     clearInterval(timer);
-                    // Auto-finish when time runs out
-                    if (deck.length > 0) {
-                        // We need to trigger finish with *current* stats
-                        // Since we can't easily access latest 'stats' and 'choices' inside this closure without refs or dependency changes,
-                        // a common pattern is using a ref or just triggering a side effect.
-                        // For simplicity in this functional component, let's set a flag or just force finish if we can.
-                        // Actually, 'onFinish' is stable. 'stats' and 'choices' change.
-                        // Let's use a Ref for current state to access in interval.
-                    }
                     return 0;
                 }
                 return prev - 1;
@@ -54,7 +82,38 @@ export default function GameEngine({ nickname, onFinish }) {
         }, 1000);
 
         return () => clearInterval(timer);
-    }, []);
+    }, [scenario]); // Re-run if scenario changes
+
+    // Roll for Bonus on new card
+    useEffect(() => {
+        if (deck.length > 0 && deck[currentIndex]?.type !== 'press_conference') {
+            const roll = Math.random();
+            setIsBonusActive(roll <= 0.1); // 10% Chance
+        } else {
+            setIsBonusActive(false);
+        }
+    }, [currentIndex, deck]);
+
+    const handleBonusSubmit = (text) => {
+        setStats(prev => ({
+            ...prev,
+            budget: Math.min(100, prev.budget + 5),
+            health: Math.min(100, prev.health + 5),
+            happiness: Math.min(100, prev.happiness + 5)
+        }));
+
+        const currentCard = deck[currentIndex];
+        const newChoices = [...choices, {
+            cardId: currentCard.id,
+            title: currentCard.title,
+            decision: "submitted_feedback",
+            input: text,
+            type: "bonus_feedback"
+        }];
+        setChoices(newChoices);
+
+        setIsBonusActive(false);
+    };
 
     // Refs for auto-finish access
     const stateRef = useRef({ stats, choices });
@@ -68,6 +127,7 @@ export default function GameEngine({ nickname, onFinish }) {
     }, [timeLeft]);
 
     const handleSwipe = async (decision) => {
+        setIsBonusActive(false);
         const currentCard = deck[currentIndex];
 
         // REMOVED ADVISOR INTERCEPTION LOGIC (Optional Mode)
@@ -124,29 +184,81 @@ export default function GameEngine({ nickname, onFinish }) {
 
         // Check Crisis trigger
         if (newChoices.length > 0 && newChoices.length % 5 === 0) {
-            setCrisisMode(true);
-            // We pause advancing card? Or advance then overlay crisis?
-            // Advance card first.
-            advanceCard(newChoices, newStats);
+            triggerCrisis(newChoices, newStats);
         } else {
             advanceCard(newChoices, newStats);
         }
     };
 
-    // Helper to dismiss advisor and effectively 'retry' the swipe user intended? 
-    // Actually, user swiped, we intercepted. Now they are looking at Advisor.
-    // They click "Got it" to close Advisor. Then they have to swipe again. 
-    // This is better for learning.
+    const triggerCrisis = (currentChoices, currentStats) => {
+        // Determine Crisis Type based on progress
+        // Event 1 (5 cards): Flash Floods (Heavy Rain)
+        // Event 2 (10 cards): Heat Wave
+        // Event 3 (15 cards): Sea Level Rise (Game Over check?)
+
+        let title = "Crisis Alert!";
+        let description = "Unexpected disruption.";
+        let impactText = "";
+        let budgetPenalty = 5;
+        let happinessPenalty = 10;
+        let healthPenalty = 0;
+
+        const turnCount = currentChoices.length;
+
+        if (turnCount === 5) {
+            title = "Flash Floods";
+            description = "Heavy rain overwhelms the drainage system.";
+
+            // Educational Modifier: Concrete Canal (ID 9)
+            // If user built Concrete Canal (ID 9, decision 'yes'), double damage.
+            const hasConcreteCanal = currentChoices.find(c => c.cardId === 9 && c.decision === 'yes');
+
+            if (hasConcreteCanal) {
+                description += " The straight concrete canals accelerated the water flow, worsening downstream flooding! (Legacy Failure)";
+                budgetPenalty = 15; // 3x penalty
+                happinessPenalty = 20; // 2x penalty
+            } else {
+                description += " Natural drainage helped, but relief efforts are still needed.";
+            }
+
+            impactText = `Budget -${budgetPenalty} | Happiness -${happinessPenalty}`;
+
+            // Apply immediate stats update (can also be done on resolve)
+            // We'll store potential impact to apply on resolve to avoid double render issues
+            // stored in ref or state? Let's just calculate on resolve or use state.
+            // Simplified: Prepare details for Modal.
+
+        } else if (turnCount === 10) {
+            title = "Heat Wave";
+            description = "Temperatures soar to 36°C. The city is baking.";
+            happinessPenalty = 15;
+            healthPenalty = 10;
+            impactText = `Happiness -${happinessPenalty} | Health -${healthPenalty}`;
+        }
+
+        setCrisisDetails({
+            title,
+            description,
+            impact: impactText,
+            penalties: { budget: budgetPenalty, happiness: happinessPenalty, health: healthPenalty }
+        });
+        setCrisisMode(true);
+    };
 
     // Crisis Handler
     const handleCrisisResolved = () => {
         setCrisisMode(false);
-        // Apply crisis penalty?
+        const penalties = crisisDetails.penalties || { budget: 5, happiness: 10, health: 0 };
+
         setStats(prev => ({
             ...prev,
-            happiness: Math.max(0, prev.happiness - 10),
-            budget: Math.max(0, prev.budget - 5)
+            budget: Math.max(0, prev.budget - penalties.budget),
+            happiness: Math.max(0, prev.happiness - penalties.happiness),
+            health: Math.max(0, prev.health - (penalties.health || 0))
         }));
+
+        // Advance card after crisis resolved
+        advanceCard(choices, stats); // This uses current `currentIndex` which hasn't changed.
     };
 
     const handlePressConferenceSubmit = (input) => {
@@ -258,9 +370,9 @@ export default function GameEngine({ nickname, onFinish }) {
                         }}
                     >
                         <AlertTriangle size={64} style={{ marginBottom: '1rem' }} />
-                        <h2 style={{ fontSize: '2rem', fontWeight: 800, textTransform: 'uppercase' }}>Crisis Alert!</h2>
-                        <p style={{ fontSize: '1.2rem', marginBottom: '1rem' }}>Flash Floods Reported!</p>
-                        <p style={{ opacity: 0.9, marginBottom: '2rem' }}>Happiness -10 | Budget -5 for relief efforts.</p>
+                        <h2 style={{ fontSize: '2rem', fontWeight: 800, textTransform: 'uppercase' }}>{crisisDetails.title}</h2>
+                        <p style={{ fontSize: '1.2rem', marginBottom: '1rem', maxWidth: '80%' }}>{crisisDetails.description}</p>
+                        <p style={{ opacity: 0.9, marginBottom: '2rem', fontWeight: 'bold' }}>{crisisDetails.impact}</p>
                         <button
                             onClick={handleCrisisResolved}
                             style={{ background: 'white', color: '#ef4444', padding: '1rem 2rem', borderRadius: '8px', fontWeight: 800 }}
@@ -326,6 +438,8 @@ export default function GameEngine({ nickname, onFinish }) {
                                 card={deck[currentIndex]}
                                 onSwipe={handleSwipe}
                                 onAdvisorClick={() => setShowAdvisor(true)}
+                                isBonusActive={isBonusActive}
+                                onBonusSubmit={handleBonusSubmit}
                             />
                         )}
                     </AnimatePresence>
