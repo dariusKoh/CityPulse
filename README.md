@@ -29,7 +29,7 @@ CityPulse addresses three specific barriers to youth engagement using an **inter
 Detailed documentation for the new gameplay features and content can be found in the `docs/` directory:
 - [Card List & Effects](docs/CARDS.md)
 - [Scenarios Guide](docs/SCENARIOS.md)
-- [New Gameplay Features (Review, Bonus, etc.)](docs/FEATURES_V2.md)
+- [New Gameplay Features (Review, Bonus, etc.)](docs/FEATURES.md)
 
 ## Key Features
 - **Tinder-Style Decision Making**: Swipe Left/Right to make choices.

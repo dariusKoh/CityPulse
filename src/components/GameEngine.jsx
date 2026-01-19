@@ -5,8 +5,8 @@ import PressConferenceCard from './PressConferenceCard';
 import { CARDS } from '../data/cards';
 import { calculateNextState, INITIAL_STATS, checkGameOver } from '../utils/ResourceManager';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Clock, GraduationCap, AlertTriangle } from 'lucide-react';
-import CityBackground from './CityBackground';
+import { Clock, GraduationCap, AlertTriangle, Eye, EyeOff } from 'lucide-react';
+import City3D from './City3D';
 
 const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
@@ -32,6 +32,8 @@ export default function GameEngine({ nickname, onFinish, scenario }) {
     const [crisisMode, setCrisisMode] = useState(false);
     const [crisisDetails, setCrisisDetails] = useState({ title: "", description: "", impact: "" });
     const [approvedStickers, setApprovedStickers] = useState([]); // For CityBackground
+    const [showCityView, setShowCityView] = useState(false); // Toggle for city view
+    const [currentCrisisType, setCurrentCrisisType] = useState(null); // 'flood' or 'heatwave'
 
     // Shuffle Utility
     const shuffleArray = (array) => {
@@ -242,12 +244,16 @@ export default function GameEngine({ nickname, onFinish, scenario }) {
             impact: impactText,
             penalties: { budget: budgetPenalty, happiness: happinessPenalty, health: healthPenalty }
         });
+        // Set crisis type for 3D effects
+        if (turnCount === 5) setCurrentCrisisType('flood');
+        else if (turnCount === 10) setCurrentCrisisType('heatwave');
         setCrisisMode(true);
     };
 
     // Crisis Handler
     const handleCrisisResolved = () => {
         setCrisisMode(false);
+        setCurrentCrisisType(null); // Clear crisis visual effects
         const penalties = crisisDetails.penalties || { budget: 5, happiness: 10, health: 0 };
 
         setStats(prev => ({
@@ -312,8 +318,42 @@ export default function GameEngine({ nickname, onFinish, scenario }) {
                 {formatTime(timeLeft)}
             </div>
 
-            {/* CityBackground Removed per user request */}
-            {/* <CityBackground approvedStickers={approvedStickers} /> */}
+            {/* View City Toggle Button */}
+            <button
+                onClick={() => setShowCityView(!showCityView)}
+                style={{
+                    position: 'absolute',
+                    bottom: '2rem',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    zIndex: showCityView ? 150 : 50,
+                    background: showCityView ? 'rgba(99, 102, 241, 0.9)' : 'rgba(15, 23, 42, 0.8)',
+                    color: 'white',
+                    padding: '10px 18px',
+                    borderRadius: '25px',
+                    fontSize: '0.9rem',
+                    fontWeight: 600,
+                    border: 'none',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    transition: 'all 0.3s ease',
+                    boxShadow: showCityView ? '0 4px 15px rgba(99, 102, 241, 0.4)' : '0 2px 10px rgba(0,0,0,0.3)'
+                }}
+            >
+                {showCityView ? <EyeOff size={16} /> : <Eye size={16} />}
+                {showCityView ? 'Back to Cards' : 'View City'}
+            </button>
+
+            {/* 3D City Visualization */}
+            <City3D
+                approvedStickers={approvedStickers}
+                stats={stats}
+                isPlaying={!crisisMode && !showAdvisor}
+                crisisType={currentCrisisType}
+                isShowcaseMode={showCityView}
+            />
 
             {/* HUD */}
             <div style={{ position: 'relative', zIndex: 10 }}>
