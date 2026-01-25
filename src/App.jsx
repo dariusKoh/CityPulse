@@ -4,21 +4,20 @@ import GameEngine from './components/GameEngine';
 import ImpactLedger from './views/ImpactLedger';
 import AdminDashboard from './views/AdminDashboard';
 import Leaderboard from './views/Leaderboard';
-import { getStoredData, saveGameResult } from './utils/StorageManager';
-
+import RewardsScreen from './views/RewardsScreen';
+import { getStoredData, saveGameResult, saveStoredData } from './utils/StorageManager';
 import StatisticsScreen from './views/StatisticsScreen';
 import { SCENARIOS } from './data/scenarios';
-
 import ScenarioIntro from './views/ScenarioIntro';
-
 import { CARDS } from './data/cards';
-
 import City3D from './components/City3D';
 
 function App() {
   const [currentView, setCurrentView] = useState('start');
   const [playerData, setPlayerData] = useState({
     nickname: 'Citizen Planner',
+    region: 'Clementi',
+    school: 'Ngee Ann Polytechnic',
     choices: [],
     stats: { budget: 100, land: 100, health: 50, happiness: 50 }
   });
@@ -47,7 +46,27 @@ function App() {
 
   const finishGame = (finalStats, choicesHistory) => {
     const receiptId = `URA-${new Date().getFullYear()}-${Math.floor(Math.random() * 10000).toString().padStart(4, '0')}`;
-    const pointsEarned = 850;
+
+    // 1. Base Score from Stats (Max 400 ~ roughly 100 each)
+    // Multiplier to make it substantial, e.g. 2x -> Max 800
+    const baseScore = (finalStats.happiness + finalStats.health + finalStats.budget + finalStats.land) * 2;
+
+    // 2. Bonus Points from Actions
+    let bonusScore = 0;
+    choicesHistory.forEach(choice => {
+      if (choice.type === 'press_conference' && choice.decision === 'submitted') {
+        const card = CARDS.find(c => c.id === choice.cardId);
+        if (card && card.bonusScore) {
+          bonusScore += card.bonusScore;
+        } else {
+          bonusScore += 300; // Default fallback
+        }
+      } else if (choice.type === 'bonus_feedback') {
+        bonusScore += 150; // Points for optional feedback
+      }
+    });
+
+    const pointsEarned = Math.round(baseScore + bonusScore);
 
     const resultData = {
       choices: choicesHistory,
@@ -168,6 +187,7 @@ function App() {
           <HomeScreen
             onStart={startGame}
             onLeaderboard={() => setCurrentView('leaderboard')}
+            onRewards={() => setCurrentView('rewards')}
             onStats={() => setCurrentView('statistics')}
             storedData={storedData}
             onViewReceipt={handleViewReceipt}
@@ -186,7 +206,7 @@ function App() {
           />
         )
       }
-      {currentView === 'leaderboard' && <Leaderboard onBack={() => setCurrentView('start')} userScore={storedData?.totalPoints || 0} />}
+      {currentView === 'leaderboard' && <Leaderboard onBack={() => setCurrentView('start')} userScore={storedData?.careerScore || 0} playerData={playerData} />}
       {currentView === 'game' && <GameEngine onFinish={finishGame} nickname={playerData.nickname} scenario={selectedScenario} />}
 
       {
@@ -214,6 +234,21 @@ function App() {
         />
       )}
       {currentView === 'statistics' && <StatisticsScreen storedData={storedData} onBack={() => setCurrentView('start')} />}
+      {currentView === 'rewards' && (
+        <RewardsScreen
+          onBack={() => setCurrentView('start')}
+          userScore={storedData?.walletBalance || 0}
+          onClaimReward={(cost) => {
+            const currentBalance = storedData?.walletBalance || 0;
+            const newBalance = Math.max(0, currentBalance - cost);
+
+            // Only update walletBalance, preserve careerScore
+            const newData = { ...storedData, walletBalance: newBalance };
+            setStoredData(newData);
+            saveStoredData(newData);
+          }}
+        />
+      )}
       {currentView === 'admin' && <AdminDashboard />}
     </div >
   );

@@ -99,12 +99,25 @@ export default function GameEngine({ nickname, onFinish, scenario }) {
         return finalDeck;
     };
 
+    // Timer Pause Ref to access state inside interval without re-triggering it
+    const isPausedRef = useRef(false);
+
+    useEffect(() => {
+        const isPressConference = deck[currentIndex]?.type === 'press_conference';
+        const isBonus = isBonusActive;
+        const isModalOpen = showAdvisor || crisisMode || showHowToPlay;
+
+        isPausedRef.current = isPressConference || isBonus || isModalOpen;
+    }, [currentIndex, deck, isBonusActive, showAdvisor, crisisMode, showHowToPlay]);
+
     useEffect(() => {
         const initialDeck = buildDeck([]);
         setDeck(initialDeck);
 
         // Timer Interval
         const timer = setInterval(() => {
+            if (isPausedRef.current) return; // Skip decrement if paused
+
             setTimeLeft(prev => {
                 if (prev <= 1) {
                     clearInterval(timer);
@@ -276,12 +289,15 @@ export default function GameEngine({ nickname, onFinish, scenario }) {
         // v4.0: Probability-based crisis triggering (instead of fixed intervals)
         // Check every turn after turn 3, with scenario-based weights
         if (newChoices.length >= 3 && updatedActiveCrises.length < 2) { // Max 2 concurrent crises
-            const scenarioId = scenario?.id || 'standard';
-            const newCrisis = rollForCrisis(scenarioId, updatedActiveCrises);
+            // v4.2: Reduced global crisis probability to 10% chance per turn check
+            if (Math.random() < 0.10) {
+                const scenarioId = scenario?.id || 'standard';
+                const newCrisis = rollForCrisis(scenarioId, updatedActiveCrises);
 
-            if (newCrisis && !updatedActiveCrises.includes(newCrisis)) {
-                triggerCrisis(newCrisis, newChoices, newStats, updatedActiveCrises);
-                return; // Don't advance card yet, crisis modal will handle it
+                if (newCrisis && !updatedActiveCrises.includes(newCrisis)) {
+                    triggerCrisis(newCrisis, newChoices, newStats, updatedActiveCrises);
+                    return; // Don't advance card yet, crisis modal will handle it
+                }
             }
         }
 
@@ -344,6 +360,31 @@ export default function GameEngine({ nickname, onFinish, scenario }) {
 
         // Advance card after crisis acknowledged
         advanceCard(ctx.currentChoices, ctx.currentStats, ctx.newActiveCrises);
+    };
+
+    const handlePressConferenceSkip = () => {
+        // 30% Chance of Crisis on Skip
+        if (Math.random() < 0.30) {
+            // Find a crisis that isn't active
+            const availableCrises = Object.values(CRISIS_TYPES).filter(c => !activeCrises.includes(c.id));
+            if (availableCrises.length > 0) {
+                // Pick random one
+                const randomCrisis = availableCrises[Math.floor(Math.random() * availableCrises.length)];
+
+                // Need to advance stats/choices slightly or just pass current state?
+                // Trigger crisis expects: (crisisConfig, currentChoices, currentStats, currentActiveCrises)
+                // We pass current state. The crisis modal will eventually call advanceCard via handleCrisisResolved
+                triggerCrisis(randomCrisis, choices, stats, activeCrises);
+
+                // Important: triggerCrisis sets crisisMode=true.
+                // We should NOT call advanceCard here immediately if we triggered a crisis, 
+                // because handleCrisisResolved will do it.
+                return;
+            }
+        }
+
+        // If no crisis triggered (or no available crises), just advance
+        advanceCard(choices, stats, activeCrises);
     };
 
     const handlePressConferenceSubmit = (input) => {
@@ -651,6 +692,7 @@ export default function GameEngine({ nickname, onFinish, scenario }) {
                                 <PressConferenceCard
                                     card={deck[currentIndex]}
                                     onSubmit={handlePressConferenceSubmit}
+                                    onSkip={handlePressConferenceSkip}
                                 />
                             </motion.div>
                         ) : (

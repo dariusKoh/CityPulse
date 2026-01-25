@@ -12,11 +12,11 @@ const COMMUNITY_PULSE = [
     { card: "Gated Enclaves", stat: "89% rejected", tag: "Consensus", icon: "🚫" }
 ];
 
-export default function HomeScreen({ onStart, onLeaderboard, onStats, storedData, onViewReceipt, onViewLastCity }) {
-    const { totalPoints, submissionHistory } = storedData || { totalPoints: 0, submissionHistory: [] };
+export default function HomeScreen({ onStart, onLeaderboard, onStats, onRewards, storedData, onViewReceipt, onViewLastCity }) {
+    const { walletBalance, careerScore, submissionHistory } = storedData || { walletBalance: 0, careerScore: 0, submissionHistory: [] };
 
-    // Calculate Rank
-    const combinedList = [...MOCK_LEADERS, { score: totalPoints, isUser: true }];
+    // Calculate Rank based on careerScore (not walletBalance)
+    const combinedList = [...MOCK_LEADERS, { score: careerScore, isUser: true }];
     combinedList.sort((a, b) => b.score - a.score);
     const userRank = combinedList.findIndex(p => p.isUser) + 1;
 
@@ -200,10 +200,15 @@ export default function HomeScreen({ onStart, onLeaderboard, onStats, storedData
                     <Wallet size={18} color="var(--color-warning)" />
                     <h3 style={{ fontSize: '1.1rem' }}>Rewards Wallet</h3>
                 </div>
-                <div style={{ background: '#1e293b', borderRadius: '16px', border: '1px solid #334155', overflow: 'hidden' }}>
+                <div
+                    onClick={onRewards}
+                    style={{ background: '#1e293b', borderRadius: '16px', border: '1px solid #334155', overflow: 'hidden', cursor: 'pointer', transition: 'transform 0.2s' }}
+                    onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-2px)'}
+                    onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
+                >
                     <div style={{ padding: '1rem', borderBottom: '1px solid #334155', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <span style={{ color: '#94a3b8' }}>Balance</span>
-                        <span style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--color-warning)' }}>{totalPoints.toLocaleString()} <span style={{ fontSize: '0.9rem' }}>CP</span></span>
+                        <span style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--color-warning)' }}>{walletBalance.toLocaleString()} <span style={{ fontSize: '0.9rem' }}>CP</span></span>
                     </div>
                     {/* Mock Coupons */}
                     <div style={{ padding: '1rem', display: 'flex', gap: '1rem', overflowX: 'auto' }}>
@@ -218,7 +223,7 @@ export default function HomeScreen({ onStart, onLeaderboard, onStats, storedData
                                 padding: '0.75rem',
                                 borderRadius: '12px',
                                 textAlign: 'center',
-                                opacity: totalPoints >= item.cost ? 1 : 0.5
+                                opacity: walletBalance >= item.cost ? 1 : 0.5
                             }}>
                                 <div style={{ background: item.color, width: '32px', height: '32px', borderRadius: '50%', margin: '0 auto 0.5rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                     <Gift size={16} color="white" />

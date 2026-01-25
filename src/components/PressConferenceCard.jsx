@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Send, MapPin } from 'lucide-react';
 
-export default function PressConferenceCard({ card, onSubmit }) {
+export default function PressConferenceCard({ card, onSubmit, onSkip }) {
     const [input, setInput] = useState('');
 
     const handleSubmit = (e) => {
@@ -87,6 +87,25 @@ export default function PressConferenceCard({ card, onSubmit }) {
                     >
                         Submit Proposal (+{card.bonusScore})
                         <Send size={18} />
+                    </button>
+                    <button
+                        type="button"
+                        onClick={onSkip}
+                        style={{
+                            padding: '0.8rem',
+                            background: 'transparent',
+                            color: '#94a3b8',
+                            border: '1px solid #334155',
+                            borderRadius: '12px',
+                            fontWeight: 600,
+                            cursor: 'pointer',
+                            transition: 'all 0.2s',
+                            fontSize: '0.9rem'
+                        }}
+                        onMouseEnter={(e) => { e.target.style.background = 'rgba(239, 68, 68, 0.1)'; e.target.style.color = '#ef4444'; e.target.style.borderColor = '#ef4444'; }}
+                        onMouseLeave={(e) => { e.target.style.background = 'transparent'; e.target.style.color = '#94a3b8'; e.target.style.borderColor = '#334155'; }}
+                    >
+                        Skip Press Conference
                     </button>
                 </form>
             </div>
